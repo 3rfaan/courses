@@ -651,3 +651,81 @@ int main() {
 
 // Output: 5 5
 ```
+
+## Optional Assesment
+
+**Optional**: Little Mac is an interplanetary space boxer, who is trying to win championship belts for various weight categories on other planets within the solar system.
+
+Write a **space.c** program that helps him keep track of his target weight by: It should ask him what his earth weight is. Ask him to enter a number for the planet he wants to fight on. It should then compute his weight on the destination planet.
+
+Compile and execute:
+
+```bash
+gcc space.c
+./a.out
+```
+
+Here is the table of conversion:
+
+| \#  | Planet  | Relative Gravity |
+| --- | ------- | ---------------- |
+| 1   | Mercury | 0.38             |
+| 2   | Venus   | 0.91             |
+| 3   | Mars    | 0.38             |
+| 4   | Jupiter | 2.34             |
+| 5   | Saturn  | 1.06             |
+| 6   | Uranus  | 0.92             |
+| 7   | Neptune | 1.19             |
+
+To compute his weight on the planet he is fighting on, multiply his earth weight and the relative gravity of that planet.
+
+Try using both `if`, `else if`, `else` and a `switch` statement!
+
+One possible answer:
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  double weight;
+  int x;
+
+  printf("Please enter your current earth weight: ");
+  scanf("%lf", &weight);
+
+  printf("\nI have information for the following planets:\n\n");
+  printf("\t1. Mercury\t2. Venus\t3. Mars\t4. Jupiter\n");
+  printf("\t5. Saturn\t6. Uranus\t7. Neptune\n\n");
+
+  printf("Which planet are you visiting? ");
+  scanf("%d", &x);
+
+  switch (x) {
+    case 1:
+      weight *= 0.38;
+      break;
+    case 2:
+      weight *= 0.91;
+      break;
+    case 3:
+      weight *= 0.38;
+      break;
+    case 4:
+      weight *= 2.34;
+      break;
+    case 5:
+      weight *= 1.06;
+      break;
+    case 6:
+      weight *= 0.92;
+      break;
+    case 7:
+      weight *= 1.19;
+      break;
+    }
+
+  printf("\nYour weight: %lf\n", weight);
+
+}
+```
