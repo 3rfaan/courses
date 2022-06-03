@@ -308,7 +308,346 @@ int main() {
   targetChar = sourceDouble;
 
   // No need to change below here
-  printf("source int %d, source double, %.2f, target %c\n", sourceInt, sourceDouble, targetChar);
+  printf("source int %d, source double %.2f, target %c\n", sourceInt, sourceDouble, targetChar);
+}
+
+// Output: source int 99, source double 55.67, target 7
+```
+
+## Mathematical Operations
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  // Variables set for you, do not change here
+  int booksSold = 100;
+  double bookCost = 9.99;
+  double totalSalesValue;
+
+  // Make your changes here
+  booksSold += 200;
+  totalSalesValue = booksSold * bookCost;
+  totalSalesValue /= 2;
+
+  // Output logic, no need to change this
+  printf("You sold %d books and your take home was $%.2f\n", booksSold, totalSalesValue);
+}
+
+// Output: You sold 300 books and your take home was $1498.50
+
+```
+
+## Modulo
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int endingDayOfWeek = 0;
+  int daysThatPass = 15;
+  int daysInWeek = 7;
+
+  endingDayOfWeek = (0 + daysThatPass)
+
+  printf("You started on the 1st (0) day of the week, went %d days from this, so it is now the %d day of the week\n", daysThatPass, endingDayOfWeek);
+}
+
+/* Output:
+You started on the 1st (0) day of the week, went 15 days from this, so it is now the 1 day of the week */
+```
+
+## Increment and Decrement
+
+```cpp
+#include <stdio.h>
+
+int main() {
+  int n = 13;
+  int m = 10;
+
+  m--;
+  n++;
+
+  printf("m = %d\n", m);
+  printf("n = %d\n", n);
+}
+```
+
+## Assignment
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int timesServerCrashed = 5;
+  double losses = 500.95;
+
+  losses *= timesServerCrashed;
+  losses /= 2;
+
+  printf("Total Losses: $%.2f\n", losses);
+}
+```
+
+## Comparisons
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int x = 5;
+  int y = 42;
+
+  if (x < y) {
+   printf("Congratulations on setting up a comparison correctly!");
+  }
 
 }
+```
+
+## Logical Operators
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int x = 1;
+  int y = 27;
+
+  if (!(x == y)) {
+    printf("Congratulations on setting up a comparison correctly!");
+  } else {
+    printf("Please try again!");
+  }
+
+}
+
+// Output: Congratulations on setting up a comparison correctly!
+```
+
+## Order of Operations
+
+Looking at the table below, the operations with priority 1 will be performed first. Then priority 2, 3, and so on will be processed. For operators of the same level of priority, they operations occur from left to right.
+
+| Priority | Symbol                   |
+| -------- | ------------------------ |
+| 1        | ++                       |
+| 1        | --                       |
+| 1        | ()                       |
+| 2        | !                        |
+| 2        | (typecast)               |
+| 3        | \*                       |
+| 3        | /                        |
+| 3        | %                        |
+| 4        | +                        |
+| 4        | -                        |
+| 5        | <, <=                    |
+| 5        | >, >=                    |
+| 6        | ==, !=                   |
+| 7        | &&                       |
+| 8        | \|\|                     |
+| 9        | all assignment operators |
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int x;
+  int y;
+
+  x = (2 + 3) * 5;
+  y = 2 / (4 + 6);
+
+  printf("x is: %d\n", x);
+  printf("y is: %d\n", y);
+
+}
+```
+
+## Coin Flip Demo
+
+```cpp
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+  // Create a number that’s 0 or 1
+  srand (time(NULL));
+  int coin = rand() % 2;
+
+  // If number is 0: Heads
+  // If it is not 0: Tails
+  if (coin == 0) {
+    printf("Heads\n");
+  } else {
+    printf("Tails\n");
+  }
+
+}
+```
+
+## `if` statement
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int grade1 = 90;
+  int grade2 = 59;
+
+  if (grade1 > 60) {
+    printf("Pass\n");
+  }
+
+  if (grade2 < 60) {
+    printf("Fail");
+  }
+
+}
+```
+
+## Working with Operators
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int a = 10;
+  int b = -5;
+
+  if (a > 0 || b > 0) {
+    printf("Positive\n");
+  }
+
+  if (a > 0 && !(b > 0)) {
+    printf("Positive too");
+  }
+
+}
+
+/* Output:
+Positive
+Positive too */
+```
+
+## `else` Clause
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int grade1 = 59;
+  int grade2 = 90;
+
+  if (grade1 > 60) {
+    printf("Pass\n");
+  } else {
+    printf("Fail\n");
+  }
+
+  if (grade2 > 60) {
+    printf("Pass\n");
+  } else {
+    printf("Fail\n");
+  }
+
+}
+```
+
+## `else if`
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  double ph = 7;
+
+  // Start the if, else if, else here:
+  if (ph > 7) {
+    printf("Basic\n");
+  } else if (ph < 7) {
+    printf("Acidic\n");
+  } else {
+    printf("Neutral\n");
+  }
+
+}
+```
+
+## `switch` Statement
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int number = 7;
+
+  switch(number) {
+    case 1:
+      printf("Bulbasaur\n");
+      break;
+    case 2:
+      printf("Ivysaur\n");
+      break;
+    case 3:
+      printf("Venusaur\n");
+      break;
+    case 4:
+      printf("Charmander\n");
+      break;
+    case 5:
+      printf("Charmeleon\n");
+      break;
+    case 6:
+      printf("Charizard\n");
+      break;
+    case 7:
+      printf("Squirtle\n");
+      break;
+    case 8:
+      printf("Wartortle\n");
+      break;
+    case 9:
+      printf("Blastoise\n");
+      break;
+    default:
+      printf("Unknown\n");
+      break;
+  }
+}
+```
+
+## Ternary Operators
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int a = 10;
+  int b = 5;
+  int min;
+
+  // Print out the smaller number with return
+  min = a < b ? a : b;
+  printf("%d\n", min);
+
+  // Print out the smaller number without return
+  a < b ? printf("%d\n", a) : printf("%d\n", b);
+}
+
+// Output: 5 5
 ```

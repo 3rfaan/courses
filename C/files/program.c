@@ -3,19 +3,11 @@
 int main()
 {
 
-  // These variables were created and had a starting value for you, no need to change
-  char bookVersionReview = 'A';
-  char movieVersionReview = 'B';
-  double ticketPrice = 10.25;
-  double bookPrice = 19.99;
+  int endingDayOfWeek = 0;
+  int daysThatPass = 15;
+  int daysInWeek = 7;
 
-  // Update the movie review score here
-  movieVersionReview = 'C';
+  endingDayOfWeek = (0 + daysThatPass) % daysInWeek;
 
-  // Update the ticket price here
-  ticketPrice = bookPrice;
-
-  // No need to change below here
-  printf("The book version has a review score of %c and costs $%.2f\n", bookVersionReview, bookPrice);
-  printf("The movie version has a review score of %c and costs $%.2f\n", movieVersionReview, ticketPrice);
+  printf("You started on the 1st (0) day of the week, went %d days from this, so it is now the %d day of the week\n", daysThatPass, endingDayOfWeek);
 }
