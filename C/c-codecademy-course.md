@@ -729,3 +729,727 @@ int main() {
 
 }
 ```
+
+## Interacting with a Loop
+
+```cpp
+#include <stdio.h>
+
+int main() {
+  int pin = 0;
+  int tries = 0;
+
+  printf("BANK OF CODECADEMY:\n");
+  printf("Enter your PIN: ");
+  scanf("%d", &pin);
+
+  tries++;
+
+  while (pin != 1234 && tries < 3) {
+    printf("Enter your PIN: ");
+    scanf("%d", &pin);
+    tries++;
+  }
+
+  if (pin == 1234) {
+    printf("PIN accepted!\n");
+    printf("You now have access.\n");
+  }
+}
+```
+
+## Guess the Number
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int guess;
+  int tries = 0;
+
+  printf("I’m thinking of a number in the range 1-10.\n");
+  printf("Try to guess it: ");
+  scanf("%d", &guess);
+
+  // Write a while loop here:
+  while (guess != 8 && tries < 50) {
+    printf("Wrong guess, try again: ");
+    scanf("%d", &guess);
+    tries++;
+  }
+
+  if (guess == 8) {
+    printf("You got it!\n");
+  }
+
+}
+```
+
+## `while` Loop
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int i = 9;
+  int square = 0;
+
+  // Write a while loop here:
+  while (i >= 0) {
+    printf("%d\t%d\n", i, i * i);
+    i--;
+  }
+
+}
+```
+
+## `do-while` Loop
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int i = 0;
+
+  do {
+    printf("%d\n", i);
+    i++;
+  } while (i < 10);
+}
+```
+
+## `for` Loop
+
+```cpp
+int main() {
+
+  // Write your loop here
+  for (int i = 99; i >= 0; i--) {
+    printf("%d bottles of pop on the wall.\n", i);
+    printf("Take one down and pass it around.\n");
+    printf("%d bottles of pop on the wall.", i - 1);
+    i--;
+  }
+
+}
+```
+
+## Breaking Out
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  int number1 = 1;
+  int numbers_entered1 = 0;
+  int number2 = 1;
+  int numbers_entered2 = 0;
+
+  while (numbers_entered1 < 10) {
+
+    printf("Loop 1 - Please enter a number: ");
+    scanf("%d", &number1);
+
+    // Figure out how to break out here!
+    if (number1 <= 0) {
+      break;
+    }
+
+    numbers_entered1++;
+  }
+
+  while (number2 > 0 && numbers_entered2 < 10) {
+
+    printf("Loop 2 - Please enter a number: ");
+    scanf("%d", &number2);
+
+    numbers_entered2++;
+  }
+
+  printf("Good job! You’ve broken out!\n");
+
+}
+```
+
+## Continuing
+
+```cpp
+#include <stdio.h>
+
+int main() {
+
+  for (int i = 0; i < 10; i++) {
+    // Figure out how to skip the print of 5 here
+    if (i == 5) {
+      continue;
+    }
+
+    printf("%d\n", i);
+  }
+
+}
+```
+
+## Creating and Initializing Arrays
+
+```cpp
+#include<stdio.h>
+
+int main() {
+
+  // Checkpoint 1 code goes here.
+  double q[5];
+
+  // Checkpoint 2 code goes here.
+  int evens[] = {2, 4, 6, 8, 10};
+
+}
+```
+
+## Array Access and Element Modification
+
+```cpp
+#include<stdio.h>
+
+int main() {
+
+  int evens[] = {2, 4, 6, 8, 10, 12};
+  int odds[] = {1, 4, 5, 7, 10, 11}; // Don't modify this line.
+
+  printf("%i\n", evens[5]); // Checkpoint 1. Fix this error.
+
+  // Code for checkpoint 2 goes here.
+  printf("%i\n", evens[2]);
+
+  // Code for checkpoint 3 goes here.
+  odds[1] = 3;
+  odds[4] = 9;
+
+}
+```
+
+## Looping Through Arrays
+
+```cpp
+#include<stdio.h>
+
+int main() {
+  int arr[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 22, 26, 28, 29};
+  int arr2[100];
+
+  // Code for Checkpoint 1 goes here
+  for (int i = 0; i < 20; i++) {
+    printf("%d\n", arr[i]);
+  }
+
+  // Code for Checkpoint 2 goes here
+  for (int i = 0; i < 100; i++) {
+    arr2[i] = i + 4;
+  }
+
+}
+```
+
+## Length of Array Using `sizeof()`
+
+```cpp
+#include<stdio.h>
+
+int main() {
+  double arr[] = {1.0, 8, 2.27, 16.2, 2, 3.14, 12.6, 1.62, 6.54, 9, 11};
+  int len;
+
+  // Checkpoint 1 code goes here.
+  len = sizeof(arr) / sizeof(double);
+
+  printf("%i\n", len);
+
+  // Checkpoint 2 code goes here.
+  for (int i = 0; i < len; i++) {
+    printf("%f\n", arr[i]);
+  }
+
+}
+```
+
+## Multidimensional Arrays
+
+```cpp
+#include<stdio.h>
+
+int main() {
+
+  // Checkpoint 1 code goes here.
+  int arr[9][9];
+
+  // Checkpoint 2 code goes here.
+  int matrix[][3] = {{2, 9, 11}, {3, 1, 4}, {8, 3, 1}};
+
+}
+```
+
+## Element Access in Multidimensional Arrays
+
+To prevent the hardcoding of dimensions in a loop, the `sizeof()` function is used as follows:
+
+rowDimension = sizeof(matrix)/sizeof(matrix[0]);
+columnDimension = sizeof(matrix[0])/sizeof(dataType);
+Let’s use these identities to write the `for` loop from the previous exercise:
+
+```cpp
+int mat[3][3] = {{12, 8, 2}, {17, 19, 5}, {6, 11, 2}};
+
+int rowDimension = sizeof(mat)/sizeof(mat[0]);
+int columnDimension = sizeof(mat[0])/sizeof(int);
+
+for(int i = 0; i < rowDimension; i++){
+  for(int j = 0; j < columnDimension; j++){
+    int num = mat[i][j];
+    printf("%i\n", num);
+  }
+}
+```
+
+---
+
+```cpp
+#include<stdio.h>
+
+int main() {
+  int matrix[][4] = {{14, 10, 6, 4}, {3, 7, 18, 11}, {13, 9, 5, 17}, {19, 12, 2, 1}};
+  int sum = 0;
+
+  // Checkpoint 1 code goes here.
+  printf("%i\n", matrix[3][1]);
+
+  // Checkpoint 2 code goes here.
+  for (int i = 0; i < sizeof(matrix) / sizeof(matrix[0]); i++) {
+    for (int j = 0; j < sizeof(matrix[0]) / sizeof(int); j++) {
+      sum += matrix[i][j];
+    }
+  }
+
+}
+```
+
+## Creating and Initializing Strings
+
+```cpp
+#include<stdio.h>
+
+int main() {
+ // Checkpoint 1 code goes here
+ char comp[] = {'C', 'o', 'm', 'p', 'u', 't', 'e', 'r', '\0'};
+
+ // Checkpoint 2 code goes here
+ char compCode[] = "Computer Code";
+
+ // Checkpoint 3 code goes here
+ printf("%s\n%s\n", comp, compCode);
+
+}
+```
+
+## Character Access and Modification
+
+```cpp
+#include <stdio.h>
+
+int main() {
+  char p[] = "procezzor";
+
+  // Checkpoint 1 code goes here
+  printf("%c\n", p[2]);
+
+  // Checkpoint 2 code goes here
+  p[5] = 's';
+  p[6] = 's';
+
+  printf("%s", p);
+}
+```
+
+## Looping Through Strings
+
+```cpp
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+  char s[] = "When the zombies arrive, quickly fax Judge Pat Alphabet";
+  char p[] = "poolloop";
+
+  // Checkpoint 1 code goes here
+  for (int i = 0; i < strlen(s); i++) {
+    s[i] = '*';
+  }
+
+  printf("%s\n", s);
+
+  // Checkpoint 2 code goes here
+  for (int i = 0; i < strlen(p) / 2; i++) {
+    p[i] = '#';
+  }
+
+  printf("%s", p);
+
+}
+```
+
+## Concatenating Strings
+
+```cpp
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+
+  char s1[] = "London";
+  char s2[] = " Bridge";
+
+  char n[] = "New";
+  char y[] = " York";
+  char c[] = " City";
+
+  // Code for checkpoint 1 goes here
+  strcat(s1, s2);
+  printf("%s\n", s1);
+
+  // Code for checkpoint 2 goes here
+  strcat(n, y);
+  strcat(n, c);
+  printf("%s\n", n);
+
+}
+```
+
+## Copying Strings
+
+```cpp
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+
+  char src[] = "banana";
+  char dst[7];
+
+  char pan[] = "How vexingly quick daft zebras jump!";
+  int len = strlen(pan) + 1; // Checkpoint 2
+  char dst2[len];
+
+  // Code for checkpoint 1 goes here
+  strcpy(dst, src);
+  printf("%s\n", dst);
+
+  // Code for checkpoint 3 goes here
+  strcpy(dst2, pan);
+  printf("%s", dst2);
+
+}
+```
+
+## Memory in C
+
+For a program to execute, it must use some of the computer’s resources such as CPU, RAM, IO, or other hardware. Deciding how and at what capacity to use these resources is the job of the underlying operating system. One of the most important of these resources is memory, more specifically: the temporary memory used for program execution which is called random access memory (RAM). When a program executes, the operating system reserves a section of the computer’s physical RAM to be used exclusively by the program. The fundamental unit of this memory is a byte. As you learned previously, all variables are simply a collection of some number of bytes: an `int` is four bytes, a `double` is eight bytes, and so on. The allocated section of RAM is simply a block of however many bytes the program needs (if available, of course).
+
+As you can see, in this block of memory to the right, every byte has an associated address numbered using the [hexadecimal numbering system](https://en.wikipedia.org/wiki/Hexadecimal). For example, a byte of memory could be located at address 0x200 and the immediate byte next to it is located at address 0x201.
+
+Every programming language has a different policy regarding the direct access and manipulation of a byte in memory; some allow it, some do not. C is one of the languages that allow such operations through the use of a pointer, and we will see how in this lesson.
+
+At first glance, pointers may appear to be an overcomplicated way to work with variables, and for such simple examples meant to illustrate basic principles, this is true. However, the real value of pointers becomes apparent in more complex applications, such as working with data structures or embedded systems (think robots and microchips). Examples of these are well beyond the scope of this introductory tutorial. For now, just familiarize yourself with these ideas such that you may recall them when you need to!
+
+## Pointers
+
+In C, a byte of memory can be accessed using a pointer. A pointer containing the address of a variable is said to “point” to that variable.
+
+Recall that when you declare a variable, a contiguous block of bytes is reserved in memory. A pointer to a variable is the address of the first of these bytes. A pointer can be created for every type of variable: be it primitive (for example `int`, `char`, or `double`), a custom data type created using a `struct` (we’ll cover those in a later lesson), or even another pointer. The syntax of a pointer is the following:
+
+> _dataType\* nameOfPointer_;
+
+or
+
+> _dataType \*nameOfPointer_;
+
+For example, to declare a pointer variable (called `ptr`) that points to an `int`, you would write:
+
+```cpp
+int* ptr; // Pointer to an int
+int *ptr; // Same as above but different style.
+```
+
+In this case, `ptr` stores the address of the first byte of a block of memory containing an `int`. To print this address to the screen, `printf()` is used like so:
+
+```cpp
+int x; // Create an int variable
+int* ptr = &x; // Pointer to that int (we'll dive into what "&" means in the coming exercises)
+printf("%p", ptr); // %p needed to instruct printf() that ptr is of type pointer
+```
+
+This will output a hexadecimal integer that represents the address in memory that is storing a variable of type `int`. This number will be different every time the program is executed.
+
+If we had another pointer named `ptr2` that doesn’t point to a declared variable, printing it will result in (`nil`) rather than a hexadecimal address:
+
+```cpp
+int* ptr2;
+printf("%p", ptr2); // Prints: (nil)
+```
+
+---
+
+```cpp
+#include<stdio.h>
+
+int main() {
+
+  // Checkpoint 1 code goes here.
+  double dblVar;
+
+  // Checkpoint 2 code goes here.
+  double *dblPtr = &dblVar;
+
+  // Checkpoint 3 code goes here.
+  printf("%p", dblPtr);
+
+}
+
+// Outputs: 0x7ffcf00236e8 (Address in memory)
+```
+
+## The Reference Operator
+
+Since pointers are used to store the memory address of a variable, we need to obtain this address first. This is done by using the reference operator (&). The syntax for this is:
+
+> &variableName;
+
+Consider the following piece of code:
+
+```cpp
+int x = 9;
+printf("%p", &x);
+```
+
+This will output to the screen the memory address of the variable `x`. To assign an address to a pointer, the following syntax is used:
+
+> pointer = &variableName;
+
+Consider the following example:
+
+```cpp
+int x = 727; // Declare variable x
+int* ptr = &x; // Declare a pointer to an int variable and assign to it the address of variable x
+printf("%p\n", &x); // Print the address of x
+printf("%p\n", ptr); // Print the address pointed to by ptr
+```
+
+The code above declares an integer variable `x` and an `int` pointer variable `ptr`. The pointer is then assigned the memory of the variable `x`. The last two `printf()` statements print this address; both lines will output the same hexadecimal number as they both refer to the same address in memory.
+
+The address a pointer contains is not constant. A pointer may be reassigned to a new address so long as type consistency is maintained (e.g., `int` pointer points to a variable of type `int`). Consider this example:
+
+```cpp
+int* ptr; // Declare pointer to an integer type
+
+int x = 3; // Declare variable x
+ptr = &x; // Assigns memory address of variable x to the pointer
+printf("%p\n", ptr); // Prints address of variable x
+
+int y = 14; // Declare variable y
+ptr = &y; // Reassigns the pointer to the memory address of variable y
+printf("%p\n", ptr); // Prints address of variable y
+```
+
+---
+
+```cpp
+#include<stdio.h>
+
+int main() {
+
+  double g = 9.81;
+  double pi = 3.14;
+
+  // Checkpoint 1 code goes here.
+  double *dblPtr = &g;
+
+  // Checkpoint 2 code goes here.
+  printf("%p\n", dblPtr);
+
+  // Checkpoint 3 code goes here.
+  dblPtr = &pi;
+
+}
+```
+
+## The Dereference Operator
+
+If we have a pointer that is assigned the memory address of a variable, eventually we will need to access the data that it contains so we can use or manipulate it. The data contained in the memory address pointed to by a pointer can be accessed using the dereference operator (\*). The syntax is as follows:
+
+> _\*pointerName;_
+
+Once a pointer is dereferenced, we can use its contents as we would a regular variable. It is important not to confuse this operator with the multiplication operator as they are represented by the same symbol!
+
+Here is a full example:
+
+```cpp
+int x = 4;
+int* ptr = &x; // ptr stores the memory address of variable x
+
+int y = *ptr; // Declare variable y and assign to it the data stored in memory pointed to by ptr, which is the value of variable x
+
+printf("%i", y);
+```
+
+The code above illustrates how to obtain the data stored in the address pointed to by `ptr` by dereferencing it. Since `ptr` stores the address of variable `x`, the value obtained by dereferencing `ptr` is the value of `x`. If the value of a dereferenced pointer is changed, the value of the corresponding variable will change in the same way:
+
+```cpp
+int x = 4;
+int *ptr = &x;
+
+*ptr = 200; // The data in the memory address pointed to by ptr now contains the value 200
+
+printf("%i", x); // This will output 200
+```
+
+---
+
+```cpp
+#include<stdio.h>
+
+int main() {
+
+  int k = 2000;
+  int* ptr = &k;
+
+  // Checkpoint 1 code goes here.
+  printf("%i\n", *ptr);
+
+  // Checkpoint 2 code goes here.
+  *ptr = 961;
+
+  printf("%i\n", k); // Notice how this variable changed value after Checkpoint 2!
+
+}
+```
+
+## Pointer Arithmetic
+
+Remember that a pointer is a special type of integer variable. This implies that basic arithmetic operations can be done on pointers. In this exercise, we will explore this idea.
+
+The only arithmetic operations allowed for pointers are addition and subtraction. Conceptually, adding to (or subtracting from) a pointer means the pointer will point to some new address. Multiplication is not allowed because the address of a byte of memory is usually a large number; therefore, multiplying an address may yield an even larger number, possibly representing an address outside the bounds of the available memory space. Division is not allowed as it potentially allows a pointer to illogically point to an address with a non-integer index.
+
+The addition operation for a pointer is only valid when adding an integer to a pointer; you cannot add two or more pointers together! The syntax is traditional addition illustrated by the following example (**here, `n` represents an integer**):
+
+```cpp
+pointer += n;
+```
+
+The important thing to note here is that adding `n` to a pointer does not increment the address to point to a value n bytes away. It moves the pointer by `n` \* (size of the data type in bytes). For example, if a pointer to an `int`, the size of which is four bytes, initially contains address 100 (we will use a decimal address for simplicity), and three is added to the pointer, the pointer will now point to address 112.
+
+Let’s take a look at how this works:
+
+```cpp
+int main() {
+  int* ptr;
+  ptr += 3; // Increment pointer by three blocks.
+}
+```
+
+This code increments the pointer `ptr` to store the address that is three `int` sizes away. Incrementing by one can be done in the following ways:
+
+```ccp
+pointer++;
+pointer += 1; // Same outcome with different syntax
+```
+
+Subtracting from a pointer behaves in the same way with the address being decremented instead of incremented.
+
+Pointers are very powerful and allow greater control over a program. But with great power comes great responsibility! Working with pointer arithmetic can be dangerous if used carelessly. If an attempt is made to increment (or decrement) a pointer beyond the bounds of the memory space of a program, a crash will occur. Pointers are so dangerous, that many high-level languages (such as Java) will not even allow such operations. Be careful!
+
+---
+
+```cpp
+#include<stdio.h>
+
+int main() {
+  double* ptr1;
+
+  // Code for Checkpoint 1 goes here:
+  ptr1 += 5;
+
+  // Code for Checkpoint 2 goes here:
+  ptr1 -= 4;
+
+}
+```
+
+## Pointers & Arrays
+
+In the lesson on arrays, you learned that an array is a contiguous block of memory reserved for many variables of the same type. Because of this structured organization, a pointer is well suited to work with this data type. If we have an integer array, we can use pointers and pointer arithmetic to iterate through the array to access or manipulate its values. This might seem like an overcomplicated way to work with arrays, but there are some advanced applications in which working with an array through a pointer is necessary.
+
+Consider an array of integers `arr`. Since arrays are contiguous blocks of memory, if we have a pointer to the first element, we can use pointer arithmetic to access the rest of the array. Keep in mind that while this is a valid way to work with arrays, it is unsafe. Accessing memory outside of the bounds of the array will not cause a program crash, but will silently corrupt data stored in those addresses. In the case of a read operation, it will return a random value.
+
+With caution in mind, let’s see how we can carefully access and manipulate elements in an array using pointers. The following code prints all of the elements of an array:
+
+```cpp
+int arr[10] = {2, 4, 7, 1, 10, 3, 11, 6, 20, 5};
+int* ptr = &arr[0]; // Pointer to the first element
+
+for(int i = 0; i < 10; i++){
+  printf("%i\n", *ptr); // Dereference the pointer and print the value
+  ptr++; // Increment the pointer to point to the next int in the array
+}
+```
+
+The following code illustrates how to change the values of an array using pointers by changing all the elements in an array to three:
+
+```cpp
+int arr[10] = {2, 4, 7, 1, 10, 3, 11, 6, 20, 5};
+int* ptr = &arr[0]; // Pointer to the first element
+
+for(int i = 0; i < 10; i++){
+  *ptr = 3; // Dereference the pointer and assign the value at the ptr address to three
+  ptr++; // Increment the pointer to point to the next int in the array
+}
+
+for(int i = 0; i < 10; i++){
+  printf("%i",arr[i]);
+}
+```
+
+The output of the code above will be a string of 10 threes. These techniques are also applicable to strings since they are arrays too. **It cannot be stressed enough: be very careful when working with pointers!**
+
+---
+
+```cpp
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+  int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  char s[] = "Farmer Jack realized that big yellow quilts were expensive!!";
+
+  // Code for Checkpoint 1 goes here.
+  int *ptr = &arr[sizeof(arr) / sizeof(int) - 1];
+
+  // Code for Checkpoint 2 goes here.
+  for (int i = sizeof(arr) / sizeof(int); i > 0 ; i--) {
+    printf("%d\n", *ptr);
+    ptr--;
+  }
+
+  // Code for Checkpoint 3 goes here.
+  char *ptr2 = &s[0];
+
+  // Code for Checkpoint 4 goes here.
+  for (int i = 0; i < strlen(s); i++) {
+    *ptr2 = '#';
+    ptr2++;
+  }
+
+  printf("%s\n", s);
+}
+```
