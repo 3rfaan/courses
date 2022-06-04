@@ -1453,3 +1453,111 @@ int main() {
   printf("%s\n", s);
 }
 ```
+
+## Memory Management
+
+| Function  | Use Case                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------- |
+| malloc()  | Use this function to reserve as many bytes as you want on the heap                                            |
+| calloc()  | Use this function to reserve memory for some number of ints, doubles, or any other data type.                 |
+| realloc() | Use this function to expand or contract a block of reserved memory (reserved by either malloc() or calloc()). |
+| free()    | Use this function to release previously allocated memory.                                                     |
+
+## Calling a Function
+
+```cpp
+#include <stdio.h>
+
+int main(int num1, int num2) {
+  // Write your code below
+  printf("My favorite numbers: %d, %d\n", num1, num2);
+
+}
+```
+
+## Library Functions
+
+C gives us access to many useful libraries that include many different functions for you to use. In order to have access to these functions you need to include header files like `<stdio.h>` and `<stdlib.h>`.
+
+You have already used `printf()` to output text to the console and learned about `abs()` to find the absolute value of an integer. Here are a few more functions we might use in your programs:
+
+- `ceil()`: takes any number as an argument, rounds it up to the nearest integer, and returns the integer.
+- `log()`: takes an integer as an argument and returns the natural logarithm of the given number.
+- `toupper()`: takes a `char` as an argument and returns the uppercase of any alphabetic character.
+- `isupper()`: takes a `char` as an argument and returns `1` if the character is an uppercase letter, `0` otherwise.
+
+```cpp
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(void) {
+  srand(time(NULL));
+
+  // Write your code below
+  int randomNumber = rand() % 20 + 1;
+  printf("%i", randomNumber);
+
+}
+```
+
+The `srand()` function is used to set the seed for the random number generator. The seed initializes the random generation and should be a number that changes over time. The `time()` function is used as the `srand()` argument to ensure that the seed is a different number every time the code is run. When passed the argument `NULL`, the `time()` function will return the number of seconds passed since the date, January 1, 1970.
+
+## Defining Functions
+
+```cpp
+#include <stdio.h>
+
+// Write your code below
+void printMyFavoriteAnimal(void) {
+  printf("My favorite animal is a tiger\n");
+}
+
+int main(void) {
+  printMyFavoriteAnimal();
+}
+```
+
+## Function Return Values
+
+```cpp
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Modiy the code below
+int getRandom1000() {
+  int random1000 = rand() % 1000 + 1;
+
+  return random1000;
+}
+
+int main(void) {
+  srand(time(NULL));
+
+  // Modify the code below
+  int randomNumber = getRandom1000();
+  printf("My random number is: %d", randomNumber);
+}
+```
+
+## Function Parameters
+
+```cpp
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Modify the code below
+int getRandomNumber(int maxNumber) {
+  int randomNumber = rand() % maxNumber + 1;
+  return randomNumber;
+}
+
+int main(void) {
+  srand(time(NULL));
+  // Modify the code below
+  int randomNumber = getRandomNumber(100);
+  printf("My random number is: %d", randomNumber);
+}
+```
