@@ -666,9 +666,9 @@ printf("%c\n", *(pointer + 8));
 // Output: T
 ```
 
-We successfully printed out the `char T` of the word `Three`.
+We successfully printed out the `char` **T** of the word `Three`.
 
-Now let's print the `char r` in the word `Three`:
+Now let's print the `char` **r** in the word `Three`:
 
 ```cpp
 printf("%c\n", *(pointer + 8 + 2));
