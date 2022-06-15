@@ -60,7 +60,7 @@ bool search(node_t *root, int data)
 int main()
 {
   node_t *root = NULL; // pointer to address of root node
-  int number;
+  int number;          // var to store user input of int
 
   root = insert(root, 15);
   root = insert(root, 10);
@@ -72,7 +72,7 @@ int main()
   printf("Enter number to be searched: ");
   scanf("%d", &number);
 
-  if (search(root, number) == true)
+  if (search(root, number))
   {
     printf("Found!\n");
   }
