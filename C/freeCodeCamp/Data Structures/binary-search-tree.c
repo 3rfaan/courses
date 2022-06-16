@@ -5,8 +5,7 @@
 typedef struct Node
 {
   int data;
-  struct Node *left;
-  struct Node *right;
+  struct Node *left, *right;
 } node_t;
 
 node_t *get_new_node(int data)
