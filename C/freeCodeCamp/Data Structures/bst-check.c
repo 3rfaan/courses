@@ -45,7 +45,7 @@ bool isBstUtil(node_t *root, int minVal, int maxVal)
     return true;
 
   // return true if BST, false otherwise
-  if (root->data < minVal && root->data > maxVal && isBstUtil(root->left, minVal, root->data) && isBstUtil(root->right, root->data, maxVal))
+  if (root->data > minVal && root->data < maxVal && isBstUtil(root->left, minVal, root->data) && isBstUtil(root->right, root->data, maxVal))
   {
     return true;
   }
