@@ -1,22 +1,3 @@
-/* K&R2, section 1.6 Arrays, exercise 1-13
-
-STATEMENT:
-write a programme to print a histogram of the lengths
-of words in ts input.
-
-
-METHOD to solve the problem:
-
-1.) we will create an array which will hold a number corresponding to
-how many times a that specific length occurs.
-
-2.) for simplicity, we will not consider words with length > 10. any words
-    having more than 10 characters will be discarded.
-
-3.) First we will attempt a horizontal histogram
-
-*/
-
 #include <stdio.h>
 
 #define MAXWORDLEN 10
