@@ -33,7 +33,7 @@ int main() {
     }
 
     for (i = 1; i <= MAXWORDLEN; ++i) {
-        printf("|%2d| ", i);
+        printf("%2d: ", i);
         for (j = 0; j < arr_of_len[i]; ++j)
             putchar('*');
 
