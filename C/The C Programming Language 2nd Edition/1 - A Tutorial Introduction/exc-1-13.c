@@ -12,8 +12,8 @@ int main(void) {
     int arr_of_len[MAXLEN + 1];
 
     c = EOF;
-    state = IN;
-    nc = 0; /* number of chars */
+    state = IN; /* declaring the char to be inside word in the beginning */
+    nc = 0;     /* number of chars */
 
     for (i = 0; i <= MAXLEN; i++) {
         arr_of_len[i] = 0;
