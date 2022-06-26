@@ -530,10 +530,11 @@ $ echo '~'
 
 ### Environment Variables
 
-| Var   | Description                                                 |
-| ----- | ----------------------------------------------------------- |
-| $PATH | Directories currently configured in system's $PATH variable |
-| $USER | Name of the current user                                    |
+| Var    | Description                                                 |
+| ------ | ----------------------------------------------------------- |
+| $PATH  | Directories currently configured in system's $PATH variable |
+| $USER  | Name of the current user                                    |
+| $SHELL | Path to the currently used shell                            |
 
 ### The star variable
 
