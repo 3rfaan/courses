@@ -467,3 +467,121 @@ Let's suppose we have a file of numbers and we want to find out how many _unique
 ```zsh
 $ sort -nu numbers.txt | wc -l
 ```
+
+## The `uniq` command
+
+Most likely used with the `sort` command. It reports or omits repeated lines.
+
+```zsh
+$ uniq file.txt
+```
+
+When used like this it will only remove _adjecent_ duplicate values!
+
+So it should mostly be used together with the `sort` command:
+
+```zsh
+$ sort file.txt | uniq
+```
+
+If we wanted to print out the words that have duplicates we can do this:
+
+```zsh
+$ sort file.txt | uniq -d
+```
+
+To display only non-duplicate lines we can use the `-u` flag:
+
+```zsh
+$ sort file.txt | uniq -u
+```
+
+### Count Duplicates
+
+To see a count of how many duplicates each word has in a file use the `-c` flag:
+
+```zsh
+$ sort file.txt | uniq -c
+```
+
+Putting it all together we can sort a list using `sort` then pipe it to `uniq -c` to get the counts of the duplicates and then pipe it again to sort it according to the count of the duplicates:
+
+```zsh
+$ sort file.txt | uniq -c | sort -nr
+```
+
+## Expansions
+
+There are special characters and syntax that the shell will interpret and expand into some other value.
+
+For example:
+
+```zsh
+$ echo ~
+/Users/arfanzubi
+```
+
+If we wanted to print the character `~` we have to do it like this:
+
+```zsh
+$ echo '~'
+~
+```
+
+### Environment Variables
+
+| Var   | Description                                                 |
+| ----- | ----------------------------------------------------------- |
+| $PATH | Directories currently configured in system's $PATH variable |
+| $USER | Name of the current user                                    |
+
+### The star variable
+
+The star variable will match anything.
+
+```zsh
+$ echo *
+```
+
+Will output anything in that directory.
+
+If we only wanted `.txt` files we can do it like this:
+
+```zsh
+$ ls -l *.txt
+```
+
+### The question mark variable
+
+The question mark will match any single character.
+
+```zsh
+$ echo *.??
+```
+
+This means we search for a file that ends with a dot and 2 characters.
+
+### Curly Braces
+
+Curly braces group together some values.
+
+For example we wanted to create three files named `a.txt`, `b.txt`, `c.txt`:
+
+```zsh
+$ echo {a, b, c}.txt
+a.txt b.txt c.txt
+```
+
+Or something more useful:
+
+```zsh
+$ touch app.{js, html, css, py}
+app.js app.html app.css app.py
+```
+
+This also works with numbers:
+
+```zsh
+$ echo Day{1..5}
+Day1 Day2 Day3 Day4 Day5
+```
