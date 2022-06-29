@@ -14,7 +14,7 @@ int main(void) {
     int wlengths[MAXWORDLEN + 1];  // word lengths
     int state;                     // inside or outside word
     int lcount;                    // letter count
-    int height;                    // height  of histogram
+    int height;                    // height of histogram
 
     state = IN;
     lcount = 0;
@@ -52,12 +52,12 @@ int main(void) {
         printf("%3d |", i);
         for (j = 1; j <= MAXWORDLEN; ++j) {
             if (wlengths[j] >= i)
-                printf(" # ");
+                printf(" 🁢 ");
             else
                 printf("   ");
         }
         if (wlengths[0] >= i)
-            printf(" # ");
+            printf(" 🁢 ");
         else
             printf("   ");
         putchar('\n');
