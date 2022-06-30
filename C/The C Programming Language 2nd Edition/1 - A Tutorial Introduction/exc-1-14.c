@@ -23,6 +23,7 @@ int main(void) {
         if (ccount[c - 33] >= height)
             height = ccount[c - 33];
     }
+    printf("\n\nHeight of Histogram: %d\n\n", height);
     for (i = height; i > 0; --i) {
         printf("%3d |", i);
         for (j = 0; j < NUMOFCHARS; ++j) {
