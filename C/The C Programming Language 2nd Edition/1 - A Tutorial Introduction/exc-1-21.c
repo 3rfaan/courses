@@ -7,7 +7,14 @@ number of tabs and blanks to achieve the same spacing. Use the same tab
 stops as for 'detab'. When either a tab or a single blank would suffice
 to reach a tab stop, which should be given preference? */
 
+void entab(void);
+
 int main(void) {
+    entab();
+    return 0;
+}
+
+void entab(void) {
     int c, blanks, tabs, pos;
 
     blanks = 0;  // # of blanks necessary
