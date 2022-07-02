@@ -29,7 +29,10 @@ int main(void) {
             if (c == '\t')
                 blanks = 0;
             else
-                for (; blanks > 0; --blanks) putchar(' ');
+                while (blanks > 0) {
+                    putchar(' ');
+                    --blanks;
+                }
             putchar(c);
             if (c == '\n')
                 pos = 0;
