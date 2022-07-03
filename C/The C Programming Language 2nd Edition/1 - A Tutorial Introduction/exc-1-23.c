@@ -6,8 +6,8 @@ C comments do not nest. */
 
 int main(void) {
     char c;
-    FILE* in = fopen("example.c", "r");
-    FILE* out = fopen("output.c", "w");
+    FILE* in = fopen("finput.c", "r");
+    FILE* out = fopen("foutput.c", "w");
 
     while ((c = fgetc(in)) != EOF) {
         if (c == '/') {
