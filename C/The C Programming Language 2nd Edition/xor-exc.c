@@ -13,12 +13,14 @@ int main(void) {
 /*
 Binary representation of
 
-4 = 0100
-3 = 0011
+a = 4 = 0100
+b = 3 = 0011
 
 XOR means exclusive OR operation. Which means if both operand digits are 1 then the output is 0 in the truth table.
 
-0100 ^ 0011 = 0111 = 7
+a = a ^ b
+a = 4 ^ 3
+a = 0100 ^ 0011 = 0111 = 7
 
 which means that
 
@@ -35,6 +37,8 @@ Then the third expression:
 a = a ^ b
 a = 7 ^ 4
 a = 0111 ^ 0100 = 0011 = 3
+
+So in the end a equals 3 (a = 3) and b equals 4 (b = 4).
 
 Output:
 
