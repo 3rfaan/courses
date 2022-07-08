@@ -3,12 +3,25 @@ position p set to the rightmost n bits of y, leaving the other bits unchanged */
 
 #include <stdio.h>
 
+int setbits(int x, int p, int n, int y);
+int setbitsV2(int x, int p, int n, int y);
+
+int main(void) {
+    int x = 178, y = 219;
+    int p = 7, n = 4;
+    int result = 0;
+
+    result = setbits(x, p, n, y);
+    printf("Result setbits:\t\t%d\n", result);
+    printf("Result setbitsV2:\t%d\n", setbitsV2(x, p, n, y));
+
+    return 0;
+}
+
 int setbits(int x, int p, int n, int y) {
     /*
-    x = 1011 0010
-    y = 1101 1011
-    p = 7
-    n = 4
+    x = 1011 0010, y = 1101 1011
+    p = 7, n = 4
     */
 
     // Setting 4 bits starting from position 7 to zero in x
@@ -47,16 +60,4 @@ int setbitsV2(int x, int p, int n, int y) {
     y = (y & mask) << (p - n);
 
     return x | y;
-}
-
-int main(void) {
-    int x = 178, y = 219;
-    int p = 7, n = 4;
-    int result = 0;
-
-    result = setbits(x, p, n, y);
-    printf("Result setbits:\t\t%d\n", result);
-    printf("Result setbitsV2:\t%d\n", setbitsV2(x, p, n, y));
-
-    return 0;
 }
