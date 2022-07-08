@@ -19,10 +19,7 @@ unsigned long htoi(const char s[]) {
     int i;
     unsigned long n;
 
-    i = 0;
-    n = 0;
-
-    for (i = 0; s[i] != '\0'; ++i) {
+    for (i = 0, n = 0; s[i] != '\0'; ++i) {
         int c = tolower(s[i]);
 
         if (c == '0' && tolower(s[i + 1]) == 'x')
