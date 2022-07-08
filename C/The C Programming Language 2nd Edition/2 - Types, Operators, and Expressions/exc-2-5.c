@@ -17,7 +17,7 @@ int any(const char s1[], const char s2[]) {
 
 int main(void) {
     const char s1[] = "Test";
-    const char s2[] = "es";
+    const char s2[] = "s";
 
     printf("First match on location: %d\n", any(s1, s2));
     return 0;
