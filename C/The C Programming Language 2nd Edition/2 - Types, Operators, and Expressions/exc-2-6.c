@@ -22,6 +22,8 @@ int setbits(int x, int p, int n, int y) {
     /*
     x = 1011 0010, y = 1101 1011
     p = 7, n = 4
+
+    Result should be: 1101 1010 (218)
     */
 
     // Setting 4 bits starting from position 7 to zero in x
