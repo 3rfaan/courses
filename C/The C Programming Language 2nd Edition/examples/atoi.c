@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <stdio.h>
 
-/* atoi: convert s to integer */
+/* atoi: convert s (ASCII) to integer */
 int atoi1(char s[]) {
     int i, n;
 
