@@ -18,6 +18,7 @@ int main(void) {
     return 0;
 }
 
+/* setbits: set n bits in x starting from position p to the rightmost n bits from y, leaving other bits unchanged */
 int setbits(int x, int p, int n, int y) {
     /*
     x = 1011 0010, y = 1101 1011
@@ -50,7 +51,7 @@ int setbits(int x, int p, int n, int y) {
     return result;
 }
 
-/* setbits version 2: All the above code can be consiced */
+/* setbits version 2: consiced version of above program*/
 int setbitsV2(int x, int p, int n, int y) {
     int mask = (~0) << p;
     int k = ~((~0) << (p - n));
