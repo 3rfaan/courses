@@ -10,5 +10,6 @@ int bitcount(unsigned x) {
 }
 
 int main(void) {
-    printf("%d\n", bitcount(5));  // 5 = 0000 0101
+    printf("%d\n", bitcount(5));    // 5 = 0000 0101 (2)
+    printf("%d\n", bitcount(255));  // 255 = 1111 1111 (8)
 }
