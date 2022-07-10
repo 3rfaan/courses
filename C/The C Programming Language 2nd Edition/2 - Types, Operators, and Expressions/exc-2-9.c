@@ -22,6 +22,8 @@ int bitcount(unsigned x) {
 
 /* Explanation: x &= (x-1)
 
+If x is odd, then (x-1) has the same bit representation as x except that the rightmost 1-bit is now a 0. In this case, (x & (x-1)) == (x-1). If x is even, then the representation of (x-1) has the rightmost zeros of x becoming ones and the rightmost one becoming a zero. Anding the two clears the rightmost 1-bit in x and all the rightmost 1-bits from (x-1).
+
 x = 5 = 0000 0101
 x &= (x - 1) ==> 5 &= 4 ==> 0000 0101 &= 0000 0100 ==> x = 0000 0101 & 0000 0100 ==> x = 0000 0100
 
