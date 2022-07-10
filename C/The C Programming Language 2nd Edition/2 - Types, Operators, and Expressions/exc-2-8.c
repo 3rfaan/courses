@@ -20,7 +20,7 @@ Pretending size of uint: 8 bits
 */
 
 int main(void) {
-    printf("UINT after rotating: %u\n", rightrot(229, 3));
+    printf("x after rotating: %u\n", rightrot(229, 3));
     return 0;
 }
 
