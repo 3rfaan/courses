@@ -7,7 +7,7 @@ char lower(char c);
 
 int main(void) {
     int i;
-    char s[] = "AaBbCcdDeE1234ZzyY";
+    const char s[] = "AaBbCcdDeE1234ZzyY";
 
     // single char
     printf("%c\n", lower('X'));
