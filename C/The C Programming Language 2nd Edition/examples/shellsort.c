@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 /* shellsort: sort v[0]...v[n-1] into increasing order */
 void shellsort(int v[], int n) {
     int gap, i, j, temp;
@@ -9,4 +11,14 @@ void shellsort(int v[], int n) {
                 v[j] = v[j + gap];
                 v[j + gap] = temp;
             }
+}
+
+int main(void) {
+    int v[] = {5, 4, 3, 2, 1}, n = 5, i;
+
+    shellsort(v, n);
+    for (i = 0; i < n; ++i) printf("%d ", v[i]);
+    if (i == n) putchar('\n');
+
+    return 0;
 }
