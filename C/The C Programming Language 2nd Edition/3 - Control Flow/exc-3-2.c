@@ -111,10 +111,12 @@ void unescape(char s[], char t[]) {
                         // If it's not one of the above escape sequences we don't translate it and instead just copy:
                         s[j++] = '\\';
                         s[j] = t[i];
+                        break;
                 }
                 break;
             default:
                 s[j] = t[i];
+                break;
         }
         ++i;
         ++j;
