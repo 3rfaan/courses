@@ -1,5 +1,26 @@
 #include <stdio.h>
 
+void shellsort(int v[], int n);
+void arrprint(int v[], int n);
+
+int main(void) {
+    int i, n;
+    int v[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+
+    n = sizeof(v) / sizeof(int);
+
+    printf("\nBefore Shellsort:\n\n");
+    arrprint(v, n);
+
+    shellsort(v, n);
+
+    printf("\nAfter Shellsort:\n\n");
+    arrprint(v, n);
+    putchar('\n');
+
+    return 0;
+}
+
 /* shellsort: sort v[0]...v[n-1] into increasing order */
 void shellsort(int v[], int n) {
     int gap, i, j, temp;
@@ -13,13 +34,10 @@ void shellsort(int v[], int n) {
             }
 }
 
-int main(void) {
-    int i, n = 5;
-    int v[] = {5, 4, 3, 2, 1};
+/* arrprint: print out array */
+void arrprint(int v[], int n) {
+    int i;
 
-    shellsort(v, n);
-    for (i = 0; i < n; ++i) printf("%d ", v[i]);
-    if (i == n) putchar('\n');
-
-    return 0;
+    for (i = 0; i < n; ++i) printf("%3d ", v[i]);
+    putchar('\n');
 }
