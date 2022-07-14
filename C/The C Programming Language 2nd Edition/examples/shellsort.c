@@ -14,7 +14,8 @@ void shellsort(int v[], int n) {
 }
 
 int main(void) {
-    int v[] = {5, 4, 3, 2, 1}, n = 5, i;
+    int i, n = 5;
+    int v[] = {5, 4, 3, 2, 1};
 
     shellsort(v, n);
     for (i = 0; i < n; ++i) printf("%d ", v[i]);
