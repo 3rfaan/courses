@@ -4,8 +4,9 @@ regardless of the machine on which it runs. */
 
 #include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+
+#define abs(x) ((x) < 0 ? -(x) : (x))
 
 void itoa(int n, char s[]);
 void reverse(char s[]);
@@ -28,7 +29,7 @@ void itoa(int n, char s[]) {
 
     do {
         s[i++] = abs(n % 10) + '0';
-    } while (n /= 10);
+    } while ((n /= 10) != 0);
 
     if (sign < 0) s[i++] = '-';
     s[i] = '\0';
