@@ -62,12 +62,12 @@ int getinput(char s[]) {
     int c, n, b;
 
     n = 0;
-    printf("Enter a Number:\n");
+    printf("\nEnter a Number: ");
     while ((c = getchar()) != EOF && c != '\n') {
         if (c >= '0' && c <= '9') n = 10 * n + (c - '0');
     }
     b = 0;
-    printf("Enter a Base:\n");
+    printf("\nEnter a Base: ");
     while ((c = getchar()) != EOF && c != '\n') {
         if (c >= '0' && c <= '9') b = 10 * b + (c - '0');
     }
