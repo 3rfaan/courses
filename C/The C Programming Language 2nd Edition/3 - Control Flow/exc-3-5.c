@@ -39,7 +39,7 @@ void itob(int n, char s[], int b) {
     do {
         j = n % b;
         s[i++] = (j <= 9) ? j + '0' : j + 'A' - 10;
-    } while ((n /= b) > 0);
+    } while ((n /= b) != 0);
 
     if (sign < 0)
         s[i++] = '-';
