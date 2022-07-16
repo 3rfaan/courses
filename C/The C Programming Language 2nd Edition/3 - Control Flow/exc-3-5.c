@@ -4,6 +4,7 @@ In particular, itob(n,s,16) fromats n as a hexadecimal integer in s. */
 #include <stdio.h>
 #include <string.h>
 
+#define MAXLEN 100
 #define ANSI_COLOR_YELLOW "\x1b[33m"
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -14,7 +15,7 @@ int getinput(char s[]);
 
 int main(void) {
     int l;
-    char s[100];
+    char s[MAXLEN];
 
     l = getinput(s);
 
