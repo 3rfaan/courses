@@ -4,14 +4,26 @@ In particular, itob(n,s,16) fromats n as a hexadecimal integer in s. */
 #include <stdio.h>
 #include <string.h>
 
+#define ANSI_COLOR_YELLOW "\x1b[33m"
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_RESET "\x1b[0m"
+
 void itob(int n, char s[], int b);
 void reverse(char s[]);
+int getinput(char s[]);
 
 int main(void) {
+    int l;
     char s[100];
 
-    itob(500, s, 2);
-    printf("%s\n", s);
+    l = getinput(s);
+
+    while (l == 0) {
+        printf("\n" ANSI_COLOR_RED "You entered invalid numbers. Try again!" ANSI_COLOR_RESET "\n\n");
+        l = getinput(s);
+    }
+    if (l == 1) printf("\n" ANSI_COLOR_YELLOW "Converted Value: %s" ANSI_COLOR_RESET "\n", s);
+    putchar('\n');
     return 0;
 }
 
@@ -41,5 +53,27 @@ void reverse(char s[]) {
 
     for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
         c = s[i], s[i] = s[j], s[j] = c;
+    }
+}
+
+/* getinput: get n and b to call function itob */
+int getinput(char s[]) {
+    int c, n, b;
+
+    n = 0;
+    printf("Enter a Number:\n");
+    while ((c = getchar()) != EOF && c != '\n') {
+        if (c >= '0' && c <= '9') n = 10 * n + (c - '0');
+    }
+    b = 0;
+    printf("Enter a Base:\n");
+    while ((c = getchar()) != EOF && c != '\n') {
+        if (c >= '0' && c <= '9') b = 10 * b + (c - '0');
+    }
+    if (n == 0 || b == 0)
+        return 0;
+    else {
+        itob(n, s, b);
+        return 1;
     }
 }
