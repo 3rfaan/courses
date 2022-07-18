@@ -1,22 +1,27 @@
-/* Given the basic framework, it's straightforward to extend the calculator.
-Add the modulus (%) operator and provisions for negative numbers. */
+/* Add commands to
+- print the top elemen of the stack without popping,
+- duplicate it,
+- and to swap the top two elements.
+Add a command to clear the stack */
 
 #include <ctype.h>
-#include <math.h>
+#include <math.h>  // for atof()
 #include <stdio.h>
-#include <stdlib.h>  // for atof()
+#include <stdlib.h>
 
 #define MAXOP 100   // max size of operand or operator
 #define MAXVAL 100  // maximum depth of val stack
 #define BUFSIZE 100
 #define NUMBER '0'  // signal that a number was found
 
+/* Global vars */
 int sp = 0;          // next free stack position
 double val[MAXVAL];  // value stack
 
-char buf[BUFSIZE];  // buffer for ungetch
 int bufp = 0;       // next free position in buf
+char buf[BUFSIZE];  // buffer for ungetch
 
+/* Function declarations */
 int getop(char[]);
 
 void push(double);
@@ -25,10 +30,12 @@ double pop(void);
 int getch(void);
 void ungetch(int);
 
+void clear(void);
+
 /* reverse Polish calculator */
 int main(void) {
     int type;
-    double op2;
+    double op1, op2;
     char s[MAXOP];
 
     while ((type = getop(s)) != EOF) {
@@ -53,17 +60,28 @@ int main(void) {
                 else
                     printf("Error: Zero Divisor\n");
                 break;
-            case '%':
+            case '?':  // print top element of stack
                 op2 = pop();
-                if (op2 != 0.0)
-                    push(fmod(pop(), op2));
-                else
-                    printf("Error: Zero Divisor\n");
+
+                push(op2);
+                break;
+            case 'c':  // clear the stack
+                clear();
+                break;
+            case 'd':  // duplicate top elem. of the stack
+                op2 = pop();
+                push(op2);
+                push(op2);
+                break;
+            case 's':  // swap the top two elements
+                op1 = pop();
+                op2 = pop();
+                push(op1);
+                push(op2);
                 break;
             case '\n':
                 printf("\t%.8g\n", pop());
                 break;
-
             default:
                 printf("Error: Unknown Command %s\n", s);
                 break;
@@ -76,22 +94,13 @@ int main(void) {
 int getop(char s[]) {
     int i, c;
 
+    i = 0;
     while ((s[0] = c = getch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
 
-    i = 0;
-    if (!isdigit(c) && c != '.' && c != '-')
-        return c;  // not a number
-    if (c == '-') {
-        if (isdigit(c = getch()) || c == '.')
-            s[++i] = c;  // negative number
-        else {
-            if (c != EOF)
-                ungetch(c);
-            return '-';  // minus sign
-        }
-    }
+    if (!isdigit(c) && c != '.')
+        return c;    // not a number
     if (isdigit(c))  // collect integer part
         while (isdigit(s[++i] = c = getch()))
             ;
@@ -132,4 +141,9 @@ void ungetch(int c) {
         printf("ungetch: Too many characters\n");
     else
         buf[bufp++] = c;
+}
+
+/* clear: clear the stack */
+void clear(void) {
+    sp = 0;
 }
