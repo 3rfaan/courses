@@ -1,5 +1,5 @@
 /* Add commands to
-- print the top elemen of the stack without popping,
+- print the top element of the stack without popping,
 - duplicate it,
 - and to swap the top two elements.
 Add a command to clear the stack */
