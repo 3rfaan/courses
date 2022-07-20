@@ -1,16 +1,15 @@
-/* Add access to library functions like sin, exp, and pow. See <math.h> in Appendix B, Section 4. */
+/* Add commands for handling variables. (It's easy to provide twenty-six variables with single-letter names.)
+Add a variable for the most recently printed value. */
 
 #include <ctype.h>
 #include <math.h>  // for atof()
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define MAXOP 100    // max size of operand or operator
 #define MAXVAL 100   // max depth of val stack
 #define BUFSIZE 100  // max size of buffer
 #define NUMBER '0'   // signal that a number was found
-#define NAME 'n'     // signal that a name was found
 
 /* Global vars */
 int sp = 0;          // next free stack position
@@ -22,23 +21,22 @@ char buf[BUFSIZE];  // buffer for ungetch
 int getop(char[]);
 void push(double);
 double pop(void);
-void mathfnc(char[]);
 int getch(void);
 void ungetch(int);
 
 /* reverse Polish calculator */
 int main(void) {
-    int type;
-    double op2;
+    int i, type, var = 0;
+    double op2, v;
     char s[MAXOP];
+    double variable[26];
 
+    for (i = 0; i < 26; i++)
+        variable[i] = 0.0;
     while ((type = getop(s)) != EOF) {
         switch (type) {
             case NUMBER:
                 push(atof(s));
-                break;
-            case NAME:
-                mathfnc(s);
                 break;
             case '+':
                 push(pop() + pop());
@@ -57,32 +55,31 @@ int main(void) {
                 else
                     printf("Error: Zero Divisor\n");
                 break;
+            case '=':
+                pop();
+                if (var >= 'A' && var <= 'Z')
+                    push(variable[var - 'A'] = pop());
+                else
+                    printf("Error: No Variable Name\n");
+                break;
+            case '?':
+                sp > 0 ? printf("There are %d item(s) in the stack\n", sp) : printf("Stack is empty\n");
             case '\n':
-                printf("\t%.8g\n", pop());
+                v = pop();
+                printf("\t%.8g\n", v);
                 break;
             default:
-                printf("Error: Unknown Command %s\n", s);
+                if (type >= 'A' && type <= 'Z')
+                    push(variable[type - 'A']);
+                else if (type == 'v')
+                    push(v);
+                else
+                    printf("Error: Unknown Command %s\n", s);
                 break;
         }
+        var = type;
     }
     return 0;
-}
-
-/* mathfnc: check string s for supported math functions */
-void mathfnc(char s[]) {
-    double op2;
-
-    if (strcmp(s, "sin") == 0)
-        push(sin(pop()));
-    else if (strcmp(s, "cos") == 0)
-        push(cos(pop()));
-    else if (strcmp(s, "exp") == 0)
-        push(exp(pop()));
-    else if (strcmp(s, "pow") == 0) {
-        op2 = pop();
-        push(pow(pop(), op2));
-    } else
-        printf("Error: %s not supported\n", s);
 }
 
 /* getop: get next operator, numeric operand, or math fnc */
@@ -94,16 +91,6 @@ int getop(char s[]) {
     s[1] = '\0';
 
     i = 0;
-    if (islower(c)) {  // command or NAME
-        while (islower(s[++i] = c = getch()))
-            ;
-        s[i] = '\0';
-        if (c != EOF) ungetch(c);  // went one char too far
-        if (strlen(s) > 1)
-            return NAME;  // >1 char; it is NAME
-        else
-            return c;  // it may be a command
-    }
     if (!isdigit(c) && c != '.') return c;  // not a number
     if (isdigit(c))
         while (isdigit(s[++i] = c = getch()))
