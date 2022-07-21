@@ -28,6 +28,8 @@ int main(void) {
     double op2;
     char s[MAXOP];
 
+    printf("\nPolish Reverse Calculator\n");
+    printf("*************************\n\n");
     while ((type = getop(s)) != EOF) {
         switch (type) {
             case NUMBER:
