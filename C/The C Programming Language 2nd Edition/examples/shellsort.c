@@ -4,7 +4,7 @@ void shellsort(int v[], int n);
 void arrprint(int v[], int n);
 
 int main(void) {
-    int i, n;
+    int n;
     int v[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 
     n = sizeof(v) / sizeof(int);
