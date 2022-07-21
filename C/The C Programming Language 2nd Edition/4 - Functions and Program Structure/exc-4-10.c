@@ -11,9 +11,9 @@ this approach. */
 #define MAXVAL 100   // maximum depth of val stack
 #define NUMBER '0'   // signal that a number was found
 
-int getop(char[]);
-int getl(char[], int);
-void push(double);
+int getop(char s[]);
+int getl(char line[], int limit);
+void push(double f);
 double pop(void);
 
 int li = 0;          // input line index
