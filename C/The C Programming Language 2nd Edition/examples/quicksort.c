@@ -13,7 +13,7 @@ int main(void) {
     printf("\nBefore Quicksort:\n\n");
     arrprint(arr, n);
 
-    qsort(arr, 0, 9);
+    qsort(arr, 0, n);
 
     printf("\nAfter Quicksort:\n\n");
     arrprint(arr, n);
