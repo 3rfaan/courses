@@ -1,5 +1,4 @@
-/* Write a recursive version of the function reverse(s), which reverses the string s
-in place. */
+/* Write a recursive version of the function reverse(s), which reverses the string s in place. */
 
 #include <stdio.h>
 #include <string.h>
