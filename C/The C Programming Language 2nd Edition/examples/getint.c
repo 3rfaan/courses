@@ -15,7 +15,6 @@ int main(void) {
     while ((status = getint(&num)) != EOF) {
         if (!status) {
             printf("Not a number\n");
-            break;
         } else {
             printf("N = %d\n", num);
             printf("N * 2 = %d\n", num * 2);
@@ -34,7 +33,6 @@ int getint(int *pn) {
     while (isspace(c = getch()))  // skip white space
         ;
     if (!isdigit(c) && c != EOF && c != '+' && c != '-') {
-        ungetch(c);  // it's not a number
         return 0;
     }
     sign = (c == '-') ? -1 : 1;
