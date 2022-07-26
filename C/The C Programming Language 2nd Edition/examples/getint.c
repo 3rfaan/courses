@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 #define BUFSIZE 100
+#define ANSI_COLOR_YELLOW "\x1b[33m"
+#define ANSI_COLOR_RESET "\x1b[0m"
 
 int getint(int *pn);
 int getch(void);
@@ -12,12 +14,15 @@ int main(void) {
     int num, status;
 
     while ((status = getint(&num)) != EOF) {
-        if (!status)
+        if (!status) {
             printf("Not a number\n");
-        else {
+            break;
+        } else {
             printf("N = %d\n", num);
             printf("N * 2 = %d\n", num * 2);
+            printf("Memory Address of num: " ANSI_COLOR_YELLOW "%p\n" ANSI_COLOR_RESET, &num);
         }
+        putchar('\n');
     }
     if (status == EOF) printf("End of file\n");
     return 0;
