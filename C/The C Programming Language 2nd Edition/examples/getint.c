@@ -11,22 +11,22 @@ void arrprint(int v[], int n);
 int main(void) {
     int num, status;
 
-    printf("Enter integer input to parse: ");
-    if ((status = getint(&num)) == EOF)
-        printf("End of file\n");
-    else if (!status)
-        printf("Not a number\n");
-    else {
-        printf("N = %d\n", num);
-        printf("N * 2 = %d\n", num * 2);
+    while ((status = getint(&num)) != EOF) {
+        if (!status)
+            printf("Not a number\n");
+        else {
+            printf("N = %d\n", num);
+            printf("N * 2 = %d\n", num * 2);
+        }
     }
+    if (status == EOF) printf("End of file\n");
     return 0;
 }
-
 /* getint: get next integer from input into *pn */
 int getint(int *pn) {
     int c, sign;
 
+    printf("Enter integer input to parse: ");
     while (isspace(c = getch()))  // skip white space
         ;
     if (!isdigit(c) && c != EOF && c != '+' && c != '-') {
