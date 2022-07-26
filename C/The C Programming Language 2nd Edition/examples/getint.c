@@ -8,7 +8,6 @@
 int getint(int *pn);
 int getch(void);
 void ungetch(int);
-void arrprint(int v[], int n);
 
 int main(void) {
     int num, status;
@@ -63,12 +62,4 @@ void ungetch(int c) {
         printf("ungetch: Too many characters\n");
     else
         buf[bufp++] = c;
-}
-
-/* arrprint: print out array */
-void arrprint(int v[], int n) {
-    int i;
-
-    for (i = 0; i < n; ++i) printf("%3d ", v[i]);
-    putchar('\n');
 }
