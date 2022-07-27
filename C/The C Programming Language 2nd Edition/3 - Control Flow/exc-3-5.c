@@ -23,6 +23,7 @@ int main(void) {
         printf("\n" ANSI_COLOR_RED "You entered invalid numbers. Try again!" ANSI_COLOR_RESET "\n\n");
         l = getinput(s);
     }
+    if (l == EOF) printf("\n\n*** End of File***\n");
     if (l == 1) printf("\n" ANSI_COLOR_YELLOW "Converted Value: %s" ANSI_COLOR_RESET "\n", s);
     putchar('\n');
     return 0;
@@ -33,15 +34,15 @@ void itob(int n, char s[], int b) {
     int i, j, sign;
 
     i = 0;
-
     if ((sign = n) < 0)
         n = -n;
-
     do {
         j = n % b;
         s[i++] = (j <= 9) ? j + '0' : (j - 10) + 'A';
     } while ((n /= b) != 0);
 
+    if (b == 2) s[i++] = 'b', s[i++] = '0';
+    if (b == 16) s[i++] = 'x', s[i++] = '0';
     if (sign < 0)
         s[i++] = '-';
     s[i] = '\0';
@@ -71,6 +72,7 @@ int getinput(char s[]) {
     while ((c = getchar()) != EOF && c != '\n') {
         if (c >= '0' && c <= '9') b = 10 * b + (c - '0');
     }
+    if (c == EOF) return EOF;
     if (n == 0 || b == 0)
         return 0;
     else {
