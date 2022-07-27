@@ -41,8 +41,17 @@ void itob(int n, char s[], int b) {
         s[i++] = (j <= 9) ? j + '0' : (j - 10) + 'A';
     } while ((n /= b) != 0);
 
-    if (b == 2) s[i++] = 'b', s[i++] = '0';
-    if (b == 16) s[i++] = 'x', s[i++] = '0';
+    switch (b) {
+        case 2:
+            s[i++] = 'b', s[i++] = '0';
+            break;
+        case 8:
+            s[i++] = 'o', s[i++] = '0';
+            break;
+        case 16:
+            s[i++] = 'x', s[i++] = '0';
+            break;
+    }
     if (sign < 0)
         s[i++] = '-';
     s[i] = '\0';
