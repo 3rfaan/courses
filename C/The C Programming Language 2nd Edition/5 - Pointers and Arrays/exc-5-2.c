@@ -41,7 +41,8 @@ int getfloat(float *pn) {
         return 0;
     }
     sign = (c == '-') ? -1 : 1;
-    if (c == '+' || c == '-') c = getch();
+    while (!isdigit(c) && c != EOF)
+        c = getch();
     for (*pn = 0.0; isdigit(c); c = getch())
         *pn = 10.0 * *pn + (c - '0');  // integer part
     if (c == '.')
