@@ -24,4 +24,5 @@ int main(void) {
         printf("Found a match at index: %d\n", n);
     else
         printf("No match found\n");
+    return 0;
 }
