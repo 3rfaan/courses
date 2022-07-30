@@ -9,6 +9,7 @@ int main(void) {
 
     itoa(15102021, s);
     printf("%s\n", s);
+    return 0;
 }
 
 /* itoa: convert n to characters in s; pointer version */
