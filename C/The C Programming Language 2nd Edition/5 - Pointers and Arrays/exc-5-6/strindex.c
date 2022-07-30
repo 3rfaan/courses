@@ -14,12 +14,12 @@ int strindex(char *s, char *t) {
 }
 
 int main(void) {
+    int n;
     char s[] = "This is a string";
     char *t = "string";
-    int res;
 
-    if ((res = strindex(s, t)) > 0)
-        printf("Found a match at index: %d\n", res);
+    if ((n = strindex(s, t)) > 0)
+        printf("Found a match at index: %d\n", n);
     else
         printf("No match found\n");
 }
