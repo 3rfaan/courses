@@ -63,10 +63,9 @@ int main(void) {
         putchar('\n');
     }
     printf("    +");
-    for (i = 0; i < MAXWORDLEN; ++i) {
+    for (i = 0; i <= MAXWORDLEN; ++i) {
         printf("---");
     }
-    printf("---");
     printf("\n    ");
     for (i = 1; i <= MAXWORDLEN; ++i) {
         printf("%3d", i);
