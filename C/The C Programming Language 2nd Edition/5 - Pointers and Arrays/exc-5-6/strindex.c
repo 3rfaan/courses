@@ -1,12 +1,14 @@
 #include <stdio.h>
 
 /* strindex: return index of t in s, -1 if none */
-int strindex(char *s, char *t) {
-    char *b = s;  // beginning of string s
-    char *p, *r;
+int strindex(const char *s, const char *t) {
+    const char *b = s;  // beginning of string s
+    const char *p, *r;
 
     while (*s++ != '\0') {
-        for (p = s, r = t; *r != '\0' && *p == *r; p++, r++)
+        p = s;
+        r = t;
+        while (*r != '\0' && *p++ == *r++)
             ;
         if (r > t && *r == '\0') return s - b;
     }
@@ -15,8 +17,8 @@ int strindex(char *s, char *t) {
 
 int main(void) {
     int n;
-    char s[] = "This is a string";
-    char *t = "string";
+    const char *s = "This is a string";
+    const char *t = "string";
 
     if ((n = strindex(s, t)) > 0)
         printf("Found a match at index: %d\n", n);
