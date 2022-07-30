@@ -12,8 +12,8 @@ void strncat_m(char *, char *, int);
 int strncmp_m(char *, char *, int);
 
 int main(void) {
-    char s[MAX] = "This is a String";
-    char *t = "This";
+    char s[MAX] = "Arfan";
+    char *t = "Zubi";
 
     strncpy_m(s, t, 5);
     printf("strncpy -> s = \"%s\"\n", s);
