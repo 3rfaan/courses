@@ -8,6 +8,7 @@ int strindex(const char *s, const char *t) {
     while (*s++ != '\0') {
         p = s;
         r = t;
+
         while (*r != '\0' && *p++ == *r++)
             ;
         if (r > t && *r == '\0') return s - b;
