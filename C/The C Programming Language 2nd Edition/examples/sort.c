@@ -90,7 +90,7 @@ void qsort(char *v[], int left, int right) {
     int i, last;
 
     if (left >= right) return;
-    swap(v, left, (left + right / 2));
+    swap(v, left, (left + right) / 2);
     last = left;
     for (i = left + 1; i <= right; i++)
         if (strcmp(v[i], v[left]) < 0)
