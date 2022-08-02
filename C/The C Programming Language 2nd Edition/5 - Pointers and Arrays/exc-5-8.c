@@ -13,10 +13,10 @@ int main(void) {
 
     y = 2022, m = 8, d = 1;
     yearday = day_of_year(y, m, d);
-    printf("%02d.%02d.%d is the %dth of the year\n", d, m, y, yearday);
+    printf("\n%02d.%02d.%d is the %dth of the year\n", d, m, y, yearday);
 
     month_day(y, yearday, &m, &d);
-    printf("The %dth day in this year equals: %02d.%02d.%d\n", yearday, d, m, y);
+    printf("The %dth day in this year equals: %02d.%02d.%d\n\n", yearday, d, m, y);
 
     return 0;
 }
