@@ -41,7 +41,7 @@ void month_day(int year, int yearday, int *pmonth, int *pday) {
     char *p;
 
     leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
-    p = daytab[leap];
+    p = daytab[leap];       // same as *(daytab + leap)
     while (yearday > *++p)
         yearday -= *p;
     *pmonth = p - *(daytab + leap);
