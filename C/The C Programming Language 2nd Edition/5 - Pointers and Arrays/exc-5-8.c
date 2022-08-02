@@ -18,7 +18,7 @@ int main(void) {
     printf("\n%02d.%02d.%d is the %dth of the year\n", d, m, y, yearday);
 
     month_day(y, yearday, &m, &d);
-    printf("The %dth day in this year equals: %02d.%02d.%d\n\n", yearday, d, m, y);
+    printf("The %dth day in the year %d equals: %02d.%02d.%d\n\n", yearday, y, d, m, y);
 
     return 0;
 }
