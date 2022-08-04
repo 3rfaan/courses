@@ -6,8 +6,6 @@ char *month_name(int);
 int getch(void);
 void ungetch(int);
 
-char buf = 0;
-
 int main(void) {
     int num, status;
 
@@ -50,6 +48,8 @@ char *month_name(int n) {
 
     return (n < 1 || n > 12) ? name[0] : name[n];
 }
+
+char buf = 0;
 
 /* getch: get a (possibly pushed back) character */
 int getch(void) {
