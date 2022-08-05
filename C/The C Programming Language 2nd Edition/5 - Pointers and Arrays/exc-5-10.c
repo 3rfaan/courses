@@ -14,9 +14,9 @@ expr 2 3 4 + * evaluates 2 x (3 + 4) */
 #define NUMBER '0'   // signal that a number was found
 
 int getop(char[]);
-void ungets(char[]);
 
 int getch(void);
+void ungets(char[]);
 void ungetch(int);
 
 void push(double);
@@ -81,19 +81,19 @@ int getop(char* s) {
     return NUMBER;
 }
 
-/* ungets: push string back onto the input */
-void ungets(char s[]) {
-    int len = strlen(s);
-
-    while (len > 0) ungetch(s[--len]);
-}
-
 static char buf[BUFSIZE];  // buffer for ungetch
 static int bufp = 0;       // next free position in buf
 
 /* getch: get a (possibly pushed back) character */
 int getch(void) {
     return (bufp > 0) ? buf[--bufp] : getchar();
+}
+
+/* ungets: push string back onto the input */
+void ungets(char s[]) {
+    int len = strlen(s);
+
+    while (len > 0) ungetch(s[--len]);
 }
 
 /* ungetch: push character back on input */
