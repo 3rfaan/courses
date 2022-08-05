@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     double op2;
 
     while (--argc > 0) {
-        ungetch(' ');     // push end of argument
+        ungets(" ");      // push end of argument
         ungets(*++argv);  // push an argument
 
         switch (getop(s)) {
