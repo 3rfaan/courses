@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     int found = 0;
 
     if (argc != 2)
-        printf("Usage: Find pattern\n");
+        printf("Usage: find <pattern>\n");
     else
         while (getl(line, MAXLINE) > 0)
             if (strstr(line, argv[1]) != NULL) {
