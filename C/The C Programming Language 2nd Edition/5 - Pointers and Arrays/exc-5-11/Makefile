@@ -1,5 +1,5 @@
-prog: main.o settab.o entab.o tabpos.o
-	gcc -o prog main.o settab.o entab.o tabpos.o
+prog: main.o settab.o entab.o tabpos.o detab.o
+	gcc -o prog main.o settab.o entab.o tabpos.o detab.o
 
 main.o: main.c
 	gcc -c main.c
@@ -12,3 +12,6 @@ entab.o: entab.c
 
 tabpos.o: tabpos.c
 	gcc -c tabpos.c
+
+detab.o: detab.c
+	gcc -c detab.c
