@@ -9,6 +9,15 @@ void swap(int *px, int *py) {
     *py = temp;
 }
 
+/* vswap: interchange i and j; void pointer */
+void vswap(void *v[], int i, int j) {
+    void *temp;
+
+    temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
 int main(void) {
     int x = 1;
     int y = 10;
