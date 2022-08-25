@@ -214,6 +214,8 @@ printf("%d", sizeof(int));
 
 Range is the upper and lower limit of some set of data.
 
+$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$
+
 For example: $\{0,1,2,3,4\}$ is **Range: 0 to 4**.
 
 ## Prerequisites
@@ -273,6 +275,3 @@ If the machine support 4 bytes (32 bits) then we have the following ranges:
 **Unsigned range**: $0$ to $4294967295$ (by applying: $2^n-1$)
 
 **Signed range**: $-2147483648$ to $2147483647$
-
-When $a \ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are
-$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
