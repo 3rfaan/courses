@@ -251,7 +251,9 @@ Maximum value = 15 (1111)
 
 **Range of 4-bit data**: 0 (0000) to 15 (1111)
 
-Formula: $2^n-1$
+Formula:
+
+$2^n-1$
 
 $2^4 - 1 = 15$
 
