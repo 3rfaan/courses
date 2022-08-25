@@ -228,7 +228,7 @@ For example the number **568** in the _base10_ system:
 | ------ | ------ | ------ |
 | $10^2$ | $10^1$ | $10^0$ |
 
-$ 10^2 \times 5 + 10^1 \times 6 + 10^0 \times 8 = 500 + 60 + 8 = 568 $
+$10^2 \times 5 + 10^1 \times 6 + 10^0 \times 8 = 500 + 60 + 8 = 568$
 
 **Binary Number System**: Machine understandable number system. Also called as _base2_ number system.
 
@@ -240,7 +240,7 @@ For example the number **12** (1100) in the _base2_ system:
 | ----- | ----- | ----- | ----- |
 | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
 
-$2^3 \times 1 + 2^2 \times 1 + 2^1 \times 0 + 2^0 \times 0 = 8 + 4 + 0 + 0 = 12$
+$`2^3 \times 1 + 2^2 \times 1 + 2^1 \times 0 + 2^0 \times 0 = 8 + 4 + 0 + 0 = 12`$
 
 ## Range of 4-bit Data?
 
