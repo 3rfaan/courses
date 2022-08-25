@@ -214,9 +214,7 @@ printf("%d", sizeof(int));
 
 Range is the upper and lower limit of some set of data.
 
-$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$
-
-For example: $\{0,1,2,3,4\}$ is **Range: 0 to 4**.
+For example: {0,1,2,3,4} is **Range: 0 to 4**.
 
 ## Prerequisites
 
