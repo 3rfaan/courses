@@ -251,11 +251,9 @@ Maximum value = 15 (1111)
 
 **Range of 4-bit data**: 0 (0000) to 15 (1111)
 
-Formula:
+Formula: $2^n-1$
 
-$2^n-1$
-
-$2^4 - 1 = 15$
+$2^4-1=15$
 
 ## Range of Integer
 
@@ -275,3 +273,6 @@ If the machine support 4 bytes (32 bits) then we have the following ranges:
 **Unsigned range**: $0$ to $4294967295$ (by applying: $2^n-1$)
 
 **Signed range**: $-2147483648$ to $2147483647$
+
+When $a \ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
