@@ -214,7 +214,7 @@ printf("%d", sizeof(int));
 
 Range is the upper and lower limit of some set of data.
 
-For example: $\{0, 1, 2, 3, 4\}$ is **Range: 0 to 4**.
+For example: $\{0,1,2,3,4\}$ is **Range: 0 to 4**.
 
 ## Prerequisites
 
@@ -228,7 +228,7 @@ For example the number **568** in the _base10_ system:
 | ------ | ------ | ------ |
 | $10^2$ | $10^1$ | $10^0$ |
 
-$10^2 \times 5 + 10^1 \times 6 + 10^0 \times 8 = 500 + 60 + 8 = 568$
+$10^2\times5+10^1\times6+10^0\times8=500+60+8=568$
 
 **Binary Number System**: Machine understandable number system. Also called as _base2_ number system.
 
@@ -240,7 +240,7 @@ For example the number **12** (1100) in the _base2_ system:
 | ----- | ----- | ----- | ----- |
 | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
 
-$2^3 \times 1 + 2^2 \times 1 + 2^1 \times 0 + 2^0 \times 0 = 8 + 4 + 0 + 0 = 12$
+$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$
 
 ## Range of 4-bit Data?
 
@@ -251,7 +251,7 @@ Maximum value = 15 (1111)
 
 **Range of 4-bit data**: 0 (0000) to 15 (1111)
 
-Formula: $2^n - 1$
+Formula: $2^n-1$
 
 $2^4 - 1 = 15$
 
