@@ -272,4 +272,4 @@ If the machine support 4 bytes (32 bits) then we have the following ranges:
 
 **Unsigned range**: $0$ to $4294967295$ (by applying: $2^n-1$)
 
-**Signed range**: $-2147483648$ to $2147483647$
+**Signed range**: ${-2147483648}$ to $2147483647$
