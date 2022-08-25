@@ -242,7 +242,9 @@ For example the number **12** (1100) in the _base2_ system:
 | ----- | ----- | ----- | ----- |
 | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
 
-$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$
+This can be written as:
+
+$$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$$
 
 ## Range of 4-bit Data?
 
@@ -253,7 +255,7 @@ Maximum value = 15 (1111)
 
 **Range of 4-bit data**: 0 (0000) to 15 (1111)
 
-Formula: $2^n-1$
+Formula is $2^n-1$
 
 $2^4-1=15$
 
