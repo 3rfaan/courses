@@ -230,7 +230,7 @@ For example the number **568** in the _base10_ system:
 
 This translates as:
 
-$10^2\times5+10^1\times6+10^0\times8=500+60+8=568$
+$$10^2\times5+10^1\times6+10^0\times8=500+60+8=568$$
 
 **Binary Number System**: Machine understandable number system. Also called as _base2_ number system.
 
