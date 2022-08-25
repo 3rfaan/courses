@@ -228,7 +228,7 @@ For example the number **568** in the _base10_ system:
 | ------ | ------ | ------ |
 | $10^2$ | $10^1$ | $10^0$ |
 
-$10^2 \times 5 + 10^1 \times 6 + 10^0 \times 8 = 500 + 60 + 8 = 568$
+$ 10^2 \times 5 + 10^1 \times 6 + 10^0 \times 8 = 500 + 60 + 8 = 568 $
 
 **Binary Number System**: Machine understandable number system. Also called as _base2_ number system.
 
@@ -272,4 +272,4 @@ If the machine support 4 bytes (32 bits) then we have the following ranges:
 
 **Unsigned range**: $0$ to $4294967295$ (by applying: $2^n-1$)
 
-**Signed range**: ${-2147483648}$ to $2147483647$
+**Signed range**: $-2147483648$ to $2147483647$
