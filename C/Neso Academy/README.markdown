@@ -250,7 +250,8 @@ $$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$$
 
 **4-bit data**:
 
-Minimum value = 0 (0000)<br/>
+Minimum value = 0 (0000)
+
 Maximum value = 15 (1111)
 
 **Range of 4-bit data**: 0 (0000) to 15 (1111)
@@ -265,7 +266,8 @@ If an integer in a system is 2 bytes (16 bits) then applying the above formula w
 
 **Unsigned range**: 0 to 65535 ($2^{16} - 1$)
 
-**Signed range**: -32768 to 32767<br/>
+**Signed range**: -32768 to 32767
+
 **2's complement range**: $-(2^{n-1})$ to $(2^{n-1}-1)$
 
 If the machine support 4 bytes (32 bits) then we have the following ranges:
