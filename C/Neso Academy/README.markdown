@@ -259,16 +259,12 @@ Formula is: $$2^n-1$$
 
 ## Range of Integer
 
-### 2 Bytes
-
 If an integer in a system is 2 bytes (16 bits) then applying the above formula will result in:
 
 **Unsigned range**: 0 to 65535 (2^16 - 1)
 
 **Signed range**: -32768 to 32767<br/>
 **2's complement range**: $-(2^{n-1})$ to $(2^{n-1}-1)$
-
-### 4 Bytes
 
 If the machine support 4 bytes (32 bits) then we have the following ranges:
 
