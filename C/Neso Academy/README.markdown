@@ -268,9 +268,7 @@ If an integer in a system is 2 bytes (16 bits) then applying the above formula w
 
 **Signed range**: -32768 to 32767
 
-**2's complement range**:
-
-$-(2^{n-1})$ to $(2^{n-1}-1)$
+**2's complement range**: $-(2^{n-1})$ to $(2^{n-1}-1)$
 
 If the machine support 4 bytes (32 bits) then we have the following ranges:
 
