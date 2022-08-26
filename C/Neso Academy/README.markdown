@@ -255,20 +255,18 @@ Maximum value = 15 (1111)
 
 **Range of 4-bit data**: 0 (0000) to 15 (1111)
 
-Formula is $2^n-1$
-
-$2^4-1=15$
+Formula is: $$2^n-1$$
 
 ## Range of Integer
 
 ### 2 Bytes
 
-If an integer in a system is 2 bytes (16 bits) then applying the above formula ($2^n - 1$) will result in:
+If an integer in a system is 2 bytes (16 bits) then applying the above formula will result in:
 
-**Unsigned range**: $0$ to $65535$ ($2^{16} - 1$)
+**Unsigned range**: 0 to 65535 (2^16 - 1)
 
-**Signed range**: $-32768$ to $32767$<br/>
-**2's complement range**: $-(2^{n-1})$ to $+(2^{n-1}-1$)
+**Signed range**: -32768 to 32767<br/>
+**2's complement range**: $-(2^{n-1})$ to $(2^{n-1}-1)$
 
 ### 4 Bytes
 
