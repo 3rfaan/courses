@@ -272,6 +272,6 @@ If an integer in a system is 2 bytes (16 bits) then applying the above formula w
 
 If the machine support 4 bytes (32 bits) then we have the following ranges:
 
-**Unsigned range**: $0$ to $4294967295$ (by applying: $2^n-1$)
+**Unsigned range**: 0 to 4294967295 (by applying: $2^n-1$)
 
-**Signed range**: $-2147483648$ to $2147483647$
+**Signed range**: -2147483648 to 2147483647
