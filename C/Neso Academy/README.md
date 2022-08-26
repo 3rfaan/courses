@@ -246,7 +246,7 @@ This can be written as:
 
 $$2^3\times1+2^2\times1+2^1\times0+2^0\times0=8+4+0+0=12$$
 
-## Range of 4-bit Data?
+## Range of 4-bit Data
 
 **4-bit data**:
 
