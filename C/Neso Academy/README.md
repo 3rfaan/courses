@@ -591,7 +591,7 @@ The output will be:
 ü
 ```
 
-If we changed the value of `var` to be **-127** the output will be the same: `ü`.
+If we changed the value of `var` to be **-127** the output will be the same: `ü` because the binary representation of **-127** and **129** is exactly the same: `1000 0001`.
 
 ## Summary
 
