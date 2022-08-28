@@ -485,3 +485,119 @@ In a 32-bit architecture the unsigned range is from **0** to **4294967295**.
 If we exceed **4294967295** we start back at **0**.
 
 In signed range of 32-bit it is from **-2147483648** to **2147483647**. So if we exceed **2147483647** we start again at **-2147483648**.
+
+# Fundamental Data Types - Character
+
+## Outline
+
+1. Brief overview on character data type
+2. Size of characters
+3. Range of characters
+4. Difference between signed and unsigned characters
+
+## Overview
+
+Binary representation of characters in the word **"HELLO!"**:
+
+| Character | Binary     |
+| --------- | ---------- |
+| H         | `01001000` |
+| E         | `01100101` |
+| L         | `01101100` |
+| L         | `01101100` |
+| O         | `01101111` |
+| !         | `00100001` |
+
+The computer uses internally **ASCII** to encode characters from a decimal number which is represented in binary.
+
+Here is how we declare and define a character variable:
+
+```c
+char var_name = 'A';
+```
+
+A character has to be surrounded by single quotes (`'`) and a `char` variable can only hold one character representing one byte.
+
+We can also assign integer values to a `char` variable:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  char var = 65;
+
+  printf("%c", var);
+  return 0;
+}
+```
+
+This will output:
+
+```bash
+A
+```
+
+Note that we use `%c` in the `printf()` function for characters.
+
+## Size and Range of Character
+
+**Size**: 1 byte = 8 bits
+
+| U/S      | Range       |
+| -------- | ----------- |
+| Unsigned | 0 to 255    |
+| Signed   | -128 to 127 |
+
+## Signed vs Unsigned
+
+In **2's complement** the most significant byte (on the far left) represents a negative value if the type is `signed`.
+
+| №    | $-2^7$ | $2^6$ | $2^5$ | $2^4$ | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
+| ---- | ------ | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| -126 | 1      | 0     | 0     | 0     | 0     | 0     | 1     | 0     |
+| -127 | 1      | 0     | 0     | 0     | 0     | 0     | 0     | 1     |
+| -128 | 1      | 0     | 0     | 0     | 0     | 0     | 0     | 0     |
+
+| №   | $2^7$ | $2^6$ | $2^5$ | $2^4$ | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
+| --- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| 128 | 1     | 0     | 0     | 0     | 0     | 0     | 0     | 0     |
+| 129 | 1     | 0     | 0     | 0     | 0     | 0     | 0     | 1     |
+| 130 | 1     | 0     | 0     | 0     | 0     | 0     | 1     | 0     |
+
+To represent the range of a character in binary:
+
+| №   | $-2^7$ | $2^6$ | $2^5$ | $2^4$ | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
+| --- | ------ | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| -1  | 1      | 1     | 1     | 1     | 1     | 1     | 1     | 1     |
+
+| №   | $2^7$ | $2^6$ | $2^5$ | $2^4$ | $2^3$ | $2^2$ | $2^1$ | $2^0$ |
+| --- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| 255 | 1     | 1     | 1     | 1     | 1     | 1     | 1     | 1     |
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  char var = 129;
+
+  printf("%c", var);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+ü
+```
+
+If we changed the value of `var` to be **-127** the output will be the same: `ü`.
+
+## Summary
+
+1. Size of character = 1 bytes
+2. Signed character range: -128 to 127
+3. Unsigned character range: 0 to 255
+4. Negative values won't buy you any additional powers
+5. In traditional ASCII table, each character requires 7 bits
+6. In extended ASCII table, each character utilize 8 bits
