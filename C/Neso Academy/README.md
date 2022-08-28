@@ -262,6 +262,8 @@ $$2^n-1$$
 
 ## Range of Integer
 
+### 2 Bytes
+
 If an integer in a system is 2 bytes (16 bits) then applying the above formula will result in:
 
 **Unsigned range**: 0 to 65535 $(2^{16}-1)$
@@ -270,8 +272,144 @@ If an integer in a system is 2 bytes (16 bits) then applying the above formula w
 
 **2's complement range**: $-(2^{n-1})$ to $(2^{n-1}-1)$
 
+### 4 Bytes
+
 If the machine support 4 bytes (32 bits) then we have the following ranges:
 
-**Unsigned range**: 0 to 4294967295 (by applying: $2^n-1$)
+**Unsigned range**: 0 to 4294967295 (by applying: $2^{32}-1$)
 
 **Signed range**: -2147483648 to 2147483647
+
+**2's complement range**: $-(2^{n-1})$ to $(2^{n-1}-1)$
+
+## `long` and `short`
+
+If integer is 4 bytes, `short int` may be 2 bytes.
+
+```c
+printf("%d", sizeof(short int)); // Output: 2
+```
+
+If integer is 4 bytes, `long int` may be 8 bytes.
+
+```c
+printf("%d", sizeof(long int)); // Output: 8
+```
+
+What is _always_ guaranteed:
+
+$$sizeof(short) <= sizeof(int) <= sizeof(long)$$
+
+**Note**: By default, a variable declares as `int var_name` is a `signed` integer variable, while `unsigned int var_name` allows only positive values.
+
+### Examples
+
+#### Signed Integer
+
+```c
+#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+  int var1 = INT_MIN;
+  int var2 = INT_MAX;
+
+  printf("Range of signed integer is from: %d to %d", var1, var2);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+Range of signed integer is from: -2147483648 to 2147483647
+```
+
+The header file `limits.h` consists of some symbolic constants that are useful in determining the minimum as well as the maximum values of any data type according to the system.
+
+#### Unsigned Integer
+
+```c
+#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+  unsigned int var1 = 0;
+  unsigned int var2 = UINT_MAX;
+
+  printf("Range of unsigned integer is from: %u to %u", var1, var2);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+Range of unsigned integer is from 0 to 4294967295
+```
+
+This will show the range of an `unsigned` integer.
+
+#### Short Signed Integer
+
+```c
+#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+  short int var1 = SHRT_MIN;
+  short int var2 = SHRT_MAX;
+
+  printf("Range of short signed integer is from: %d to %d", var1, var2);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+Range of short signed integer is from -32768 to 32767
+```
+
+#### Short Unsigned Integer
+
+```c
+#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+  unsigned short int var1 = 0;
+  unsigned short int var2 = USHRT_MAX;
+
+  printf("Range of short unsigned integer is from: %u to %u", var1, var2);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+Range of short unsigned integer is from 0 to 65535
+```
+
+For `long` integers use in `printf()` the placeholder `%ld` and for `unsigned long` integers `%lu`.
+
+### `long long` Integers
+
+| Type            | Size    |
+| --------------- | ------- |
+| `long int`      | 4 bytes |
+| `long long int` | 8 bytes |
+
+The maximum limit is 8 bytes!
+
+## Summary
+
+1. `sizeof(short) <= sizeof(int) <= sizeof(long)`
+2. Writing `signed int var_name` is equivalent to `int var_name`
+3. `%d` is used to print `signed int`
+4. `%u` is used to print `unsigned int`
+5. `%ld` is used to print `long int` which is equivalent to `signed long int`
+6. `%lu` is used to print `unsigned long int`
+7. `%lld` is used to print `long long int`
+8. `%llu` is used to print `unsigned long long int`
