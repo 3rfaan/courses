@@ -456,3 +456,28 @@ If we add 1 to the value of var the output will be **0**.
 | 1     | 0     | 1     | **5** |
 | 1     | 1     | 0     | **6** |
 | 1     | 1     | 1     | **7** |
+
+If we wanted to represent the number **8**, the binary would be `1 0 0 0` but in a 3-bit range the 1 in `1 0 0 0` would not be considered which leaves the binary representation of `0 0 0` which equals **0**.
+The same logic applies to **9** `1 0 0 1` -> `0 0 1` = **1** and every other following number.
+
+The formula in the case of 3-bit representation is:
+
+$$\mod 2^3$$
+
+- 1 % 8 = 1
+- 2 % 8 = 2
+- 3 % 8 = 3
+- ...
+- 8 % 8 = 0
+- 9 % 8 = 1
+
+For 32-bit unsigned data -> $\mod 2^{32}$
+
+For n-bit unsigned data -> $\mod 2^n$
+
+## Signed-Unsigned Range Representation
+
+In a 32-bit architecture the unsigned range is from **0** to **4294967295**.
+If we exceed **4294967295** we start back at **0**.
+
+In signed range of 32-bit it is from **-2147483648** to **2147483647**. So if we exceed **2147483647** we start again at **-2147483648**.
