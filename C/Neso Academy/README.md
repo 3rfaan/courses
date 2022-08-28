@@ -471,9 +471,11 @@ $$\mod 2^3$$
 - 8 % 8 = 0
 - 9 % 8 = 1
 
-For 32-bit unsigned data -> $\mod 2^{32}$
+For 32-bit unsigned data
+$$\mod 2^{32}$$
 
-For n-bit unsigned data -> $\mod 2^n$
+For n-bit unsigned data
+$$\mod 2^n$$
 
 ## Signed-Unsigned Range Representation
 
