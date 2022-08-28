@@ -413,3 +413,46 @@ The maximum limit is 8 bytes!
 6. `%lu` is used to print `unsigned long int`
 7. `%lld` is used to print `long long int`
 8. `%llu` is used to print `unsigned long long int`
+
+# Exceeding the Valid Range of Data Types
+
+## Outline
+
+1. Exceeding the unsigned range
+2. Exceeding the signed range
+
+## Example
+
+The number **4294967295** is the maximum value for assigning to a `unsigned int` variable.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  unsigned int var = 4294967295;
+
+  printf("%u", var);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+4294967295
+```
+
+If we add 1 to the value of var the output will be **0**.
+
+## 3-bit Unsigned Range
+
+| $2^2$ | $2^1$ | $2^0$ | 3-bit |
+| ----- | ----- | ----- | ----- |
+| 0     | 0     | 0     | **0** |
+| 0     | 0     | 1     | **1** |
+| 0     | 1     | 0     | **2** |
+| 0     | 1     | 1     | **3** |
+| 1     | 0     | 0     | **4** |
+| 1     | 0     | 1     | **5** |
+| 1     | 1     | 0     | **6** |
+| 1     | 1     | 1     | **7** |
