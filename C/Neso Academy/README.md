@@ -601,3 +601,111 @@ If we changed the value of `var` to be **-127** the output will be the same: `ü
 4. Negative values won't buy you any additional powers
 5. In traditional ASCII table, each character requires 7 bits
 6. In extended ASCII table, each character utilize 8 bits
+
+# Fundamental Data Types - Float, Double & Long Double
+
+## Outline
+
+1. `float`, `double`, `long double` - size and difference between them
+2. Brief introduction to fixed and floating point
+3. Coding examples
+
+## Float, Double and Long Double
+
+Used for representing fractional numbers.
+
+E.g. **3.14**, **0.678**, **-3276.789**, **0.0000009999**, etc.
+
+The size of these data types totally depends from system to system.
+
+| Type          | Bytes | Bits | Representation                           |
+| ------------- | ----- | ---- | ---------------------------------------- |
+| `float`       | 4     | 32   | IEEE 754 Single Precision Floating Point |
+| `double`      | 8     | 64   | IEEE 754 Double Precision Floating Point |
+| `long double` | 12    | 96   | Extended Precision Floating Point        |
+
+## Overview on Fixed and Floating Point
+
+### Fixed Point Representation
+
+Example:
+
+| Sign | Integer | .   | Fraction | Fraction |
+| ---- | ------- | --- | -------- | -------- |
+| -    | 9       | .   | 9        | 9        |
+
+Minimum value = **-9.99**<br/>
+Maximum value = **+9.99**
+
+The positions are fixed meaning if we want to represent a number like -7.9765 then in fixed point representation it would be -7.97 and .0065 gets truncated and removed, reducing the precision.
+
+### Floating Point Representation
+
+Example:
+
+| Sign | Exponent | Exponent | Mantissa -> |
+| ---- | -------- | -------- | ----------- |
+| -    | +        | 9        | 9           |
+
+Formula:
+
+$$(0.M)\times Base^{Exponent}$$
+
+Minimum value = -(0.9) \* 10<sup>+9</sup><br/>
+Maximum value = +(0.9) \* 10<sup>+9</sup>
+
+## Why Three Different Data Types?
+
+> No more words. Let the code speak it out.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  float var1 = 3.1415926535897932;
+  double var2 = 3.1415926535897932;
+  long double var3 = 3.141592653589793213456;
+
+  printf("%d\n", sizeof(float));
+  printf("%d\n", sizeof(double));
+  printf("%d\n", sizeof(long double));
+
+  printf("%.16f\n", var1);
+  printf("%.16f\n", var2);
+  printf("%.21Lf\n", var3);
+}
+```
+
+The output will be:
+
+```bash
+4
+8
+12
+3.1415927410125732
+3.1415926535897931
+3.141592653589793213359
+```
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var = 4/9;
+  printf("%d\n", var);
+
+  float var1 = 4/9;
+  printf("%.2f\n", var1);
+
+  float var2 = 4.0/9.0;
+  printf("%.2f\n", var2);
+}
+```
+
+The output will be:
+
+```bash
+0
+0.00
+0.44
+```
