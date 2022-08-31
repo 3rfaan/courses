@@ -729,3 +729,103 @@ The first output of **0** is, because we divide two integers (4 and 9) and defin
 The second output of **0.00** is, because we divide again two integers (4 and 9) which results in 0. But this time we defined the type of `var1` as `float`. So the result will be printed as `%.2f` which equals to **0.00**.
 
 The third output is our desired result. As we divided two floats (4.0 and 9.0) and stored it in `var2` which is of type `float`.
+
+# Important Questions Set 1
+
+## Q1: What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  printf("%d", printf("%s", "Hello World!"));
+  return 0;
+}
+```
+
+- `%s` is used to print "string of characters".
+- `printf()` not only prints the content on the screen. It also **returns the number of characters that it successfully prints on the screen.**
+
+**Answer:**
+
+```bash
+Hello World!12
+```
+
+## Q2: What is the output of the following C program fragment?
+
+```c
+int main(void) {
+  printf("%10s", "Hello");
+  return 0;
+}
+```
+
+**Answer:**
+
+```bash
+     Hello
+```
+
+By setting `%10s`, we define the width of the string to be printed. So we defined here a string that is 10 characters long. As the word _Hello_ is only 5 characters long, the rest of the 10 characters (5 characters) will get added on the beginning.
+
+## Q3: What is the output of the following C program fragment?
+
+```c
+int main(void) {
+  char c = 255;
+
+  c = c + 10;
+  printf("%d", c);
+  return 0;
+}
+```
+
+- a) 265
+- b) Some character according to ASCII table
+- c) 7
+- **d) 9** ✅
+
+## Q4: Which of the following statement(s) is/are correct corresponding to the definition of integer?
+
+1. `signed int i`
+2. `signed i`
+3. `unsigned i`
+4. `long i`
+5. `long int i`
+6. `long long i`
+
+- a) Only 1 and 5 are correct
+- b) Only 1 is correct
+- **c) All are correct** ✅
+- d) Only 4, 5, 6 are correct
+
+## Q5: What does the following program fragment print?
+
+```c
+int main(void) {
+  unsigned i = 1;
+  int j = -4;
+
+  printf("%u", i+j);
+  return 0;
+}
+```
+
+- a) Garbage
+- b) -3
+- **c) Integer value depends from machine to machine** ✅
+- d) None of the above
+
+**Answer:**
+
+-3 in 2's complement representation:
+
+- **Step 1**: Take 1's complement of 3
+  - 3 = 00000000 00000000 00000000 00000011
+  - 1's complement of 3 = 11111111 11111111 11111111 11111100
+- **Step 2**: Add 1 bit to the result
+
+  - 11111111 11111111 11111111 11111101 = **4294967293** (on my computer)
+
+If we would use `%d` as a `printf()` statement, the result would have been **-3**.
