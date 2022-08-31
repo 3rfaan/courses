@@ -687,6 +687,20 @@ The output will be:
 3.141592653589793213359
 ```
 
+The statement `%.16f` determines that there will be 16 places after the comma when printing the float.
+
+For `double` the actual format specified is `%lf`, but some compilers also accept `%f`, as in the example `%.16f`.
+
+For `long double` it is important to use a capital L in the `printf()` parameter: `%Lf`.
+
+`float` has 23 mantissa bits + 1 hidden bit, which is **7** decimal digits of precision:
+
+$$log(2^{24})\div log(10) = 7.22$$
+
+`double` has 52 mantissa bits + 1 hidden bit, which is **15** decimal digits of precision:
+
+$$log(2^{53})\div log(10) = 15.95$$
+
 ```c
 #include <stdio.h>
 
