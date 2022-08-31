@@ -723,3 +723,9 @@ The output will be:
 0.00
 0.44
 ```
+
+The first output of **0** is, because we divide two integers (4 and 9) and define the type of `var` as `int`. So everything after the comma will be truncated.
+
+The second output of **0.00** is, because we divide again two integers (4 and 9) which results in 0. But this time we defined the type of `var1` as `float`. So the result will be printed as `%.2f` which equals to **0.00**.
+
+The third output is our desired result. As we divided two floats (4.0 and 9.0) and stored it in `var2` which is of type `float`.
