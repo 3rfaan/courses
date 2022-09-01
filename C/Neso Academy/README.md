@@ -915,6 +915,8 @@ This program will produce an error because we defined `var` two times, which is 
 error: redefinition of 'var'
 ```
 
+---
+
 ```c
 #include <stdio.h>
 
