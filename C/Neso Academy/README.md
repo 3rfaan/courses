@@ -829,3 +829,133 @@ int main(void) {
   - 11111111 11111111 11111111 11111101 = **4294967293** (on my computer)
 
 If we would use `%d` as a `printf()` statement, the result would have been **-3**.
+
+# Scope of Variables - Local vs Global
+
+## Outline
+
+1. Defining scope of a variable
+2. Local variable
+3. Global variable
+
+## Defining Scope
+
+> Scope = Lifetime
+
+The area under which a variable is applicable or _alive_.
+
+**Strict definition:** A block or a region where a variable is _declared, defined and used_ and when a block or a region ends, the variable is automatically _destroyed_.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var = 34;
+
+  printf("%d", var);
+  return 0;
+}
+
+int fun(void) {
+  printf("%d", var);
+}
+```
+
+Scope of `var` is within the `main()` function only. Therefore called **local** to `main()` function.
+
+Trying to access variable `var` outside `main()` function will result in an error:
+
+```bash
+error: 'var' undeclared (first use in this function)
+```
+
+## Basic Principle of Scoping
+
+```c
+{
+  ... // Outer block
+  {
+    ... // Internal block
+  }
+}
+```
+
+Contents of outer block upto the beginning of internal block are visible to the **internal block**.
+
+Contents of **internal block** are not visible to outer block.
+
+```c
+{
+  ... // Block 1
+}
+{
+  ... // Block 2
+}
+```
+
+Contents of block 1 are not visible to any block outside of this block.<br/>
+Contents of block 2 are not visible to any block outside of this block.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var = 3;
+  int var = 4;
+
+  printf("%d\n", var);
+  printf("%d", var);
+  return 0;
+}
+```
+
+This program will produce an error because we defined `var` two times, which is not allowed:
+
+```bash
+error: redefinition of 'var'
+```
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var = 3;
+  {
+    int var = 4;
+    printf("%d\n", var);
+  }
+  printf("%d", var);
+  return 0;
+}
+```
+
+There is **no error** in this code because `var` is declared in `main()` and in a seperate block internal to `main()`.
+
+The output will be:
+
+```bash
+4
+3
+```
+
+---
+
+```c
+#include <stdio.h>
+
+int var = 10; // global variable
+
+int main(void) {
+  int var = 3;
+
+  printf("%d\n", var);  // Output: 3
+  fun();                // Output: 10
+  return 0;
+}
+
+int fun(void) {
+  printf("%d", var);
+}
+```
+
+`var` is outside of all functions. Therefore called a **global** variable. So it is available to all functions in a program.
