@@ -961,3 +961,114 @@ int fun(void) {
 ```
 
 `var` is outside of all functions. Therefore called a **global** variable. So it is available to all functions in a program.
+
+# Variable Modifiers
+
+## Auto & Extern
+
+### What is Auto Modifier?
+
+**Auto** means **Automatic**.
+
+Variables declared insisde a scope by default are automatic variables.
+
+Syntax: `auto int var_name`
+
+These two declarations of `var` are equal:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var;
+  return 0;
+}
+```
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  auto int var;
+  return 0;
+}
+```
+
+### Take Aways
+
+1. If you won't initialize auto variable, by default it will be initialized with some garbage (random) value
+2. On the other hand, **global variables** by default are initialized to 0
+
+### What is Extern Modifier?
+
+| Variable          | Description                | Meaning                                                                                                                   |
+| ----------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `int var;`        | Declaration and Definition | Declaring type of `var` to be integer<br/>Definition means telling the compiler to allocate memory for the variable `var` |
+| `extern int var;` | Declaration                | Only declaring type of `var` to be integer. No memory gets allocated.                                                     |
+
+- `extern` is short name for external
+- Used when a particular file needs to access a variable from another file
+
+### Example
+
+_main.c_
+
+```c
+#include <stdio.h>
+
+extern int a;
+
+int main(void) {
+  printf("%d\n", a);
+  return 0;
+}
+```
+
+_other.c_
+
+```c
+int a = 5;
+```
+
+We can now compile the two files and give the program the name _test-program_:
+
+```bash
+gcc main.c other.c -o test-program
+```
+
+The output will be:
+
+```bash
+5
+```
+
+### Take Aways
+
+1. When we write `extern type var_name;` no memory is allocated. Only property of variable is announced.
+2. Multiple declarations of an extern variable is allowed within the same file. This is not the case with automatic variables.
+3. Extern variable says to compiler _"go outside from my scope and you will find the definition of the variable that I declared"_.
+4. Compiler believes that whatever the extern variable said is true and produces no error. Linker throws an error when it finds no such variable exists.
+5. When an extern variable is _initialized_, then memory for this variable is allocated and it will be considered _defined_.
+
+## Register
+
+### What is Register Modifier?
+
+Syntax: `register type var_name`
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  register int var;
+  return 0;
+}
+```
+
+**The register keyword hints the compiler to store a variable in register memory.**
+
+This is done because access time reduces greatly for most frequently referred variables.
+
+This is the choice of compiler whether it puts the given variable in register or not.
+
+Usually compiler themselves do the necessary optimizations.
