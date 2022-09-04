@@ -1198,3 +1198,65 @@ This will throw an error!
 1. Static variable remains in memory even if it is declared within a block on the other hand automatic variable is destroyed after the completion of the function in which it was declared.
 2. Static variable if declared outside the scope of any function will act like a global variable but only within the file in which it is declared.
 3. You can only assign a constant literal (or value) to a static variable.
+
+# Constants in C
+
+## What is a Constant?
+
+As the name suggests - something that never changes
+
+**Once defined, it cannot be modified later in the code.**
+
+## Defining Constants
+
+Using `#define` or using `const`.
+
+### Using `#define`
+
+**Syntax:** `#define NAME value` (Also called _Macro_)
+
+Job of preprocessor (_not compiler_) to replace `NAME` with `value`.
+
+```c
+#include <stdio.h>
+#define PI 3.14159
+
+int main(void) {
+  printf("%.5f", PI);
+  return 0;
+}
+```
+
+Output:
+
+```bash
+3.14159
+```
+
+#### Take Aways
+
+1. Please don't add _semicolon_ at the end.
+2. Choosing capital letters for `NAME` is good practice.
+3. Whatever is inside double quotes won't get replaced.
+4. We can use macros like functions. E. g. `#define add(x, y) x+y`
+5. We can write multiple lines using `\`.
+6. First expansion then evaluation.
+7. Some predefined macros like `__DATE__`, `__TIME__` can print current date and time.
+
+### Using `const`
+
+**Syntax:** `const type var_name`
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  const int var = 67;
+  var = 57;
+
+  printf("%d", var);
+  return 0;
+}
+```
+
+This will result in an error, as we cannot reassign the variable `var` to 57 as it is a constant.
