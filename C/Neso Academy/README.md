@@ -1112,6 +1112,8 @@ We would expect the value **3**, but this is the actual output:
 1
 ```
 
+This is because everytime we call the function `increment()`, the variable `count` will be set back to **0** and the function will add **1** to `count`, which will always result in **1** being returned.
+
 If we modify the code of file _add.c_, we can get the expected output:
 
 ```c
