@@ -1072,3 +1072,127 @@ This is done because access time reduces greatly for most frequently referred va
 This is the choice of compiler whether it puts the given variable in register or not.
 
 Usually compiler themselves do the necessary optimizations.
+
+## Static
+
+To understand static variables we look at this program:
+
+_main.c_
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+  int value;
+
+  value = increment();
+  value = increment();
+  value = increment();
+
+  printf("%d", value);
+  return 0;
+}
+```
+
+_add.c_
+
+```c
+int increment() {
+  int count = 0;
+
+  count = count + 1;
+  return count;
+}
+```
+
+We would expect the value **3**, but this is the actual output:
+
+```bash
+1
+```
+
+If we modify the code of file _add.c_, we can get the expected output:
+
+```c
+int count; // global variable, gets initialized to 0
+
+int increment() {
+  count = count + 1;
+  return count;
+}
+```
+
+The output will be as expected:
+
+```bash
+3
+```
+
+The value 3 is returned because the global variable `count` doesn't get destroyed after the functions lifecycle because it is _global_, outside any functions.
+
+The disadvantage of using a global variable here is that the global variable is visible to all other files of the program. Sometimes we want a variable to be visible only to a file that is specific to that variable, so it can't be modified by other files.
+
+To achieve this, we use the `static` keyword:
+
+_add.c_
+
+```c
+static int count;
+
+int increment() {
+  count = count + 1;
+  return count;
+}
+```
+
+Now the variable `count` can be used by all functions INSIDE the file _add.c_ only, not by other files.
+
+We can also declare `count` as a static variable local to the function `increment()` to retain its value even after finishing the function's life cycle:
+
+```c
+int increment() {
+  static int count; // initialized with 0
+
+  count = count + 1;
+  return count;
+}
+```
+
+Normally, uninitialized _local variables_ are automatically initialized with garbage values and _global variables_ are initialized with **0**. Now _local STATIC variables_ are also initialized with **0**.
+
+Another important point to note is that we can initialize a static variable **only** with a constant value. For example:
+
+````c
+int increment() {
+  static int count = 3;
+
+  count = count + 1;
+  return count;
+}
+
+The output would be:
+
+```bash
+6
+````
+
+But this would not be possible as the variable `var` is not constant:
+
+```c
+int increment() {
+  int var = 3;
+  static int count = var;
+
+  count = count + 1;
+  return count;
+}
+```
+
+This will throw an error!
+
+### Take Aways
+
+1. Static variable remains in memory even if it is declared within a block on the other hand automatic variable is destroyed after the completion of the function in which it was declared.
+2. Static variable if declared outside the scope of any function will act like a global variable but only within the file in which it is declared.
+3. You can only assign a constant literal (or value) to a static variable.
