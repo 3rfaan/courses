@@ -1448,3 +1448,111 @@ Two memory segments:
 | Uninitialized data | Uninitialized global, static (both local and global), constant global variables |
 
 The answer is **0** because the local variable `static int i;` gets prefered over the global variable `static int i;`. As it is uninitialized it gets the value 0 automatically as it is a static variable.
+
+# Introduction to Operators in C
+
+Operators are the foundation of any programming language.
+
+| Operation             | Operator               |
+| --------------------- | ---------------------- |
+| $15\times10$          | _Arithmetic operator_. |
+| $3000 >= 5000$        | _Relational operator_. |
+| `if (chair && table)` | _Logical operator_     |
+
+## Types of Operators in C
+
+| Name of Operators             | Operators                                                          |
+| ----------------------------- | ------------------------------------------------------------------ |
+| Arithmetic operators          | `+`, `-`, `*`, `/`, `%`                                            |
+| Increment/Decrement operators | `++`, `--`                                                         |
+| Relational operators          | `==`, `!=`, `<=`, `>=`, `<`, `>`                                   |
+| Logical operators             | `&&`, `\|\|`, `!`                                                  |
+| Bitwise operators             | `&`, `^`, `\|`, `~`, `>>`, `<<`                                    |
+| Assignment operators          | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `\|=` |
+| Other operators               | `?:`, `&`, `*`, `sizeof()`, `,`                                    |
+
+### Arithmetic Operators
+
+| Operator | Operation      |
+| -------- | -------------- |
+| `+`      | Addition       |
+| `-`      | Subtraction    |
+| `*`      | Multiplication |
+| `/`      | Division       |
+| `%`      | Modulus        |
+
+All are _binary operators_ which means **two operands** are required to perform operation.
+
+**Example:** $A+B$
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a, b;
+
+  printf("Enter the first number\n");
+  scanf("%d", &a);
+  printf("Enter the second number\n");
+  scanf("%d", &b);
+
+  printf("a / b = %d\n", a/b);
+  printf("a %% b = %d", a%b);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+$ Enter the first number
+> 9
+$ Enter the second number
+> 3
+$ a / b = 3
+$ a % b = 0
+```
+
+#### Operator Precedence and Associativity
+
+| Precedence | Operators     | Associativity |
+| ---------- | ------------- | ------------- |
+| Highest    | `*`, `/`, `%` | Left to right |
+| Lowest     | `+`, `-`      | Left to right |
+
+**Note:** Associativity is used only when two or more operators are of same precedence.
+
+**Example:** `+`, `-`
+
+_Same precedence_ therefore we _use associativity_.
+
+#### Example
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 2, b = 3, c = 4, d = 5;
+
+  printf("a * b / c = %d\n", a*b/c);
+  printf("a + b - c = %d\n", a+b-c);
+  printf("a + b * d - c %% a = %d", a+b*d-c%a);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+$ a * b / c = 1
+$ a + b - c = 1
+$ a + b * d - c % a = 17
+```
+
+The last operation will be evaluated as follows:
+
+$$a+b\times d-c\mod a = a+(b\times d)-(c\mod a) = a+(3\times5)-(4\mod2)$$
+
+So:
+
+$$2+15-0=17$$
