@@ -1260,3 +1260,54 @@ int main(void) {
 ```
 
 This will result in an error, as we cannot reassign the variable `var` to 57 as it is a constant.
+
+# Important Questions Set 2
+
+## Q1: What is the output of the following C program?
+
+```c
+int main(void) {
+  int var = 052;
+
+  printf("%d", var);
+  return 0;
+}
+```
+
+- a) 52
+- b) 56
+- **c) 42** ✅
+- d) Compiler error
+
+**Answer:**
+
+When we place a zero (0) in front of any value, then that value is threated as an **octal value**, not a decimal value!
+
+| $8^1$ | $8^0$ |
+| ----- | ----- |
+| 5     | 2     |
+
+$$5\times8+2\times1=40+2=42$$
+
+So 52 in octal representation is 42 in decimal representation.
+
+If we used `printf("%o", var);`, then the result would have been **52**, as we printed out an octal value, not a decimal one.
+
+## Q2: What is the output of the following C program?
+
+```c
+#include <stdio.h>
+
+#define STRING "%s\n"
+#define NESO "Welcome to Neso Academy!"
+
+int main(void) {
+  printf(STRING, NESO);
+  return 0;
+}
+```
+
+- a) Compiler error
+- b) "Welcome to Neso Academy!"
+- c) Garbage value
+- **d) Welcome to Neso Academy!** ✅
