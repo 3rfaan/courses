@@ -1311,3 +1311,140 @@ int main(void) {
 - b) "Welcome to Neso Academy!"
 - c) Garbage value
 - **d) Welcome to Neso Academy!** ✅
+
+# Basic Input Function - `scanf()`
+
+## What is `scanf()` ?
+
+Stands for **scan f**ormatted string
+
+Accept character, string and numeric data from the user using standard input - _keyboard_.
+
+`scanf()` also uses _format specifiers_ like `printf()`.
+
+**For example:**
+
+- `%d` to accept input of type integer.
+- `%c` to accept input of type character.
+- `%s` to accept a string
+
+and so on...
+
+## Example
+
+```c
+int var;
+
+scanf("%d", &var);
+```
+
+### Why `&`?
+
+While scanning the input, `scanf()` needs to store that input data somewhere.
+
+To store this input data, `scanf()` needs to know the memory location of a variable.
+
+`&` is also called as **address-of** operator.
+
+> `&var` = Address of `var`
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a, b;
+
+  printf("Enter the first number\n");
+  scanf("%d", &a);
+
+  printf("Enter the second number\n");
+  scanf("%d", &b);
+
+  printf("%d + %d = %d", a, b, a + b);
+  return 0;
+}
+```
+
+The output will be:
+
+```bash
+$ Enter the first number
+> 7
+$ Enter the second number
+> 7
+$ 7 + 7 = 14
+```
+
+# Important Questions Set 3
+
+## Q1: What is the ouput of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var = 0x43FF;
+
+  printf("%x", var);
+  return 0;
+}
+```
+
+**Answer:**
+
+```bash
+43ff
+```
+
+The hexdecimal value will be printed directly as we use the specifier `%x` as an argument for `printf()`.
+
+**Note:** 0x and 0X are the same and can be used interchangeably.
+
+If we wanted the output to use uppercase letters we set the format specifier `%X` instead of `%x`:
+
+```bash
+43FF
+```
+
+## Q2: What is the ouput of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+static int i;
+static int i = 27;
+static int i;
+
+int main(void) {
+  static int i;
+
+  printf("%d", i);
+  return 0;
+}
+```
+
+- a) 27
+- **b) 0** ✅
+- c) No output
+- d) None of the above
+
+### Memory Layout of a C Program
+
+Two memory segments:
+
+- Text/code segment
+- Data sagment
+  - Initialized
+    - Read only
+    - Read write
+  - Uninitialized (bss - Block started by symbol)
+  - Stack
+  - Heap
+
+| Segment            | Description                                                                     |
+| ------------------ | ------------------------------------------------------------------------------- |
+| Text/code segment  | Contains machine code of the compiled program                                   |
+| Initialized data   | Global, extern, static (both local and global), const global variables          |
+| Uninitialized data | Uninitialized global, static (both local and global), constant global variables |
+
+The answer is **0** because the local variable `static int i;` gets prefered over the global variable `static int i;`. As it is uninitialized it gets the value 0 automatically as it is a static variable.
