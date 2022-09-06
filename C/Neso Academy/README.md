@@ -1556,3 +1556,76 @@ $$a+b\times d-c\mod a = a+(b\times d)-(c\mod a) = a+(3\times5)-(4\mod2)$$
 So:
 
 $$2+15-0=17$$
+
+## Increment and Decrement Operators in C
+
+### What are Increment and Decrement Operators?
+
+- **Increment operator** is used to increment the value of a variable by one. Similarly, **decrement operator** is used to decrement the value of a variable by one.
+- Both are unary operators.
+  - because they are applied on single operand.
+    - `a++;` ✅
+    - `a ++ a;` ❌
+
+**Increment**
+
+```c
+int a = 5;
+a++;
+```
+
+`a` is now 6.
+
+**Decrement**
+
+```c
+int a = 5;
+a--;
+```
+
+`a` is now 4
+
+`a++;` is the same as `a = a + 1;`
+
+`a--;` is the same as `a = a - 1;`
+
+### Pre- and Post Increment/Decrement
+
+| Pre-increment operator | Post-increment operator |
+| ---------------------- | ----------------------- |
+| `++a;`                 | `a++;`                  |
+
+| Pre-decrement operator | Post-decrement operator |
+| ---------------------- | ----------------------- |
+| `--a;`                 | `a--;`                  |
+
+You cannot use **rvalue** before or after increment/decrement operator.
+
+- `(a + b)++;` ❌
+- `++(a + b);` ❌
+
+**lvalue (left value):** Simply means an object that has an identifiable location in memory (i.e. having an address).
+
+- In any assignment statement _lvalue_ must have the capability to hold the data.
+- _lvalue_ **must be a variable** because they have the capability to store the data.
+- _lvalue_ cannot be a function, expression (like `a+b`) or a constant (like 3, 4, etc.).
+
+**rvalue (right value):** Simply means an objec that has no identifiable location in memory.
+
+- Anything which is capable of returning a constant expression or value.
+- Expressions like `a + b` will return some constant value.
+
+`a++;` is the same as `a = a + 1;`
+
+So `(a+b)++;` is equal to: `(a+b) = (a+b) + 1;` which is completly wrong!
+
+**Question:** What is the difference between pre-increment and post-increment operator OR pre-decrement and post-decrement operator?
+
+**Pre -** means first increment/decrement, then assign it to another variable.
+
+**Post -** means first assign it to another variable, then increment/decrement.
+
+If we suppose that variable `int a = 5;` and we have the following statements:
+
+- `x = ++a;`, then `x` is equal to **6**, as the increment happens before the assignment.
+- `x = a++;`, then `x` is equal to **5**, as the assignment happens before the increment.
