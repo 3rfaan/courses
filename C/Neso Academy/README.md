@@ -1377,7 +1377,7 @@ $ 7 + 7 = 14
 
 # Important Questions Set 3
 
-## Q1: What is the ouput of the following C program fragment?
+## Q1: What is the output of the following C program fragment?
 
 ```c
 #include <stdio.h>
@@ -1406,7 +1406,7 @@ If we wanted the output to use uppercase letters we set the format specifier `%X
 43FF
 ```
 
-## Q2: What is the ouput of the following C program fragment?
+## Q2: What is the output of the following C program fragment?
 
 ```c
 #include <stdio.h>
