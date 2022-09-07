@@ -1629,3 +1629,385 @@ If we suppose that variable `int a = 5;` and we have the following statements:
 
 - `x = ++a;`, then `x` is equal to **6**, as the increment happens before the assignment.
 - `x = a++;`, then `x` is equal to **5**, as the assignment happens before the increment.
+
+### Questions
+
+#### Q1: What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 4, b = 3;
+
+  printf("%d", a+++b);
+  return 0;
+}
+```
+
+##### Token Generation
+
+- Lexical analysis is the first phase in the compilation process.
+- Lexical analyzer (scanner) scans the whole source program and when it finds the meaningful sequence of characters (lexemes) then it converts it into a token.
+- **Token:** Lexemes mapped into token-name and attribute-value.
+  - **Example:** int -> <keywoard, int>
+- It always matches the longest character sequence.
+
+The tokens of the statement `a+++b` will be the following:
+
+| a   | ++  | +   | b   |
+| --- | --- | --- | --- |
+
+Or: `a++ + b`
+
+Now we can review an important topic:
+
+**Post increment/decrement in context of equation:** First use the value in the equation and then increment the value.
+
+**Pre increment/decrement in context of equation:** First increment the value and then use it in the equation after completion of the equation.
+
+When `a = 4` and `b = 3` then the operation would be:
+
+`4 + 3` which equals **7**. So **7** will be the ouput of the program.
+
+#### Q2: What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 4, b = 3;
+
+  printf("%d", a + ++b);
+  return 0;
+}
+```
+
+The tokens of `a + ++b` will be:
+
+| a   | +   | ++  | b   |
+| --- | --- | --- | --- |
+
+If `a = 4` and `b = 3` then we must increment the value of `b` first and then complete the equation, making `b` equals 4.
+
+`4 + 4` which equals **8**, so **8** will be the output.
+
+#### Q3: What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 4, b = 3;
+
+  printf("%d", a+++++b);
+  return 0;
+}
+```
+
+- a) 7
+- b) 8
+- c) 9
+- **d) Error** ✅
+
+## Relational Operators in C
+
+| Operator | Description              |
+| -------- | ------------------------ |
+| `==`     | Equal to                 |
+| `!=`     | Not equal to             |
+| `<=`     | Less than or equal to    |
+| `>=`     | Greater than or equal to |
+| `<`      | Less than                |
+| `>`      | Greater than             |
+
+**Used for comparing values.**
+
+- All relational operators will return either `true` or `false`.
+  - `4 == 5` is equivalent to _is 4 equal to 5?_ - Answer: `false`
+  - `4 != 5` is equivalent to _is 4 not equal to 5?_ - Answer: `true`
+
+```c
+int a = 300, b = 2090;
+
+if (b >= a) {
+  printf("Bingo! You are in");
+} else {
+  printf("OOPS! You are out");
+}
+```
+
+Output:
+
+```bash
+Bingo! You are in
+```
+
+## Logical Operators in C
+
+| Operator | Description |
+| -------- | ----------- |
+| `&&`     | AND         |
+| `\|\|`   | OR          |
+| `!`      | NOT         |
+
+- `&&` and `||` are used to combine two conditions.
+  - `&&` returns `true` when _all_ conditions under consideration are true and returns `false` when any one or more than one condition is false.
+  - `||` returns `true` when _one or more than one_ condition under consideration is true and returns `false` when all conditions are false.
+- `!` operator is used to complement the condition under consideration.
+  - `!` returns `true` when condition is **false** and returns `false` when condition is **true**.
+
+### Concept of Short Circuit in Logical Operators
+
+**Short circuit in case of `&&`:** Simply means if there is a condition anywhere in the expression that returns `false`, then the rest of the conditions after that will not be evaluated.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 5, b = 3;
+  int incr;
+
+  incr = (a < b) && (b++);
+  printf("%d\n", incr);
+  printf("%d", b);
+  return 0;
+}
+```
+
+- `false` = 0
+- `true` = 1
+
+As `(a < b)` is `false`, therefore `(b++)` will not be evaluated.
+
+The output will be:
+
+```bash
+0
+3
+```
+
+---
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 5, b = 3;
+  int incr;
+
+  incr = (a > b) && (b++);
+  printf("%d\n", incr);
+  printf("%d", b);
+  return 0;
+}
+```
+
+As `(a > b)` is `true` and `(b++)` returns a value greater than 0, `incr` is `true` which will be printed as **1**. Also, `(b++)` is evaluated, so `b` will be incremented.
+
+```bash
+1
+4
+```
+
+**Short circuit in case of `||`:** Simply means if there is a condition anywhere in the expression that returns `true`, then the rest of the conditions after that will not be evaluated.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 5, b = 3;
+  int incr;
+
+  incr = (a > b) || (b++);
+  printf("%d\n", incr);
+  printf("%d", b);
+  return 0;
+}
+```
+
+As `(a > b)` returns `true`, the second part of the `||` (OR) operand `(b++)` will not be evaluated.
+
+So the output will be:
+
+```bash
+1
+3
+```
+
+## Bitwise Operators in C
+
+### Outline
+
+- Introducing bitwise operators.
+- Bitwise OR, AND, NOT
+- Difference between bitwise and logical operators.
+
+### Introduction to Bitwise Operators
+
+As the name suggests - **it does bitwise manipulation**.
+
+| Operator | Description |
+| -------- | ----------- |
+| `&`      | AND         |
+| `\|`     | OR          |
+| `^`      | XOR         |
+| `~`      | NOT         |
+| `<<`     | Left shift  |
+| `>>`     | Right shift |
+
+#### Bitwise AND (`&`) Operator
+
+- It takes two bits at a time and performs AND operation.
+- AND (`&`) is a binary operator. It takes two numbers and performs bitwise AND.
+- Result of AND is 1 when both bits are 1.
+
+**Example:** `7 & 4`
+
+7 -> `0 1 1 1`
+
+4 -> `0 1 0 0`
+
+`0 1 1 1 & 0 1 0 0 = 0 1 0 0`
+
+So: `7 & 4 = 4`
+
+##### Truth Table
+
+| A   | B   | A & B |
+| --- | --- | ----- |
+| 0   | 0   | 0     |
+| 0   | 1   | 0     |
+| 1   | 0   | 0     |
+| 1   | 1   | 1     |
+
+#### Bitwise OR (`|`) Operator
+
+- It takes two bits at a time and performs OR operation.
+- OR (`|`) is a binary operator. It takes two numbers and performs bitwise OR.
+- Result of OR is 0 when both bits are 0.
+
+**Example:** `7 | 4`
+
+7 -> `0 1 1 1`
+
+4 -> `0 1 0 0`
+
+`0 1 1 1 | 0 1 0 0 = 0 1 1 1`
+
+So: `7 | 4 = 7`
+
+##### Truth Table
+
+| A   | B   | A \| B |
+| --- | --- | ------ |
+| 0   | 0   | 0      |
+| 0   | 1   | 1      |
+| 1   | 0   | 1      |
+| 1   | 1   | 1      |
+
+#### Bitwise NOT (`~`) Operator
+
+- NOT is a unary operator.
+- Its job is to complement each bit one by one.
+- Result of NOT is 0 when bit is 1 and 1 when bit is 0.
+
+**Example:** `~7`
+
+7 -> `0 1 1 1`
+
+`~0 1 1 1 = 1 0 0 0`
+
+So: `~7 = 8`
+
+##### Truth Table
+
+| A   | ~A  |
+| --- | --- |
+| 0   | 1   |
+| 1   | 0   |
+
+### Difference between Bitwise and Logical Operators
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  char x = 1, y = 2; // x = 1 (0000 0001), y = 2 (0000 0010)
+
+  if (x & y)  // 1 & 2 = 0 (0000 0000)
+    printf("Result of x & y is 1");
+  if (x && y) // 1 && 2 = TRUE && TRUE = TRUE = 1
+    printf("Result of x && y is 1");
+
+  return 0;
+}
+```
+
+Only the second `if` statement will get satisfied, because `x & y` will evaluate to 0, thus will not be printed. But `x && y` will evaluate to 1 so it will get printed:
+
+```bash
+Result of x && y is 1
+```
+
+### Left Shift Operator
+
+| First operand               | `<<` | Second operand                                 |
+| --------------------------- | ---- | ---------------------------------------------- |
+| Whose bits get left shifted |      | Decides the number of places to shift the bits |
+
+#### Important Points
+
+1. When bits are shifted left then trailing positions are filled with zeros.
+2. Left shifting is equivalent to **multiplication** by $2^{rightOperand}$.
+
+##### How Left Shift Works?
+
+Let's suppose we have a variable with a value of 3, `int var = 3;`. We will do a left shift by 1 position, `var << 1`.
+
+In binary, 3 is `0000 0011`. So we have to left shift all digits by one and replace trailing positions with 0:
+
+`0000 0110`
+
+and this is the binary representation of the number **6**.
+
+This could also be solved mathematically by using above formula:
+
+$$2^{rightOperand}$$
+
+or in this case:
+
+$$3\times2^1=6$$
+
+If we wanted to left shift by 4 positions, `var << 4`, then we would use the following equation:
+
+$$3\times2^4=48$$
+
+### Right Shift Operator
+
+| First operand                | `>>` | Second operand                             |
+| ---------------------------- | ---- | ------------------------------------------ |
+| Whose bits get right shifted |      | Decides number of places to shift the bits |
+
+#### Important Points
+
+1. When bits are shifted right then leading positions are filled with zeros.
+2. Right shifting is equivalent to **division** by $2^{rightOperand}$.
+
+##### How Right Shift Works?
+
+Again we have a variable with the value of 3: `int var = 3;`. We want to right shift the bits by one: `var >> 1`.
+
+In binary, 3 is `0000 0011`. So we right shift all digits by one and replace leading positions with 0:
+
+`0000 0001`
+
+and this is the binary representation of the number **1**.
+
+In mathematical terms:
+
+$$3\div2^1=1$$
+
+If we had `var = 32` and `var >> 4` then:
+
+$$32\div2^4=2$$
