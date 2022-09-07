@@ -2173,3 +2173,134 @@ So the output will be:
 ```bash
 65
 ```
+
+## Comma Operator in C
+
+### Comma (`,`) Operator
+
+1. Comma operator can be used as a "separator".
+
+```c
+int a = 3;
+int b = 4;
+int c = 8;
+```
+
+is equivalent to:
+
+```c
+int a = 3, b = 4, c = 8;
+```
+
+2. Comma operator can be used as an "operator".
+
+```c
+int a = (3, 4, 8);
+
+printf("%d", a);
+```
+
+Output: `8`
+
+**Comma operator** returns the _rightmost_ operand in the expression and it simply evaluates _the rest of the operands_ and finally reject them.
+
+```c
+int var = (printf("%s\n", "HELLO"), 5);
+
+printf("%d", var);
+```
+
+The output will be:
+
+```bash
+HELLO!
+5
+```
+
+This is because 5 will get assigned to `var` as it is the rightmost operand, but the `printf()` expression will be evaluated too, before the value 5 will be returned to `var`.
+
+3. Comma operator is having **least precedence** among all the operators available in C language.
+
+```c
+int a;
+
+a = 3, 4, 8;
+printf("%d", a);
+```
+
+We would think that 8 is returned to `a`, but this is wrong. Because _assignment operator_ (`=`) has higher precedence than _comma operator_. The above code would look like this if we added brackets:
+
+```c
+int a;
+
+(a = 3), 4, 8;
+printf("%d", a);
+```
+
+The output will be:
+
+```bash
+3
+```
+
+---
+
+```c
+int a = 3, 4, 8;
+
+printf("%d", a);
+```
+
+When we initialize `a` with comma operator then here comma is behaving like a _seperator_.
+
+Comma operator acts like a separator within function calls and definitions, variable declarations and enum declarations.
+
+So `int a = 3, 4, 8;` is equivalent to `int a = 3; int 4; int 8;` which will throw an error as we can not start variable names with digits.
+
+```c
+int a;
+
+a = (3, 4, 8);
+printf("%d", a);
+```
+
+_Bracket_ has the highest precedence than any other operator.
+
+Or we could also write:
+
+```c
+int a = (3, 4, 8);
+printf("%d", a);
+```
+
+The output will be:
+
+```bash
+8
+```
+
+### Homework Problem
+
+What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var;
+  int num;
+
+  num = (var = 15, var + 35);
+  printf("%d", num);
+  return 0;
+}
+```
+
+- a) 15
+- **b) 50** ✅
+- c) No output
+- d) Error
+
+**Answer:**
+
+The answer is 50 because `var = 15` will get evaluated, then rejected as the rightmost operand will be assigned to `num` which will be `15 + 35` which is 50. Then `num` gets printed.
