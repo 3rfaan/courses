@@ -2011,3 +2011,84 @@ $$3\div2^1=1$$
 If we had `var = 32` and `var >> 4` then:
 
 $$32\div2^4=2$$
+
+## Assignment Operators in C
+
+### Outline
+
+- Introduction to assignment operators.
+- Shorthand assignment operators.
+- Homework problem.
+
+### Assignment Operator
+
+Values to a variable can be assigned using **assignment operator**.
+
+Requires two values - _lvalue_ and _rvalue_.
+
+This operator copies _rvalue_ to _lvalue_:
+
+| `var`  | `=`                | `5;`   |
+| ------ | ------------------ | ------ |
+| lvalue | Assigment operator | rvalue |
+
+### Shorthand Assignment Operators
+
+| Operator | Description                          |
+| -------- | ------------------------------------ |
+| `+=`     | First addition then assignment       |
+| `-=`     | First substraction then assignment   |
+| `*=`     | First multiplication then assignment |
+| `/=`     | First division then assignment       |
+
+Assignment operator is having **least precedence** except the comma operator.
+
+**Example:** `a += 1` is equivalent to `a = a + 1`
+
+Similar concept for other shorthand assignment operators as well.
+
+| Operator | Description                               |
+| -------- | ----------------------------------------- |
+| `%=`     | First modulus then assignment             |
+| `<<=`    | First bitwise left shift then assignment  |
+| `>>=`    | First bitwise right shift then assignment |
+| `&=`     | First bitwise AND then assignment         |
+| `\|=`    | First bitwise OR then assignment          |
+| `^=`     | First bitwise XOR then assignment         |
+
+### Homework Problem
+
+What is the output of the following program segment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  char a = 7;
+
+  a ^= 5;
+  printf("%d", printf("%d", a += 3));
+  return 0;
+}
+```
+
+- a) 5
+- b) 6
+- c) 51
+- d) 15
+
+**Answer:**
+
+7 -> `0000 0111`
+
+5 -> `0000 0101`
+
+a = 7 ^ 5 = `0000 0111 ^ 0000 0101` = `0000 0010` = 2
+
+a = 2 + 3 = 5 (inner `printf()`)
+
+Outer `printf()` will print **1** as the inner one printed only one character. So the output will be:
+
+```bash
+51
+```
