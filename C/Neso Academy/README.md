@@ -2074,7 +2074,7 @@ int main(void) {
 
 - a) 5
 - b) 6
-- c) 51
+- **c) 51** ✅
 - d) 15
 
 **Answer:**
@@ -2091,4 +2091,85 @@ Outer `printf()` will print **1** as the inner one printed only one character. S
 
 ```bash
 51
+```
+
+## Conditional Operator in C
+
+### Outline
+
+- Introduction to conditional operator.
+- Quick facts.
+- Homework problem.
+
+### Introduction to Conditional Operator
+
+**Look and feel:** `? :`
+
+Instead of writing this:
+
+```c
+char result;
+int marks;
+
+if (marks > 33) {
+  result = 'p';
+} else {
+  result = 'f';
+}
+```
+
+We can compress it into one line:
+
+```c
+char result;
+int marks;
+
+result = (marks > 33) ? 'p' : 'f';
+```
+
+Let's take it apart:
+
+`(marks > 33)` is a boolean expression, therefore it will return either `true` or `false`.
+
+`(marks > 33) ? 'p' : 'f'` is a conditional expression, which is after all an expression, therefore it is an _rvalue_ and **result** is _lvalue_.
+
+### Quick Facts Checklist
+
+- Conditional operator is the only **ternary operator** available in the list of operators in C language.
+- As in `expression1 ? expression2 : expression3`, `expression1` is the boolean expression. If we simply write 0 instead of some boolean expression then that simply means `false` and therefore `expression3` will get evaluated.
+  - **Example:** `result = 0 ? 2 : 1`, `result` will be 1.
+
+### Homework Problem
+
+What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int var = 75;
+  int var2 = 56;
+  int num;
+
+  num = sizeof(var) ? (var2 > 23 ? ((var == 75) ? 'A' : 0) : 0) : 0;
+
+  printf("%d", num);
+  return 0;
+}
+```
+
+**Answer:**
+
+1. The first condition `sizeof(var)` returns how many bytes a data type can hold (for integer either 2 or 4 bytes), so it evaluates to true as every number except 0 is evaluated to be true.
+
+2. The next condition `(var2 > 23)` will evaluate to be true as `var2` is 56 and therefore bigger than 23.
+
+3. Because so far everything evaluated to be true the last condition is being checked: `(var == 75)`. As `var` is indeed 75, also the last condition is true and therefore the expression assigns `'A'` to the variable `num` of type integer.
+
+As we specified a data specifier of `%d` (int) in `printf()` and `num` is of type `int`, we need to convert the ASCII character `'A'` to its equilavent decimal value, which is 65.
+
+So the output will be:
+
+```bash
+65
 ```
