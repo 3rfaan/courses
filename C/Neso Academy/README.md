@@ -2761,3 +2761,179 @@ switch(x) {
 3. Float value is not allowed as a constant value in _case label_. Only integer constants/constant expressions are allowed in case label.
 4. **Variable expressions are not allowed in case labels.** Although macros are allowed.
 5. Default can be placed anywhere inside switch. It will still get evaluated if no match is found.
+
+# Loops
+
+## For and While Loops
+
+### While Loop
+
+**Syntax:**
+
+```c
+while (expression) {
+  statement1;
+  statement2;
+  .
+  .
+  .
+}
+```
+
+**Example:**
+
+```c
+int i = 3;
+
+while (i > 0) {
+  printf("%d\n", i);
+  i--;
+}
+```
+
+Output will be:
+
+```bash
+3
+2
+1
+```
+
+### For Loop
+
+**Syntax:**
+
+```c
+for (initialization; condition; increment/decrement) {
+  statements;
+}
+```
+
+**Example:**
+
+```c
+int i;
+
+for (i = 3; i > 0; i--) {
+  printf("%d\n", i);
+}
+```
+
+This program will have the exact same output as the program above using a `while` loop.
+
+## Do-While Loop
+
+### Difference Between While Loop and Do-While Loop
+
+`while`:
+
+```c
+int i = 0;
+
+while (i > 0) {
+  printf("%d", i);
+  i--;
+}
+```
+
+Output: No output
+
+`do-while`:
+
+```c
+int i = 0;
+
+do {
+  printf("%d", i);
+  i--;
+} while (i > 0);
+```
+
+Output: `0`
+
+### When Should I Prefer Do-While Over While?
+
+Wrtie a program which allows user to enter an integer until he enters a value zero.
+
+`while`:
+
+```c
+int n;
+
+printf("Enter an integer\n");
+scanf("%d", &n);
+
+while (n != 0) {
+  printf("Enter an integer\n");
+  scanf("%d", &n);
+}
+printf("You are out of the loop");
+```
+
+`do-while`:
+
+```c
+int n;
+
+do {
+  printf("Enter an integer\n");
+  scanf("%d", &n);
+} while (n != 0);
+
+printf("You are out of the loop");
+```
+
+Whenever we require to execute the body of the loop at least once, we should use `do-while` loops.
+
+## Loop Control Statements
+
+### Break
+
+Used to terminate from the loop.
+
+**Example:** WAP to allow user to enter integers until he enters a negative number or a zero.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int n;
+
+  printf("Enter a number\n");
+  scanf("%d", &n);
+
+  while (n != 0) {
+    if (n < 0) break;
+    printf("Enter a number\n");
+    scanf("%d", &n);
+  }
+}
+```
+
+### Continue
+
+Similar to `break` but instead of terminating from the loop it forces to execute the next iteration of the loop.
+
+**Example:** WAP to print all odd numbers from 1 to 20.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int i, n = 2;
+
+  for (i = 1; i <= 20; i++) {
+    if (i == n) {
+      n += 2;
+      continue;
+    }
+    printf("%d ", i);
+  }
+}
+```
+
+The output will be:
+
+```bash
+1 3 5 7 9 11 13 15 17 19
+```
