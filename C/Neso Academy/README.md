@@ -2436,3 +2436,186 @@ int main(void) {
 **Answer:**
 
 In the expression `(a <= b == d > c)`, `<=` and `>` have the same precedence and their associativity is from left to right. So `a<= b` returns 1 (for `true`), and `d > c` also returns 1 leading to `1 == 1` which again returns 1 for `true` which then evaluated the `printf()` statement printing `TRUE`.
+
+## Operators in C - Solved Problem 1
+
+What is the output of the following C program fragment? Assume size of integer to be 4 bytes.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int i = 5;
+  int var = sizeof(i++);
+
+  printf("%d %d", i, var);
+  return 0;
+}
+```
+
+- **a) `5 4`** ✅
+- b) `6 4`
+- c) `5 8`
+- d) Compiler error
+
+**Answer:**
+
+C standard is the language specification which is adopted by all C compilers across the globe.
+
+According to C99 standard:
+
+> The sizeof operator yields the size (in bytes) of its operand, which may be an expression or a parenthesized name of a type. _The size is determined from the type of the operand_. If the type of the operand is a **variable length array type, then the operand is evaluated;** otherwise, **the operand is not evaluated** and the result is an integer constant.
+
+Therefore, `i++` inside of `sizeof()` is not evaluated.
+
+## Operators in C - Solved Problem 2
+
+What is the output of the following C program fragment?
+
+```c
+int a = 1;
+int b = 1;
+int c = ++a || b++;
+int d = b-- && --a;
+
+printf("%d %d %d %d", d, c, b, a);
+```
+
+- a) `1 1 1 1`
+- b) `0 1 0 0`
+- c) `1 0 0 1`
+- d) **`1 1 0 1`** ✅
+
+**Answer:**
+
+`a = 1` `b = 1`
+
+`c = 2 || b++` - As the first operand is `true`, the second will not be evaluated, leaving the value of `b = 1` and `c = 1`. `a = 2` because it got incremented.
+
+`d = 1 && 1` - This will evaluate to `true` or 1. So `d = 1`. `b` get post incremented and will be `b = 0`. `a` has been post incremented so `a = 1`.
+
+# Rapid Fire Quiz 1
+
+## Instructions
+
+1. All questions are multiple choice questions.
+2. There are **10 questions** in this rapid fire quiz.
+3. You have been provided **10 seconds** to answer each question except the last question. You have been provided **15 seconds** to answer the last question.
+4. All questions carry **one mark** for correct answer and **zero marks** for incorrect answer. There is no negative marking.
+5. Whatever we learned so far is now being tested in this quiz.
+6. Please not down the scores you gain this quiz for self evaluation.
+7. All questions are compulsory to attempt.
+
+## Q1: Sizeof operator returns size in?
+
+- a) Bits
+- **b) Bytes** ✅
+- c) Kilobytes
+- d) Megabytes
+
+## Q2: Which of the following is the correct inline declaration of variable?
+
+- a) `int a; b; c;`
+- b) `int a, int b, int c;`
+- **c) `int a, b, c;`** ✅
+
+## Q3: What does printf function return?
+
+- a) Size of integer
+- b) Size of character
+- **c) Number of characters printed on the screen** ✅
+- d) Size of variable
+
+## Q4: ASCII decimal range of characters from A...Z is?
+
+- **a) 65 - 90** ✅
+- b) 97 - 122
+- c) 100 - 127
+- d) 1 - 28
+
+## Q5: Size of integer?
+
+- a) 32 bytes
+- b) 8 bytes
+- c) 16 bytes
+- **d) Depends from machine to machine** ✅
+
+## Q6: Consider the following variable declarations and definitions in C?
+
+1. `int 39 = 1;`
+2. `int var_39 = 2;`
+3. `int_ = 3;`
+
+Which of the following is correct?
+
+- a) Both 1 and 2 are valid.
+- b) Only 2 is valid.
+- **c) Both 2 and 3 are valid.** ✅
+- d) None of the above.
+
+## Q7: Consider the following lines.
+
+`int var;`
+`extern int var;`
+
+Which of the following is correct?
+
+- a) Both statements only declare variables and not define them.
+- b) Both statements declare and define variables.
+- c) Statement 1 declares a variable and statement 2 defines a variable.
+- **d) Statement 1 declares and defines a variable and statement 2 just declares a variable.** ✅
+
+## Q8: Predict the output.
+
+```c
+#include <stdio.h>
+
+int var = 5;
+
+int main(void) {
+  int var = var;
+  printf("%d", var);
+}
+```
+
+- a) 5
+- b) Compiler error
+- **c) Garbage value** ✅
+- d) None of the above
+
+## Q9: Predict the output.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  {
+    int var = 10;
+  }
+  {
+    printf("%d", var);
+  }
+}
+```
+
+- a) 10
+- **b) Compiler error** ✅
+- c) Garbage value
+- d) None of the above
+
+## Q10: Predict the output.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  unsigned int var = 10;
+
+  printf("%d", ~var);
+}
+```
+
+- a) 10
+- b) -10
+- c) -11
+- d) -5
