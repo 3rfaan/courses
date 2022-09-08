@@ -2304,3 +2304,135 @@ int main(void) {
 **Answer:**
 
 The answer is 50 because `var = 15` will get evaluated, then rejected as the rightmost operand will be assigned to `num` which will be `15 + 35` which is 50. Then `num` gets printed.
+
+## Precedence and Associativity of Operators
+
+### Precedence of Operators
+
+Precedence of operators come into picture when in an expression we need to decide which operator will be evaluated first. **Operator with higher precedence will be evaluated first**.
+
+**Example:** `2 + 3 * 5` = `2 + (3 * 5)` = **17**
+
+❕ Precedence of multiplication is greater than addition.
+
+### Associativity of Operators
+
+Associativity of operators come into picture when **precedence of operators are same** and we need to decide which operator will be evaluated first.
+
+**Example:** `10 / 2 * 5` -> Left to right: `(10 / 2) * 5` = **25**
+
+> Associativity can be either:
+>
+> 1. Left to right
+> 2. Right to left
+
+### Precedence and Associativity Table
+
+| Category             | Operators                                                          | Associativity |
+| -------------------- | ------------------------------------------------------------------ | ------------- |
+| Parenthesis/brackets | `()`, `[]`, `->`, `.`, `++`, `--`                                  | Left to right |
+| Unary                | `!`, `~`, `++`, `--`, `+`, `-`, `*`, `&`, `(type)`, `sizeof()`     | Right to left |
+| Multiplicative       | `*`, `/`, `%`                                                      | Left to right |
+| Additive             | `+`, `-`                                                           | Left to right |
+| Bitwise Shift        | `<<`, `>>`                                                         | Left to right |
+| Relational           | `<`, `<=`, `>`, `>=`                                               | Left to right |
+| Equality             | `==`, `!=`                                                         | Left to right |
+| Bitwise AND          | `&`                                                                | Left to right |
+| Bitwise XOR          | `^`                                                                | Left to right |
+| Bitwise OR           | `\|`                                                               | Left to right |
+| Logical AND          | `&&`                                                               | Left to right |
+| Logical OR           | `\|\|`                                                             | Left to right |
+| Conditional          | `? :`                                                              | Right to left |
+| Assignment           | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `\|=`, `<<=`, `>>=` | Right to left |
+| Comma                | `,`                                                                | Left to right |
+
+#### `()` - Parenthesis in Function Calls
+
+**Example:** `int var =fun();` -> `int var =(fun());`
+
+`=` operator is having less precedence as compared to `()`, therefore `()` belongs to `fun` and `fun` will be treated as a function.
+
+If suppose `=` operator is having greated precedence then `fun` will belong to `=` operator and therefore it will be treated as a variable.
+
+`int (var =fun)();`
+
+#### Member Access Operators (`->`, `.`)
+
+They are used to **access members of structures**. We will talk about structures later in this course.
+
+#### Postfix Increment/Decrement (`++`, `--`)
+
+**Precedence** of postfix increment/decrement operator is _greater_ than prefix increment/decrement operator.
+
+**Associativity** of postfix is also different from prefix. Associativity of **postfix** operators is from _left to right_ and that of **prefix** operators is from _right to left_.
+
+### Important Facts
+
+- Associativity can only help if there are two or more operators of same precedence and not when there is just one operator.
+- Operators with same precedence have same associativity as well.
+
+```c
+int main(void) {
+  int a;
+
+  a = fun1() + fun2();
+  printf("%d", a);
+  return 0;
+}
+
+int fun1(void) {
+  printf("Neso");
+  return 1;
+}
+
+int fun2(void) {
+  printf("Academy");
+  return 1;
+}
+```
+
+Which function is called first? `fun1()` or `fun2()`?
+
+It is not defined whether `fun1()` will be called first or whether `fun2()` will be called. **Behaviour is undefined and output is compiler dependent.**
+
+📝 **NOTE:** Here associativity will not come into picture as we have just one operator and which function will be called first is undefined. Associativity will only work when we have more than one operator of same precedence.
+
+So the output will be either:
+
+```bash
+NesoAcademy2
+```
+
+or
+
+```bash
+AcademyNeso2
+```
+
+The **2** at the end gets printed because both functions, `fun1()` and `fun2()` return a value of 1. So 2 gets assigned to `a` which will then get printed after the two functions got called.
+
+### Homework Problem
+
+What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int a = 10, b = 20, c = 30, d = 40;
+
+  if (a <= b == d > c) {
+    printf("TRUE");
+  } else {
+    printf("FALSE");
+  }
+  return 0;
+}
+```
+
+- **a) TRUE** ✅
+- b) FALSE
+
+**Answer:**
+
+In the expression `(a <= b == d > c)`, `<=` and `>` have the same precedence and their associativity is from left to right. So `a<= b` returns 1 (for `true`), and `d > c` also returns 1 leading to `1 == 1` which again returns 1 for `true` which then evaluated the `printf()` statement printing `TRUE`.
