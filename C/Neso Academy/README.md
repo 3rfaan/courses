@@ -2619,3 +2619,199 @@ int main(void) {
 - b) -10
 - **c) -11** ✅
 - d) -5
+
+# Conditionals
+
+## If - Else
+
+```c
+if (button is clicked) {
+  Applications page will get opened;
+} else {
+  Stay at home page;
+}
+```
+
+### Nested If
+
+```c
+if (button is clicked) {
+  Applications page will get opened;
+
+  if (icon is clicked) {
+    Play store will get opened;
+  }
+} else {
+  Stay at home page;
+}
+```
+
+### Else If
+
+```c
+if (button is clicked) {
+  Applications page will get opened;
+} else if (chrome is clicked) {
+  Google Chrome will get opened;
+}
+```
+
+#### Is It Necessary to Put the Else Part?
+
+The answer to this question is NO and YES!
+
+**Example 1:**
+
+```c
+int n = 4;
+
+if (n != 4)
+  printf("n is not 4");
+```
+
+No output.
+
+**Example 2:**
+
+```c
+int n = 4;
+
+if (n != 4)
+  printf("n is not 4");
+else
+  printf("n is 4");
+```
+
+Output: `n is 4`
+
+#### Why Curly Braces?
+
+**Example 1:**
+
+```c
+int n = 5;
+
+if (n == 4)
+printf("n is 4");
+n++;
+printf("%d", n);
+```
+
+Output: `6`
+
+**Example 2:**
+
+```c
+int n = 5;
+if (n == 4) {
+  printf("n is 4");
+  n++;
+}
+printf("%d", n);
+```
+
+Output: `5`
+
+If we want to include more than one statement in the condition we have to use curly braces.
+
+## Switch
+
+### What is Switch?
+
+`switch` is a great replacement to long else if constructs.
+
+```c
+int x = 2;
+
+if (x == 1)
+  printf("x is 1");
+else if (x == 2)
+  printf("x is 2");
+else if (x == 3)
+  printf("x is 3");
+else
+  printf("x is a number other than 1, 2 and 3");
+```
+
+This looks very verbose. Here is a replacement:
+
+```c
+int x = 2;
+
+switch(x) {
+  case 1:
+    printf("x is 1");
+    break;
+  case 2:
+    printf("x is 2");
+    break;
+  case 3:
+    printf("x is 3");
+    break;
+  default:
+    printf("x is a number other than 1, 2 and 3");
+    break;
+}
+```
+
+### Facts Related to Switch
+
+1. You are not allowed to add duplicate cases.
+2. Only those expressions are allowed in switch which results in an integral constant value.
+3. Float value is not allowed as a constant value in _case label_. Only integer constants/constant expressions are allowed in case label.
+4. **Variable expressions are not allowed in case labels.** Although macros are allowed.
+
+default:
+printf("x is a number other than 1, 2 and 3");
+break;
+
+```
+T#
+## Facts rRelated to Switch
+
+1. You are not allowed to add duplicate cases.
+2. Only those expressions are allowed in switch which results in an integral constant value.
+3. Float value is not allowed as a constant value in _case label_. Only integer constants/constant expressions are allowed in case label.
+4. **Variable expressions are not allowed in case labels.** Although macros are allowed.
+
+default:
+    printf("x is a number other than 1, 2 and 3");
+    break;
+```
+
+T#
+
+## Facts rRelated to Switch
+
+1. You are not allowed to add duplicate cases.
+2. Only those expressions are allowed in switch which results in an integral constant value.
+3. Float value is not allowed as a constant value in _case label_. Only integer constants/constant expressions are allowed in case label.
+4. **Variable expressions are not allowed in case labels.** Although macros are allowed.
+
+default:
+printf("x is a number other than 1, 2 and 3");
+break;
+
+```
+T#
+## Facts rRelated to Switch
+
+1. You are not allowed to add duplicate cases.
+2. Only those expressions are allowed in switch which results in an integral constant value.
+3. Float value is not allowed as a constant value in _case label_. Only integer constants/constant expressions are allowed in case label.
+4. **Variable expressions are not allowed in case labels.** Although macros are allowed.
+
+default:
+    printf("x is a number other than 1, 2 and 3");
+    break;
+```
+
+T#
+
+## Facts Related to Switch
+
+1. You are not allowed to add duplicate cases.
+2. Only those expressions are allowed in switch which results in an integral constant value.
+3. Float value is not allowed as a constant value in _case label_. Only integer constants/constant expressions are allowed in case label.
+4. **Variable expressions are not allowed in case labels.** Although macros are allowed.
+5. Default can be placed anywhere inside switch. It will still get evaluated if no match is found.
