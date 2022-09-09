@@ -3160,7 +3160,7 @@ The relations of rows to columns is as follows:
 | 5 rows | 9 columns  |
 | 6 rows | 11 columns |
 
-So: _If n is no. of rows_ then _2n - 1 will be no. of columns_.
+So: If $n$ is no. of rows then $2n - 1$ will be no. of columns.
 
 ```c
 for (i = 1; i <= n; i++) {
