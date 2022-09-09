@@ -2937,3 +2937,183 @@ The output will be:
 ```bash
 1 3 5 7 9 11 13 15 17 19
 ```
+
+## Loops - Question 1
+
+How many times will "Hello, World" be printed in the below program?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int i = 1024;
+
+  for (; i; i >>= 1)
+    printf("Hello, World");
+  return 0;
+}
+```
+
+- a) 10
+- **b) 11** ✅
+- c) Infinite
+- d) Compile time error
+
+**Answer:**
+
+1024 = `0100 0000 0000`
+
+`i >>= 1` is equivalent to `i = i >> 1`, so we right shift the bits by one and we get:
+
+`0010 0000 0000` = 512
+
+This will get repeated until `i` is equal to 0.
+
+`0001 0000 0000` = 256
+
+`0000 1000 0000` = 128
+
+`0000 0100 0000` = 64
+
+until:
+
+`0000 0000 0001` = 1
+
+Then the loop terminates because the condition is false as `i` is equal to 0 (`0000 0000 0000`).
+
+## Conditionals and Loops - Question 2
+
+What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int i;
+
+  for (i = 0; i < 20; i++) {
+    switch (i) {
+      case 0: i += 5;
+      case 1: i += 2;
+      case 5: i += 5;
+      default: i += 4;
+    }
+    printf("%d ", i);
+  }
+  return 0;
+}
+```
+
+- a) `5 10 15 20`
+- b) `7 12 17 22`
+- c) Compiler error
+- **d) `16 21`** ✅
+
+**Answer:**
+
+Because there is no `break` keywod after the cases, all cases will be evaluated. So in the first run `i` (0) gets incremented by 5, 2, 5 and 4 which is 16. Then in the second loop `i` gets incremented by one and then by 4 as 16 does not match any cases so the `default` case gets evaluated.
+
+## Conditionals and Loops - Question 3
+
+How many times will "Neso" be printed on the screen?
+
+```c
+int i = -5;
+
+while (i <= 5) {
+  if (i >= 0)
+    break;
+  else {
+    i++;
+    continue;
+  }
+  printf("Neso");
+}
+```
+
+- a) 10 times
+- b) 5 times
+- c) Infinite times
+- **d) 0 times** ✅
+
+**Answer:**
+
+The value of `i` will get incremented until it reaches a value of 0. On each increment, the loop gets continued, meaning the `printf()` will not evaluate. If `i` reaches 0 then the loop will be terminated.
+
+## Homework Problem
+
+What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int i = 0;
+
+  for (printf("one\n"); i < 3 && printf(""); i++) {
+    printf("Hi!\n");
+  }
+  return 0;
+}
+```
+
+Output: `one`
+
+The initial `printf()` statement prints "one" to the console and returns 3. Then the condition returns `false` as the second `printf()` function returns 0 which is `false`. As there is a `&&` (conditional AND operator) the whole condition returns 0 so the inner `printf()` will never get evaluated.
+
+## Conditionals and Loops - Question 4
+
+What is the output of the following C program fragment? Assuming size of unsigned int is 4 bytes.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  unsigned int i = 500;
+
+  while (i++ != 0);
+  printf("%d", i);
+  return 0;
+}
+```
+
+- a) Infinite loop
+- b) 0
+- **c) 1** ✅
+- d) Compiler error
+
+**Answer:**
+
+Range of `unsigned int` (4 bytes) -> 0 to 4294967295
+
+When `i` reached 4294967295, then because of `i++`, it comes back again to 0.
+
+As `0 != 0` is `false` therefore we come outside of the `while` loop.
+
+After we come out of the loop, `i` will contain 1 because of post increment operator. Therefore, **1** will be printed to the screen.
+
+## Conditionals and Loops - Question 5
+
+What is the output of the following C program fragment?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int x = 3;
+
+  if (x == 2); x = 0;
+  if (x == 3) x++;
+  else x += 2;
+
+  printf("x = %d", x);
+  return 0;
+}
+```
+
+- a) x = 4
+- b) **x = 2** ✅
+- c) Compiler error
+- d) x = 0
+
+**Answer:** Because after `if (x == 2);` there is a semicolon so `x = 0;` will be executed in any case. So x is 0 and the `else` will be executed which increments `x` by 2. So the output will be `x = 2`.
