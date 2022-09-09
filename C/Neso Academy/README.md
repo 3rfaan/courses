@@ -3112,8 +3112,112 @@ int main(void) {
 ```
 
 - a) x = 4
-- b) **x = 2** ✅
+- **b) x = 2** ✅
 - c) Compiler error
 - d) x = 0
 
 **Answer:** Because after `if (x == 2);` there is a semicolon so `x = 0;` will be executed in any case. So x is 0 and the `else` will be executed which increments `x` by 2. So the output will be `x = 2`.
+
+# Special Program in C - Pyramid of Stars
+
+## Prequisite: Matrices
+
+Code for filling a matrix of 2 x 2 with stars (`*`) where `i` represents the rows and `j` represents the columns.
+
+```c
+for (i = 1; i <= 2; i++) {
+  for (j = 1; j <= 2; j++) {
+    printf("*");
+  }
+}
+```
+
+For a matrix of 4 x 4 we use the following code:
+
+```c
+for (i = 1; i <= 4; i++) {
+  for (j = 1; j <= 4; j++) {
+    printf("*");
+  }
+}
+```
+
+For a pyramid of 4 x 7 like this:
+
+| -     | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+| ----- | --- | --- | --- | --- | --- | --- | --- |
+| **1** |     |     |     | \*  |     |     |     |
+| **2** |     |     | \*  | \*  | \*  |     |     |
+| **3** |     | \*  | \*  | \*  | \*  | \*  |     |
+| **4** | \*  | \*  | \*  | \*  | \*  | \*  | \*  |
+
+The relations of rows to columns is as follows:
+
+| Rows   | Columns    |
+| ------ | ---------- |
+| 3 rows | 5 columns  |
+| 4 rows | 7 columns  |
+| 5 rows | 9 columns  |
+| 6 rows | 11 columns |
+
+So: _If n is no. of rows_ then _2n - 1 will be no. of columns_.
+
+```c
+for (i = 1; i <= n; i++) {
+  for (j = 1; j <= 2 * n - 1; j++) {
+
+  }
+}
+```
+
+To print the stars and blanks in the right order, we use the following logic:
+
+```c
+if (j >= n - (i - 1) && j <= n + (i - 1)) {
+  printf("*");
+} else {
+  printf(" ");
+}
+```
+
+Combining all things together this will be the final program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int n, i, j;
+
+    printf("How many rows do you wish in your pyramid?\n");
+    scanf("%d", &n);
+
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= 2 * n - 1; j++) {
+            if (j >= n - (i - 1) && j <= n + (i - 1))
+                printf("*");
+            else
+                printf(" ");
+        }
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+Output will be:
+
+```bash
+$ How many rows do you wish in your pyramid?
+> 10
+
+         *
+        ***
+       *****
+      *******
+     *********
+    ***********
+   *************
+  ***************
+ *****************
+*******************
+```
