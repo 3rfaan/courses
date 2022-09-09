@@ -19,3 +19,29 @@ Update to a newer Rust version
 Open locally installed documentation
 Write and run a “Hello, world!” program using `rustc` directly
 Create and run a new project using the conventions of Cargo
+
+# Data Types
+
+Integer Types
+An integer is a number without a fractional component. We used one integer type in Chapter 2, the u32 type. This type declaration indicates that the value it’s associated with should be an unsigned integer (signed integer types start with i, instead of u) that takes up 32 bits of space. Table 3-1 shows the built-in integer types in Rust. We can use any of these variants to declare the type of an integer value.
+
+Table 3-1: Integer Types in Rust
+
+| Length  | Signed | Unsigned |
+| ------- | ------ | -------- |
+| 8-bit   | i8     | u8       |
+| 16-bit  | i16    | u16      |
+| 32-bit  | i32    | u32      |
+| 64-bit  | i64    | u64      |
+| 128-bit | i128   | u128     |
+| arch    | isize  | usize    |
+
+Table 3-2: Integer Literals in Rust
+
+| Number literals | Example     |
+| --------------- | ----------- |
+| Decimal         | 98_222      |
+| Hex             | 0xff        |
+| Octal           | 0o77        |
+| Binary          | 0b1111_0000 |
+| Byte (u8 only)  | b'A'        |
