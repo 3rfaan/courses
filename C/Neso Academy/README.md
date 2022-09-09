@@ -190,7 +190,7 @@ int main(void) {
 
 The program outputs:
 
-```bash
+```
 Arithmetic expression: (2 + 3) * 6 / 3 and the result is: 10
 ```
 
@@ -321,7 +321,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 Range of signed integer is from: -2147483648 to 2147483647
 ```
 
@@ -344,7 +344,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 Range of unsigned integer is from 0 to 4294967295
 ```
 
@@ -367,7 +367,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 Range of short signed integer is from -32768 to 32767
 ```
 
@@ -388,7 +388,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 Range of short unsigned integer is from 0 to 65535
 ```
 
@@ -438,7 +438,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 4294967295
 ```
 
@@ -533,7 +533,7 @@ int main(void) {
 
 This will output:
 
-```bash
+```
 A
 ```
 
@@ -587,7 +587,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 ü
 ```
 
@@ -678,7 +678,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 4
 8
 12
@@ -718,7 +718,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 0
 0.00
 0.44
@@ -748,7 +748,7 @@ int main(void) {
 
 **Answer:**
 
-```bash
+```
 Hello World!12
 ```
 
@@ -763,7 +763,7 @@ int main(void) {
 
 **Answer:**
 
-```bash
+```
      Hello
 ```
 
@@ -865,7 +865,7 @@ Scope of `var` is within the `main()` function only. Therefore called **local** 
 
 Trying to access variable `var` outside `main()` function will result in an error:
 
-```bash
+```
 error: 'var' undeclared (first use in this function)
 ```
 
@@ -911,7 +911,7 @@ int main(void) {
 
 This program will produce an error because we defined `var` two times, which is not allowed:
 
-```bash
+```
 error: redefinition of 'var'
 ```
 
@@ -935,7 +935,7 @@ There is **no error** in this code because `var` is declared in `main()` and in 
 
 The output will be:
 
-```bash
+```
 4
 3
 ```
@@ -1032,13 +1032,13 @@ int a = 5;
 
 We can now compile the two files and give the program the name _test-program_:
 
-```bash
+```
 gcc main.c other.c -o test-program
 ```
 
 The output will be:
 
-```bash
+```
 5
 ```
 
@@ -1108,7 +1108,7 @@ int increment() {
 
 We would expect the value **3**, but this is the actual output:
 
-```bash
+```
 1
 ```
 
@@ -1127,7 +1127,7 @@ int increment() {
 
 The output will be as expected:
 
-```bash
+```
 3
 ```
 
@@ -1175,7 +1175,7 @@ int increment() {
 
 The output would be:
 
-```bash
+```
 6
 ````
 
@@ -1229,7 +1229,7 @@ int main(void) {
 
 Output:
 
-```bash
+```
 3.14159
 ```
 
@@ -1367,7 +1367,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 $ Enter the first number
 > 7
 $ Enter the second number
@@ -1392,7 +1392,7 @@ int main(void) {
 
 **Answer:**
 
-```bash
+```
 43ff
 ```
 
@@ -1402,7 +1402,7 @@ The hexdecimal value will be printed directly as we use the specifier `%x` as an
 
 If we wanted the output to use uppercase letters we set the format specifier `%X` instead of `%x`:
 
-```bash
+```
 43FF
 ```
 
@@ -1504,7 +1504,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 $ Enter the first number
 > 9
 $ Enter the second number
@@ -1543,7 +1543,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 $ a * b / c = 1
 $ a + b - c = 1
 $ a + b * d - c % a = 17
@@ -1739,7 +1739,7 @@ if (b >= a) {
 
 Output:
 
-```bash
+```
 Bingo! You are in
 ```
 
@@ -1782,7 +1782,7 @@ As `(a < b)` is `false`, therefore `(b++)` will not be evaluated.
 
 The output will be:
 
-```bash
+```
 0
 3
 ```
@@ -1805,7 +1805,7 @@ int main(void) {
 
 As `(a > b)` is `true` and `(b++)` returns a value greater than 0, `incr` is `true` which will be printed as **1**. Also, `(b++)` is evaluated, so `b` will be incremented.
 
-```bash
+```
 1
 4
 ```
@@ -1830,7 +1830,7 @@ As `(a > b)` returns `true`, the second part of the `||` (OR) operand `(b++)` wi
 
 So the output will be:
 
-```bash
+```
 1
 3
 ```
@@ -1946,7 +1946,7 @@ int main(void) {
 
 Only the second `if` statement will get satisfied, because `x & y` will evaluate to 0, thus will not be printed. But `x && y` will evaluate to 1 so it will get printed:
 
-```bash
+```
 Result of x && y is 1
 ```
 
@@ -2089,7 +2089,7 @@ a = 2 + 3 = 5 (inner `printf()`)
 
 Outer `printf()` will print **1** as the inner one printed only one character. So the output will be:
 
-```bash
+```
 51
 ```
 
@@ -2170,7 +2170,7 @@ As we specified a data specifier of `%d` (int) in `printf()` and `num` is of typ
 
 So the output will be:
 
-```bash
+```
 65
 ```
 
@@ -2212,7 +2212,7 @@ printf("%d", var);
 
 The output will be:
 
-```bash
+```
 HELLO!
 5
 ```
@@ -2239,7 +2239,7 @@ printf("%d", a);
 
 The output will be:
 
-```bash
+```
 3
 ```
 
@@ -2275,7 +2275,7 @@ printf("%d", a);
 
 The output will be:
 
-```bash
+```
 8
 ```
 
@@ -2399,13 +2399,13 @@ It is not defined whether `fun1()` will be called first or whether `fun2()` will
 
 So the output will be either:
 
-```bash
+```
 NesoAcademy2
 ```
 
 or
 
-```bash
+```
 AcademyNeso2
 ```
 
@@ -2793,7 +2793,7 @@ while (i > 0) {
 
 Output will be:
 
-```bash
+```
 3
 2
 1
@@ -2934,7 +2934,7 @@ int main(void) {
 
 The output will be:
 
-```bash
+```
 1 3 5 7 9 11 13 15 17 19
 ```
 
@@ -3118,9 +3118,11 @@ int main(void) {
 
 **Answer:** Because after `if (x == 2);` there is a semicolon so `x = 0;` will be executed in any case. So x is 0 and the `else` will be executed which increments `x` by 2. So the output will be `x = 2`.
 
-# Special Program in C - Pyramid of Stars
+# Special Programs in C
 
-## Prequisite: Matrices
+## Pyramid of Stars
+
+### Prequisite: Matrices
 
 Code for filling a matrix of 2 x 2 with stars (`*`) where `i` represents the rows and `j` represents the columns.
 
@@ -3206,7 +3208,7 @@ int main(void) {
 
 Output will be:
 
-```bash
+```
 $ How many rows do you wish in your pyramid?
 > 10
 
@@ -3220,4 +3222,67 @@ $ How many rows do you wish in your pyramid?
   ***************
  *****************
 *******************
+```
+
+## Palindromes
+
+### Basics
+
+**What is a palindrome?**
+
+A number or a word or a phrase if read backwards gives the same number or a word or a phrase as it is being read forwards.
+
+**Example:** 1221, racecar, 24542 etc.
+
+**Idea:**
+
+Make last number first number, second last number the second number and so on...
+
+That means you need to reverse the number and if the reversed number is equal to the actual number then we can say that the number is a palindrome.
+
+**What happens when we divide the number by 10?**
+
+$456\div10$ -> Remainder = 6, quotient = 45
+
+```
+result = 0;
+number = 2332
+q = number
+
+remainder = q % 10
+result = result * 10 + remainder
+q = q / 10
+```
+
+In C the program would look like this:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int n, result = 0, q, rem;
+
+    printf("Please enter a number: ");
+    scanf("%d", &n);
+
+    q = n;
+    while (q != 0) {
+        rem = q % 10;
+        result = result * 10 + rem;
+        q /= 10;
+    }
+
+    if (result == n)
+        printf("It's a palindrome!\n");
+    else
+        printf("No! It's not a palindrome.\n");
+    return 0;
+}
+```
+
+The output would be:
+
+```
+$ Please enter a number: 2332
+It's a palindrome!
 ```
