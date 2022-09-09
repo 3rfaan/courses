@@ -3286,3 +3286,107 @@ The output would be:
 $ Please enter a number: 2332
 It's a palindrome!
 ```
+
+## Check If The Number Is Armstrong Number
+
+Write a program to check whether a number is an Armstrong number or not?
+
+**Armstrong number:** An Armstrong number of _order n_ is a number in which each digit when multiplied by itself _n number of times_ and finally added together, results in the same number.
+
+**Example:**
+
+371 is a 3 digit number. Therefore, its order is 3.
+
+Now here, each digit is multiplied by _itself 3 times_ and finally added together and results in our original number i.e.
+
+$$3\times3\times3+7\times7\times7+1\times1\times1=27+343+1=371$$
+
+How to write a program which checks whether a number is an Armstrong number or not?
+
+**Step #1** - First find out, how many digits are there in your number.
+
+```
+count = 0;
+while (q != 0) {
+  q = q / 10;
+  count++;
+}
+```
+
+| Step | Operation      | Count |
+| ---- | -------------- | ----- |
+| 1.   | $371\div10=37$ | 1     |
+| 2.   | $37\div10=3$   | 2     |
+| 3.   | $3\div10=0$    | 3     |
+
+**Step #2** - Multiply each digit $n$ times (in our example, $n = 3$) and add them together.
+
+```
+cnt = count, result = 0;
+
+while (q != 0) {
+  rem = q % 10;
+
+  while (cnt != 0) {
+    mul = mul * rem;
+    cnt--;
+  }
+  result = result + mul;
+  cnt = count;
+  q = q / 10;
+  mul = 1;
+}
+```
+
+| Step | `rem`         | `mul`                 | `result`     |
+| ---- | ------------- | --------------------- | ------------ |
+| 1.   | $371\mod10=1$ | 1                     | 1            |
+| 2.   | $37\mod10=7$  | $7\times7\times7=343$ | $1+343=344$  |
+| 3.   | $3\mod10=3$   | $3\times3\times3=27$  | $344+27=371$ |
+
+**Step #3** - Check whether the calculated result is equal to the actual number or not.
+
+```
+if (result == number)
+  printf("%d is an Armstrong number", number);
+else
+  printf("%d is not an Armstrong number", number);
+```
+
+Combining all of the above steps, we get the final program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int number, count = 0, result = 0, mul = 1, cnt, rem;
+
+    printf("Please enter a number: ");
+    scanf("%d", &number);
+
+    int q = number;
+    while (q != 0) {
+        q /= 10;
+        count++;
+    }
+    cnt = count;
+    q = number;
+
+    while (q != 0) {
+        rem = q % 10;
+        while (cnt != 0) {
+            mul = mul * rem;
+            cnt--;
+        }
+        result += mul;
+        cnt = count;
+        q /= 10;
+        mul = 1;
+    }
+    if (result == number)
+        printf("%d is an Armstrong number\n", number);
+    else
+        printf("%d is not an Armstrong number\n", number);
+    return 0;
+}
+```
