@@ -3404,3 +3404,89 @@ Or:
 $ Please enter a number: 890
 890 is not an Armstrong number
 ```
+
+## Check If the Number Is A Strong Number
+
+**Problem statement:**
+
+Write a program to check whether a number is a strong number or not.
+
+**What is a strong number?**
+
+**Strong number:** is a number in which the sum of _factorial_ of individual digits of a number is equal to the original number.
+
+**Example:**
+
+$$145=1!+4!+5!=1+24+120=145$$
+
+### Factorial Basics
+
+**Definition:** Factorial of a positive integer $n$, is the number which is obtained by multiplying all positive integers less than or equal to $n$.
+
+$$3!=3\times2\times1=6$$
+$$5!=5\times4\times3\times2\times1=120$$
+
+In general,
+
+$$n!=n\times(n-1)\times(n-2)\times...\times3\times2\times1$$
+
+**Step #1** - Calculate the factorial of each digit of a number and add them.
+
+```
+q = n, fact = 1, result = 0;
+
+while (q != 0) {
+  rem = q % 10;
+  for (i = 1; i <= rem; i++) {
+    fact = fact * i;
+  }
+  result = result + fact;
+  fact = 1;
+  q = q / 10;
+}
+```
+
+| `q` | `rem` | `fact`                              | `result` |
+| --- | ----- | ----------------------------------- | -------- |
+| 145 | 5     | $1\times2\times3\times4\times5=120$ | 120      |
+| 14  | 4     | $1\times2\times3\times4=24$         | 144      |
+| 1   | 1     | $1=1$                               | 145      |
+
+**Step #2** - Check whether the calculated result is equal to the actual number or not.
+
+```
+if (result == number)
+  printf("%d is a strong number", number);
+else
+  printf("%d is not a strong number", number);
+```
+
+This is the program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int n, q, rem, fact = 1, i, result = 0;
+
+    printf("Please enter a number: ");
+    scanf("%d", &n);
+
+    q = n;
+    while (q != 0) {
+        rem = q % 10;
+
+        for (i = 1; i <= rem; i++)
+            fact *= i;
+        result += fact;
+        fact = 1;
+        q /= 10;
+    }
+    if (result == n)
+        printf("%d is a strong number\n", n);
+    else
+        printf("%d is not a strong number\n", n);
+
+    return 0;
+}
+```
