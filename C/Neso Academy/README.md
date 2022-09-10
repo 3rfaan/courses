@@ -3872,3 +3872,49 @@ int main(void) {
     return 0;
 }
 ```
+
+## Binary to Decimal Conversion
+
+### Basics
+
+| $2^3$ | $2^2$ | $2^1$ | $2^0$ |
+| ----- | ----- | ----- | ----- |
+| 1     | 0     | 0     | 1     |
+
+$$2^3\times1+2^2\times0+2^1\times0+2^0\times1=8\times1+1\times1=9$$
+
+This is the C program to convert binary into decimal representation:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int decimal = 0, binary, base = 1, rem, num;
+
+    printf("Enter the binary number: ");
+    scanf("%d", &binary);
+
+    num = binary;
+    while (binary != 0) {
+        rem = binary % 10;
+        decimal += rem * base;
+        binary /= 10;
+        base *= 2;
+    }
+    printf("Decimal equivalent of binary number %d is: %d\n", num, decimal);
+    return 0;
+}
+```
+
+**Explanation:**
+
+Suppose we have a binary number: `1 0 0 1`.
+
+Going step by step through the program:
+
+| Iteration | `rem`          | `decimal`      | `binary`         | `base`        |
+| --------- | -------------- | -------------- | ---------------- | ------------- |
+| 1.        | $1001\mod10=1$ | $0+1\times1=1$ | $1001\div10=100$ | $1\times2=2$  |
+| 2.        | $100\mod10=0$  | $1+0\times2=1$ | $100\div10=10$   | $2\times2=4$  |
+| 3.        | $10\mod10=0$   | $1+0\times4=1$ | $10\div10=1$     | $4\times2=8$  |
+| 4.        | $1\mod10=1$    | $1+1\times8=9$ | $1\div10=0$      | $8\times2=16$ |
