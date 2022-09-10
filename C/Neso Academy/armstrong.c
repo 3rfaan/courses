@@ -17,7 +17,7 @@ int main(void) {
     while (q != 0) {
         rem = q % 10;
         while (cnt != 0) {
-            mul = mul * rem;
+            mul *= rem;
             cnt--;
         }
         result += mul;

@@ -3375,7 +3375,7 @@ int main(void) {
     while (q != 0) {
         rem = q % 10;
         while (cnt != 0) {
-            mul = mul * rem;
+            mul *= rem;
             cnt--;
         }
         result += mul;
@@ -3389,4 +3389,18 @@ int main(void) {
         printf("%d is not an Armstrong number\n", number);
     return 0;
 }
+```
+
+Output will be:
+
+```
+$ Please enter a number: 371
+371 is an Armstrong number
+```
+
+Or:
+
+```
+$ Please enter a number: 890
+890 is not an Armstrong number
 ```
