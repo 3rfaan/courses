@@ -3758,3 +3758,75 @@ int main(void) {
     return 0;
 }
 ```
+
+## Fibonacci Series
+
+**Problem statement:**
+
+Write a program to print _Fibonacci_ series upto $n$ number of terms.
+
+### What is Fibonacci Series?
+
+In Fibonacci series, next term is obtained by taking sum of previous two terms.
+
+| $n$      | 1   | 2   | 3   | 4   | 5   | 6   |
+| -------- | --- | --- | --- | --- | --- | --- |
+| $fib(n)$ | 0   | 1   | 1   | 2   | 3   | 5   |
+
+Mathematically,
+
+$$fib(n)=fib(n-1)+fib(n-2)$$
+
+Here we represent exactly that in pseudocode:
+
+```
+a = 0;
+b = 1;
+
+for (i = 1; i <= n; i++) {
+  printf("%d ", a);
+  result = a + b;
+  a = b;
+  b = result;
+}
+```
+
+**Example:**
+
+$a=0$
+
+$b=1$
+
+$n=6$
+
+| Iteration ($n$) | Output | `result` | `a` | `b` |
+| --------------- | ------ | -------- | --- | --- |
+| 1               | 0      | $0+1=1$  | 1   | 1   |
+| 2               | 1      | $1+1=2$  | 1   | 2   |
+| 3               | 1      | $1+2=3$  | 2   | 3   |
+| 4               | 2      | $2+3=5$  | 3   | 5   |
+| 5               | 3      | $3+5=8$  | 5   | 8   |
+| 6               | 5      | $5+8=13$ | 8   | 13  |
+
+The C program looks like this:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int a, b, result, n, i;
+
+    printf("Enter the number of terms: ");
+    scanf("%d", &n);
+
+    a = 0, b = 1;
+    for (i = 1; i <= n; i++) {
+        printf("%d ", a);
+        result = a + b;
+        a = b;
+        b = result;
+    }
+    putchar('\n');
+    return 0;
+}
+```
