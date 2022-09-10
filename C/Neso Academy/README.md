@@ -3918,3 +3918,114 @@ Going step by step through the program:
 | 2.        | $100\mod10=0$  | $1+0\times2=1$ | $100\div10=10$   | $2\times2=4$  |
 | 3.        | $10\mod10=0$   | $1+0\times4=1$ | $10\div10=1$     | $4\times2=8$  |
 | 4.        | $1\mod10=1$    | $1+1\times8=9$ | $1\div10=0$      | $8\times2=16$ |
+
+## Calculating Power of an Integer
+
+### Basics
+
+$$a^b = a\times a\times a\times a...b\ times$$
+
+where $a$ and $b$ are integers.
+
+**Example:**
+
+$$2^3=2\times2\times2$$
+$$2^{-3}=\frac1 2\times\frac1 2\times\frac1 2$$
+
+### Implementation
+
+```c
+int base, exponent;
+int power = 1, expo;
+
+printf("Enter the base: ");
+scanf("%d", &base);
+printf("Enter the exponent: ");
+scanf("%d", &exponent);
+
+expo = exponent;
+if (exponent > 0) {
+  while (exponent != 0) {
+    power *= base;
+    exponent--;
+  }
+  printf("%d to the power of %d is %d\n", base, expo, power);
+}
+```
+
+For the example value $2^3$ we have the following iterations of the code:
+
+| Iteration | `power`      | `exponent` |
+| --------- | ------------ | ---------- |
+| 1.        | $1\times2=2$ | $3-1=2$    |
+| 2.        | $2\times2=4$ | $2-1=1$    |
+| 3.        | $4\times2=8$ | $1-1=0$    |
+
+⛔️ This program works only with positive exponents!
+
+If we wanted to include negative exponents let's add some stuff:
+
+```c
+int base, exponent, expo;
+double power1 = 1.0;
+
+printf("Enter the base: ");
+scanf("%d", &base);
+printf("Enter the exponent: ");
+scanf("%d", &exponent);
+
+expo = exponent;
+if (exponent < 0) {
+  while (exponent != 0) {
+    power1 *= (1.0 / base);
+    exponent++;
+  }
+  printf("%d to the power of %d is %.10f\n", base, expo, power1);
+}
+```
+
+Let's calculate $2^{-3}$
+
+| Iteration | `power1`                     | `exponent` |
+| --------- | ---------------------------- | ---------- |
+| 1.        | $1\times(1.0\div2)=0.5$      | $-3+1=-2$  |
+| 2.        | $0.5\times(1.0\div2)=0.25$   | $-2+1=-1$  |
+| 3.        | $0.25\times(1.0\div2)=0.125$ | $-1+1=0$   |
+
+So, the output will be:
+
+```
+2 to the power of -3 is 0.125
+```
+
+Combining the two above programs we can build the full C program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int base, exponent, expo, power = 1;
+    double power1 = 1.0;
+
+    printf("Enter the base: ");
+    scanf("%d", &base);
+    printf("Enter the exponent: ");
+    scanf("%d", &exponent);
+
+    expo = exponent;
+    if (exponent > 0) {
+        while (exponent != 0) {
+            power *= base;
+            exponent--;
+        }
+        printf("%d to the power of %d is %d\n", base, expo, power);
+    } else {
+        while (exponent != 0) {
+            power1 *= (1.0 / base);
+            exponent++;
+        }
+        printf("%d to the power of %d is %.10f\n", base, expo, power1);
+    }
+    return 0;
+}
+```
