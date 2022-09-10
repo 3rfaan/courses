@@ -4085,3 +4085,87 @@ Output:
 $ Enter a year: 2000
 2000 is a leap year!
 ```
+
+## Perfect Number
+
+### Basics
+
+#### What is a Perfect Number?
+
+Perfect number is a positive integer that is equal to the sum of all its proper positive divisors excluding the number itself.
+
+**Example:**
+
+6 is a perfect number because the proper positive divisors of 6 are 1, 2 and 3 (excluding 6). The sum of all its positive divisors is 6 i.e. $1+2+3=6$.
+
+### Code
+
+```c
+int number;
+
+printf("Enter the number: ");
+scanf("%d", &number);
+
+int i, rem, sum = 0;
+
+for (i = 1; i < number; i++) {
+  rem = number % i;
+
+  if (rem == 0) {
+    sum += i;
+  }
+}
+```
+
+If we had 6 as an input for `number`, let's see the iterations of the program:
+
+| Iteration | `rem`      | `sum`   |
+| --------- | ---------- | ------- |
+| 1.        | $6\mod1=0$ | $0+1=1$ |
+| 2.        | $6\mod2=0$ | $1+2=3$ |
+| 3.        | $6\mod3=0$ | $3+3=6$ |
+
+The we check if `sum` is equal to the inputted `number` variable:
+
+```c
+if (sum == number)
+  printf("%d is a perfect number\n", number);
+else
+  printf("%d is not a perfect number\n", number);
+```
+
+The full C program looks like this:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int number;
+
+    printf("Enter the number: ");
+    scanf("%d", &number);
+
+    int i, rem, sum = 0;
+
+    for (i = 1; i < number; i++) {
+        rem = number % i;
+
+        if (rem == 0) {
+            sum += i;
+        }
+    }
+    if (sum == number)
+        printf("%d is a perfect number\n", number);
+    else
+        printf("%d is not a perfect number\n", number);
+
+    return 0;
+}
+```
+
+Output:
+
+```
+$ Enter the number: 28
+28 is a perfect number
+```
