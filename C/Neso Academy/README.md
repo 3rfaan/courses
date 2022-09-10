@@ -3490,3 +3490,120 @@ int main(void) {
     return 0;
 }
 ```
+
+## Check If The Number Is Prime Number
+
+**Problem statement:**
+
+Write a program to check whether a number is prime or not?
+
+### Basic Terminology
+
+- **Prime number** - A _number greater than 1_ is called a prime number, if it has only two factors, namely 1 and the number itself.
+  - **Example:** `2, 3, 5, 7, 11` ...
+- **Composite number** - A _composite number_ is a positive integer which is not prime i.e. which has factors other than 1 and itself.
+  - **Example:** `4, 6, 8, 9, 10` ...
+
+**Question:** Is 1 a prime number?
+
+**Solution:** No. It's not a prime number because according to the definition of prime numbers - A prime number is a number which has exactly two divisors, 1 and itself. But 1 has only one divisor i.e. itself. Therefore it is not a prime number.
+
+Another reason - it violates the _fundamental theorem of arithmetic_.
+
+According to this theorem - Every positive integer greater than one can be written _uniquely_ as the product of primes.
+
+**Example:** $9=3\times3$
+
+But we can also write it as:
+
+$$9=3\times3\times1$$
+$$9=3\times3\times1\times1$$
+$$9=3\times3\times1\times1\times1$$
+
+### The Big Picture
+
+In order to find whether a number is prime or not, we first need to calculate the square root of that number and then we divide that number by numbers less than or equal to the square root of that number. **If it is divisible by any of the number** then we can say that _the number is not a prime number_ else it is a prime number.
+
+**Example:** Suppose we need to find whether 23 is a prime number or not.
+
+**Step 1** - _Take square root of 23_. Which is nearly 4.7958 = 7.
+
+**Step 2** - Divide 23 by numbers greater than 2 and less than or equal to 5. If it is divisible by any of those numbers then it is not prime else it is a prime.
+
+As 23 is not divisible by any of those numbers, therefore 23 is a prime number.
+
+In code it would look like this:
+
+```c
+#include <math.h>
+#include <stdio.h>
+
+int main(void) {
+    int x;
+    int i, val1, val2, count = 0;
+
+    printf("Please enter a number (only positive integers): ");
+    scanf("%d", &x);
+
+    val1 = ceil(sqrt(x));
+    val2 = x;
+
+    for (i = 2; i <= val1; i++)
+        if (val2 % i == 0) count = 1;
+
+    if ((count == 0 && val2 != 1) || val2 == 2 || val2 == 3)
+        printf("%d is a prime number\n", val2);
+    else
+        printf("%d is not a prime number\n", val2);
+
+    return 0;
+}
+```
+
+#### Part 1 - Finding the Square Root
+
+```c
+#include <math.h>
+
+int main(void) {
+  int x, val1;
+
+  val1 = ceil(sqrt(x));
+}
+```
+
+##### `sqrt()`
+
+- `sqrt()` means square root.
+- Available in _math.h_ library.
+
+**Syntax:** `double sqrt(double x)`
+
+##### `ceil()`
+
+- `ceil()` function returns a smallest integer greater than or equal to `x`.
+- Available in _math.h_ library.
+
+**Syntax:** `double ceil(double x)`
+
+#### Part 2 - Check the Divisibility
+
+```c
+int val2 = x, count = 0;
+
+for (i = 2; i <= val1; i++)
+  if (val2 % i == 0) count = 1;
+```
+
+If `val2` is divisible by any of the number less than or equal to the square root of `x`. If it is, then `count` will be set to 1 and we know that `x` is not a prime number.
+
+#### Part 3 - Check Whether a Number is Prime or not
+
+```c
+if ((count == 0 && val2 != 1) || val2 == 2 || val2 == 3)
+  printf("%d is a prime number\n", val2);
+else
+  printf("%d is not a prime number\n", val2);
+```
+
+If `count` equals 0 and the number is not 1 then we should print that it is not a prime number. If it is 2 or 3 then we print that it is a prime number. These base cases have not been checked by the program before that's why we have to check them here.
