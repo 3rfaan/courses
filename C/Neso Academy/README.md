@@ -4030,3 +4030,58 @@ int main(void) {
     return 0;
 }
 ```
+
+## Check Leap Year
+
+### Basics
+
+#### What is a Leap Year?
+
+A leap year is a year having 366 days.
+
+The extra day is the 29th February.
+
+Leap year arrives after every four years.
+
+**Note:** Every year that is exactly divisible by 4 is a leap year, except the centurial year that is exactly divisible by 100. But these centurial years are leap years if they are exactly divisible by 400.
+
+#### How to Check Whether a Year is a Leap Year or not?
+
+1. If a year is _divisible by 400_ then it is a _leap year_.
+
+- **Example:** 2000 is divisible by 400. Therefore it is a leap year.
+
+2. If a year is _not divisible by 400_ but it is _divisible by 100_ then it is _not a leap year_.
+
+- **Example:** 1900 is divisible by 100 but not by 400. Therefore it is not a leap year.
+
+3. If a year is _not divisible by 400_ and _not divisible by 100_ but it _is divisible by 4_ then it is a leap year.
+
+- **Example:** 2012 is not divisible by 400 and not divisible by 100 but it is divisible by 4. Therefore it is a leap year.
+
+This would be the corresponding C program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int year;
+
+    printf("Enter a year: ");
+    scanf("%d", &year);
+
+    if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0))
+        printf("%d is a leap year!\n", year);
+    else
+        printf("%d is not a leap year!\n", year);
+
+    return 0;
+}
+```
+
+Output:
+
+```
+$ Enter a year: 2000
+2000 is a leap year!
+```
