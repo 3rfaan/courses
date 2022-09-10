@@ -3607,3 +3607,154 @@ else
 ```
 
 If `count` equals 0 and the number is not 1 then we should print that it is not a prime number. If it is 2 or 3 then we print that it is a prime number. These base cases have not been checked by the program before that's why we have to check them here.
+
+## Addition Without `+` Operator
+
+**Problem statement:**
+
+Write a program to add two numbers without using `+` operator.
+
+💡 The _idea_ is to use increment and decrement operators.
+
+```
+x = 3, y = 4
+```
+
+**Algorithm:**
+
+1. `x++;` `y--;`
+2. Repeat step 1 until `y` becomes 0.
+
+| Step | `x` | `y` |
+| ---- | --- | --- |
+| 1.   | 4   | 3   |
+| 2.   | 5   | 2   |
+| 3.   | 6   | 1   |
+| 4.   | 7   | 0   |
+
+The program in C looks like this:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int x, y;
+
+    printf("Enter the two numbers you want to add: ");
+    scanf("%d %d", &x, &y);
+
+    while (y != 0) {
+        x++, y--;
+    }
+    printf("Sum of two values is: %d\n", x);
+    return 0;
+}
+```
+
+⛔️ This program only works with _positive_ integers!
+
+But there is a solution for adding negative integers to the program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int x, y;
+    printf("Enter the two numbers you want to add: ");
+    scanf("%d %d", &x, &y);
+
+    if (y > 0)
+        while (y != 0)
+            x++, y--;
+    else if (y < 0)
+        while (y != 0)
+            x--, y++;
+    printf("Sum of two values is: %d\n", x);
+    return 0;
+}
+```
+
+### Half Adder Basics
+
+#### Truth Table
+
+| A   | B   | S   | C   |
+| --- | --- | --- | --- |
+| 0   | 0   | 0   | 0   |
+| 0   | 1   | 1   | 0   |
+| 1   | 0   | 1   | 0   |
+| 1   | 1   | 0   | 1   |
+
+S = Sum = `A XOR B`
+
+C = Carry = `A AND B`
+
+#### Implementation
+
+```
+while (b != 0) {
+  sum = a ^ b;
+  carry = (a & b) << 1;
+
+  a = sum;
+  b = carry;
+}
+```
+
+#### Example 1
+
+- $a=5$ (`0 1 0 1`)
+- $b=10$ (`1 0 1 0`)
+- $5+10=15$ **(`1 1 1 1`)**
+
+| `sum`                               | `carry`                         |
+| ----------------------------------- | ------------------------------- |
+| `0 1 0 1 ^ 1 0 1 0` = **`1 1 1 1`** | `0 1 0 1 & 1 0 1 0` = `0 0 0 0` |
+
+As `b` is equal to 0 after the first iteration, we move out of the `while` loop and print `a` which is **15**.
+
+#### Example 2
+
+- $a=7$ (`0 1 1 1`)
+- $b=2$ (`0 0 1 0`)
+- $7+2=9$ **(`1 0 0 1`)**
+
+| Iteration | `sum`                               | `carry`                                          |
+| --------- | ----------------------------------- | ------------------------------------------------ |
+| 1         | `0 1 1 1 ^ 0 0 1 0` = `0 1 0 1`     | `0 1 1 1 & 0 0 1 0` = `0 0 1 0 << 1` = `0 1 0 0` |
+| 2         | `0 1 0 1 ^ 0 1 0 0` = `0 0 0 1`     | `0 1 0 1 & 0 1 0 0` = `0 1 0 0 << 1` = `1 0 0 0` |
+| 3         | `0 0 0 1 ^ 1 0 0 0` = **`1 0 0 1`** | `0 0 0 1 & 1 0 0 0` = `0 0 0 0`                  |
+
+#### Example 3
+
+- $a=7$ (`0 1 1 1`)
+- $b=7$ (`0 1 1 1`)
+- $7+7=14$ **(`1 1 1 0`)**
+
+| Iteration | `sum`                               | `carry`                                          |
+| --------- | ----------------------------------- | ------------------------------------------------ |
+| 1         | `0 1 1 1 ^ 0 1 1 1` = `0 0 0 0`     | `0 1 1 1 & 0 1 1 1` = `0 1 1 1 << 1` = `1 1 1 0` |
+| 2         | `0 0 0 0 ^ 1 1 1 0` = **`1 1 1 0`** | `0 0 0 0 & 1 1 1 0` = `0 0 0 0`                  |
+
+#### Final Code
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int sum, carry, a, b;
+
+    printf("Enter the two numbers: ");
+    scanf("%d %d", &a, &b);
+
+    while (b != 0) {
+        sum = a ^ b;
+        carry = (a & b) << 1;
+
+        a = sum;
+        b = carry;
+    }
+    printf("Sum of two numbers is: %d\n", sum);
+    return 0;
+}
+```
