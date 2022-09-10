@@ -3930,6 +3930,7 @@ where $a$ and $b$ are integers.
 **Example:**
 
 $$2^3=2\times2\times2$$
+
 $$2^{-3}=\frac1 2\times\frac1 2\times\frac1 2$$
 
 ### Implementation
