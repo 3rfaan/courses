@@ -4169,3 +4169,443 @@ Output:
 $ Enter the number: 28
 28 is a perfect number
 ```
+
+# Introduction to Functions in C
+
+## Basics of Function
+
+**Definition:** Function is basically a set of statements that takes inputs, perform some computation and produces output.
+
+**Syntax:** `return_type func_name(set_of_inputs);`
+
+## Why Functions?
+
+There are two important reasons of why we are using functions:
+
+1. **Reusability** - Once the function is defined, it can be reused over and over again.
+2. **Abstraction** - If you are just using the function in your program then you don't have to worry about _how it works inside!_
+
+## Demonstration
+
+```c
+#include <stdio.h>
+
+int area_of_rect(int length, int breadth) {
+    int area;
+
+    area = length * breadth;
+    return area;
+}
+
+int main(void) {
+    int l = 10, b = 5;
+    int area = area_of_rect(l, b);
+
+    printf("%d\n", area);
+
+    l = 50, b = 20;
+    area = area_of_rect(l, b);
+
+    printf("%d\n", area);
+}
+```
+
+Output:
+
+```
+50
+1000
+```
+
+## What is Function Declaration?
+
+As we already know, when we declare a variable, we declare its properties to the compiler.
+
+**Example:** `int var;`
+
+**Properties:**
+
+1. Name of variable: `var`
+2. Type of variable: `int`
+
+Similarly, function declaration (also called _function prototype_) means declaring the properties of a function to the compiler.
+
+**Example:** `int fun(int, char);`
+
+**Properties:**
+
+| №   | Properties              | Code   |
+| --- | ----------------------- | ------ |
+| 1.  | Name of function        | `fun`  |
+| 2.  | Return type of function | `int`  |
+| 3.  | Number of parameters    | 2      |
+| 4.  | Type of parameter 1     | `int`  |
+| 5.  | Type of parameter 2     | `char` |
+
+### Important Takeaway
+
+- It is not necessary to put the name of the parameters in function prototype.
+  - **Example:** `int fun(int var1, char var2);`
+
+```c
+#include <stdio.h>
+
+char fun(void); // function prototype
+
+int main(void) {
+  char c = fun();
+
+  printf("character is: %c", c);
+  return 0;
+}
+
+char fun(void) {
+  return 'a';
+}
+```
+
+#### Is it Always Necessary to Declare the Function before using it?
+
+Not necessary but it is preferred to declare the function before using it.
+
+```c
+#include <stdio.h>
+
+char fun(void) {
+  return 'a';
+}
+
+int main(void) {
+  char c = fun();
+
+  printf("character is: %c", c);
+  return 0;
+}
+```
+
+This code will compile, as `fun()` has been defined before the `main()` function.
+
+## Function Definition
+
+### Basics
+
+#### What is Function Definition?
+
+Function definition consists of block of code which is capable of performing some specific task.
+
+**Example:**
+
+```c
+int add(int a, int b) {
+  int sum;
+
+  sum = a + b;
+  return sum;
+}
+```
+
+### How Function Works?
+
+```c
+int add(int, int); // function prototype
+
+int main(void) {
+  int m = 20, n = 30, sum;
+
+  sum = add(m, n);
+  printf("sum is %d", sum);
+  return 0;
+}
+
+int add(int a, int b) {
+  return (a + b);
+}
+```
+
+Output: `sum is 50`
+
+### What is the Difference Between an Argument and a Parameter?
+
+**Parameter:** A variable in the declaration and definition of the function.
+
+**Argument:** The actual value of the parameter that gets passed to the function.
+
+📝 **NOTE:** Parameter is also called as **Formal Parameter** and argument is also called as **Actual Parameter**.
+
+## Call By Value & Call By Reference
+
+### Recall
+
+**Actual Parameters:** The parameters passed to a function.
+
+**Formal Parameters:** The parameters received by a function.
+
+### Call By Value
+
+Here values of actual parameters will be copied to formal parameters and these two different parameters store values in different locations.
+
+```c
+#include <stdio.h>
+
+int fun(int x, int y) {
+  x = 20, y = 10;
+}
+
+int main(void) {
+  int x = 10, y = 20;
+
+  fun(x, y);
+  printf("x = %d, y = %d", x, y);
+  return 0;
+}
+```
+
+Output: `x = 10, y = 20`
+
+The variables `x` and `y` are _local_ to the `fun()` function. So when the execution of the function ends, these two variables are destroyed. So they have no impact on the variables defined and initialized in `main()`.
+
+### Call By Reference
+
+Here both actual and formal parameters refers to same memory location. Therefore, any changes made to the formal parameters will get reflected to actual parameters.
+
+```c
+int x = 10, y = 20;
+
+fun(&x, &y);
+```
+
+Here we are passing the addresses of variable `x` and `y` instead of the values.
+
+The function will receive the addresses and can manipulate the actual value in memory using pointers:
+
+```c
+int fun(int *ptr1, int *ptr2) {
+  *ptr1 = 20;
+  *ptr2 = 10;
+}
+```
+
+This would be the whole program:
+
+```c
+#include <stdio.h>
+
+int fun(int *ptr1, int *ptr2) {
+  *ptr1 = 20;
+  *ptr2 = 10;
+}
+
+int main(void) {
+  int x = 10, y = 20;
+
+  fun(&x, &y); // passing addresses of x and y
+  printf("x = %d, y = %d", x, y);
+  return 0;
+}
+```
+
+Output: `x = 20, y = 10`
+
+## Questions on Functions
+
+### Question 1
+
+Consider the function `func()` shown below:
+
+```c
+int func(int num) {
+  int count = 0;
+
+  while (num) {
+    count++;
+    num >>=1;
+  }
+  return count;
+}
+```
+
+The value returned by `func(435)` is **\_\_\_**.
+
+**Answer**:
+
+`num = 435`
+
+435 is represented as `110110011` in binary.
+
+| Iteration | Operation                      | `count` |
+| --------- | ------------------------------ | ------- |
+| 1.        | `110110011 >> 1` = `011011001` | 1       |
+| 2.        | `011011001 >> 1` = `001101100` | 2       |
+| 9.        | `000000001 >> 1` = `000000000` | 9       |
+
+So the answer will be **9** as it takes 9 iterations and `count` gets incremented by 1 each iteration starting at 0.
+
+### Question 2
+
+What is the output of the following C program fragment:
+
+```c
+void f1(int a, int b) {
+  int c;
+
+  c = a, a = b, b = c;
+}
+
+void f2(int *a, int *b) {
+  int c;
+
+  c = *a, *a = *b, *b = c;
+}
+
+int main(void) {
+  int a = 4, b = 5, c = 6;
+
+  f1(a, b);
+  f2(&b, &c);
+  printf("%d", c - a - b);
+  return 0;
+}
+```
+
+5 - 4 - 6 = -5
+
+After the execution of `f1()` the variables have values as follows:
+
+| `a` | `b` | `c` |
+| --- | --- | --- |
+| 5   | 4   | 4   |
+
+But these variables will be destroyed.
+
+After the execution of `f2()` the variables have values as follows:
+
+| `a` (`&b`) | `b` (`&c`) | `c` |
+| ---------- | ---------- | --- |
+| 6          | 5          | 5   |
+
+In the `main()` function, the variables will have the following values after calling `f1()` (no impact) and `f2()`:
+
+| `a` | `b` | `c` |
+| --- | --- | --- |
+| 4   | 6   | 5   |
+
+So the `printf()` statement will print `c - a - b` which is equivalent to:
+
+$$5-4-6=-5$$
+
+So the output of the C program will be: `-5`
+
+### Question 3
+
+Consider the following C program:
+
+```c
+int fun(void) {
+  static int num = 16;
+
+  return num--;
+}
+
+int main(void) {
+  for (fun(); fun(); fun())
+    printf("%d ", fun());
+  return 0;
+}
+```
+
+What is the output?
+
+- a) Infinite loop
+- b) `13 10 7 4 1`
+- **c) `14 11 8 5 2`** ✅
+- d) `15 12 8 5 2`
+
+**Answer:**
+
+To understand this problem we look at the value of variable `num` in each iteration:
+
+| for | `fun()` | `fun()` | `fun()` | Output |
+| --- | ------- | ------- | ------- | ------ |
+| 1.  | 16      | 15      | -       | 14     |
+| 2.  | -       | 12      | 13      | 11     |
+| 3.  | -       | 9       | 10      | 8      |
+| 4.  | -       | 6       | 7       | 5      |
+| 5.  | -       | 3       | 4       | 2      |
+| 6.  | -       | 0       | 1       | -      |
+
+In a `for` loop, on the first interation the first leftmost statement gets executed, then the condition. After that the increment rightmost statement gets executed and then the condition. Of course on every iteration also the `printf()` statement gets executed.
+
+First iteration:
+
+```
+    1.      2.      -
+for (fun(); fun(); fun())
+```
+
+After the first iteration:
+
+```
+    -       2.     1.
+for (fun(); fun(); fun())
+```
+
+## Static Functions
+
+### Basic
+
+- In C, functions are global by default.
+  - This means that if we want to access the function outside from the file where it is declared, we can access it easy.
+- Now if we want to restrict this access, then we make our function static by simply putting a keyword `static` in front of the function.
+
+Suppose we have two files, _main.c_ and _file1.c_:
+
+_main.c_
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int fun(int, int);
+
+int main(void) {
+  int sum = fun(3, 4);
+
+  printf("%d", sum);
+  return 0;
+}
+```
+
+_file1.c_
+
+```c
+int fun(int a, int b) {
+  int c;
+
+  c = a + b;
+  return c;
+}
+```
+
+If we compiled it this way, it will compile without any problems. The output will be:
+
+```
+7
+```
+
+If we modified the _file1.c_ file to make `fun()` a static variable the `main()` function cannot access the function `fun()` because as it is static the scope changed so the function is only visible in the file itself, not external.
+
+```c
+static int fun(int a, int b) {
+  int c;
+
+  c = a + b;
+  return c;
+}
+```
+
+Output: **Error**
+
+### Important Takeaways
+
+- Static functions are restricted to the files where they are declared.
+- Reuse of the same function in another file is possible.
