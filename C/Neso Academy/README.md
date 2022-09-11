@@ -4609,3 +4609,457 @@ Output: **Error**
 
 - Static functions are restricted to the files where they are declared.
 - Reuse of the same function in another file is possible.
+
+# Static and Dynamic Scoping
+
+## Preliminaries
+
+Memory layout of a C program:
+
+| Stack                    |
+| ------------------------ |
+| Heap                     |
+| Uninitialized data (bss) |
+| Initialized data         |
+| Text/Code segment        |
+
+- Stack is a container (or memory segment) which holds some data.
+- Data is retrieved in _Last In First Out_ (LIFO) fashion.
+- Two operations: _push_ and _pop_.
+
+If we had for example this C program:
+
+```c
+int main(void) {
+  fun1();
+  return 0;
+}
+
+void fun1(void) {
+  fun2();
+}
+
+void fun2(void) {
+  fun3();
+}
+
+void fun3(void) {
+  return;
+}
+```
+
+The stack looks like this:
+
+| Stack    |
+| -------- |
+| `fun3()` |
+| `fun2()` |
+| `fun1()` |
+| `main()` |
+
+So `fun3()` will return and removed from the stack. Then `fun2()`, then `fun1()` until control goes back to the `main()` function. When `main()` finishes executing, the stack is empty and this indicates that all functions of the program finished their executions.
+
+But not the real functions are stored in the stack, but the **Activition Record**.
+
+**Activision Record** - is a portion of a stack which generally is composed of:
+
+1. Locals of the callee
+2. Return address to the caller
+3. Parameters of the callee
+
+**Example:**
+
+```c
+int main(void) {
+  int a = 10;
+
+  a = fun1(a);
+  printf("%d", a);
+}
+
+int fun1(int a) {
+  int b = 5;
+
+  b = b + a;
+  return b;
+}
+```
+
+Output: `15`
+
+| Stack                          |
+| ------------------------------ |
+| `b = 5`, `some addr`, `a = 10` |
+| `a = 10`                       |
+
+After execution of `fun1()`, the activation record of this functions gets popped from the stack and control returns to `main()`, where `a` will be assigned a value of 15 which was returned by `fun1()`.
+
+| Stack      |
+| ---------- |
+| `printf()` |
+| `a = 15`   |
+
+After the `printf()` function, there is nothing left in `main()` to be executed, so `main()` returns 0 and exits and the program is done.
+
+## Why Scoping?
+
+Scoping is necessary if you want to reuse variable names.
+
+**Example:**
+
+```c
+int fun1(void) {
+  int a = 10;
+}
+
+int fun2(void) {
+  int a = 40;
+}
+```
+
+## What is Static Scoping?
+
+**In static scoping (or lexical scoping),** definition of a variable is resolved by searching its containing block or function. If that fails, then searching the outer containing block and so on.
+
+```c
+int a = 10, b = 20;
+
+int fun(void) {
+  int a = 5;
+
+  {
+    int c;
+
+    c = b / a;
+    printf("%d", c);
+  }
+}
+```
+
+Output: `4`
+
+### Static Scoping Example
+
+```c
+int fun1(int);
+int fun2(int);
+
+int a = 5;
+
+int main(void) {
+  int a = 10;
+
+  a = fun1(a);
+  printf("%d", a);
+}
+
+int fun1(int b) {
+  b = b + 10;
+  b = fun2(b);
+  return b;
+}
+
+int fun2(int b) {
+  int c;
+
+  c = a + b;
+  return c;
+}
+```
+
+Output: `25`
+
+| Initialized Data Segment |
+| ------------------------ |
+| Global var: `a = 5`      |
+
+| Stack (Call Stack)       |
+| ------------------------ |
+| fun2: `b = 20`, `c = 25` |
+| fun1: `b = 20`           |
+| main: `a = 10`           |
+
+| Stack (Call Stack) |
+| ------------------ |
+| fun1: `b = 25`     |
+| main: `a = 10`     |
+
+| Stack (Call Stack) |
+| ------------------ |
+| main: `a = 25`     |
+
+| Stack (Call Stack) |
+| ------------------ |
+| -                  |
+
+## What is Dynamic Scoping?
+
+**In dynamic scoping,** definition of a variable is resolved by searching its containing block and if not found, then searching its calling function and if still not found then the function which called that calling function will be searched and so on.
+
+### Dynamic Scoping Example
+
+```c
+int fun1(int);
+int fun2(int);
+
+int a = 5;
+
+int main(void) {
+  int a = 10;
+
+  a = fun1(a);
+  printf("%d", a);
+}
+
+int fun1(int b) {
+  b = b + 10;
+  b = fun2(b);
+  return b;
+}
+
+int fun2(int b) {
+  int c;
+
+  c = a + b;
+  return c;
+}
+```
+
+Output: `30`
+
+| Initialized Data Segment |
+| ------------------------ |
+| Global var: `a = 5`      |
+
+| Stack (Call Stack)       |
+| ------------------------ |
+| fun2: `b = 20`, `c = 30` |
+| fun1: `b = 20`           |
+| main: `a = 10`           |
+
+| Stack (Call Stack) |
+| ------------------ |
+| fun1: `b = 30`     |
+| main: `a = 10`     |
+
+| Stack (Call Stack) |
+| ------------------ |
+| main: `a = 30`     |
+
+| Stack (Call Stack) |
+| ------------------ |
+| -                  |
+
+## Homework Problem
+
+What will be the output of the following program snippet:
+
+```c
+int a, b; // a = 0, b = 0
+
+void print(void) {
+  printf("%d %d", a, b);
+}
+
+int fun1(void) {
+  int a, c;
+
+  a = 0, b = 1, c = 2;
+  return c;
+}
+
+void fun2(void) {
+  int b;
+
+  a = 3, b = 4;
+  print();
+}
+
+int main(void) {
+  a = fun1();
+  fun2();
+  return 0;
+}
+```
+
+With static scoping
+
+- a) `2 4`
+- **b) `3 1`** ✅
+- c) `2 5`
+- d) `3 4`
+
+With dynamic scoping
+
+- a) `2 4`
+- b) `3 1`
+- c) `2 5`
+- **d) `3 4`** ✅
+
+**Answer:**
+
+In static scoping, definition of a variable is resolved by searching its containing block or function. If that fails, then searching the outer containing block and so on.
+
+Let's go through the program and observe the variables:
+
+| Function    | `a` (only global!) | `b` (only global!)                                      |
+| ----------- | ------------------ | ------------------------------------------------------- |
+| Global vars | 0                  | 0                                                       |
+| `main()`    | `a = fun1()`       | 0                                                       |
+| `fun1()`    | 0                  | 1                                                       |
+| `main()`    | `a = fun1()` = 2   | 1                                                       |
+| `fun2()`    | 3                  | 1 (`b` in `fun2()` is local, global var doesn't change) |
+| `print()`   | 3                  | 1                                                       |
+
+For dynamic scoping we have to also consider the local variables of the functions:
+
+| Function    | `a`              | `b` |
+| ----------- | ---------------- | --- |
+| Global vars | 0                | 0   |
+| `main()`    | `a = fun1()`     | 0   |
+| `fun1()`    | 0                | 1   |
+| `main()`    | `a = fun1()` = 2 | 1   |
+| `fun2()`    | 3                | 4   |
+| `print()`   | 3                | 4   |
+
+So for static scoping the output will be `3 1` while for dynamic scoping the output will be `3 4`.
+
+## Important Takeaways
+
+1. In most of the programming languages, **static scoping** is follwed instead of dynamic scoping.
+2. Languages, including Algol, Pascal, C, Haskell, Scheme etc. are **statically scoped**.
+3. Some languages, including SNOBOL, APL, Lisp etc. are **dynamically scoped**.
+4. As C follows **static scoping** therefore it is not possible to see programmatically, how dynamic scoping works in C.
+
+💡 Perl is a programming language which supports both static as well as dynamic scoping.
+
+This is an example for dynamic scoping in Perl:
+
+```perl
+$x = 50;
+
+sub fun2 {
+  return $x;
+}
+
+sub fun1 {
+  local $x = 10;  # makes var visible up the call stack too
+  my $y = fun2(); # makes var visible only where declared
+  return $y;
+}
+
+print fun1();
+```
+
+Output: `10`
+
+And this is for static scoping:
+
+```perl
+$x = 50;
+
+sub fun2 {
+  return $x;
+}
+
+sub fun1 {
+  my $x = 10;     # makes var visible up the call stack too
+  my $y = fun2(); # makes var visible only where declared
+  return $y;
+}
+
+print fun1();
+```
+
+Output: `50`
+
+This would be the corresponding C program in - of course - static scoping:
+
+```c
+int x = 50;
+
+int fun2(void) {
+  return x;
+}
+
+int fun1(void) {
+  int x = 10;
+  int y = fun2();
+
+  return y;
+}
+
+int main(void) {
+  printf("%d", fun1());
+}
+```
+
+Output: `50`
+
+## Question 1
+
+Consider the program below in a hypothetical programming language which allows global variables and a choice of static or dynamic scoping.
+
+```
+int i;
+
+program main() {
+  i = 10;
+  call f();
+}
+
+procedure f() {
+  int i = 20;
+  call g();
+}
+
+procedure g() {
+  print i;
+}
+```
+
+Let `x` be the value printed under static scoping and `y` be the value printed under dynamic scoping. Then, `x` and `y` are
+
+- a) `x = 10, y = 10`
+- b) `x = 20, y = 10`
+- **c) `x = 10, y = 20`** ✅
+- d) `x = 20, y = 20`
+
+**Answer:**
+
+As in `main()` the assignment `i = 10` does not declare a new variable, so the global variable `i` gets assigned with 10. In `f()` a new (local) variable is declared and assigned a value of 20. So when `g()` is called if we had static scoping then `i` would print 10 because the variable `i` in function `f()` is not considered as it is local. If we had dynamic scoping then `g()` will consider the local variable `i` in function `f()`.
+
+## Question 2
+
+What will be the output of the following pseudocode when parameters are passed by reference and dynamic scoping is assumed?
+
+```
+a = 3;
+
+void n(x) {
+  x = x * a;
+  print(x);
+}
+
+void m(y) {
+  a = 1;
+  a = y - a;
+  n(a);
+  print(a);
+}
+
+void main() {
+  m(a);
+}
+```
+
+- a) `6 2`
+- b) `6 6`
+- c) `4 2`
+- **d) `4 4`** ✅
+
+**Answer:**
+
+We have a global variable `a` with a value of 3. We pass the address of `a` (`&a`) to function `m()`. In `m()` we have a local variable `a` with a value of 1. The local variable `a` will contain 2 after the expression `y - a` (3 - 1).
+
+We pass the local variable `a` with a value of 2 by reference (`&a`) to `n()`. Because we assume dynamic scoping, `a` in function `n()` will take the value of 2 also because `m()` is the caller. As we passed the value of local variable `a` by reference, `a` in `print` of function `m()` will also be 4. So the output will be `4 4`.
