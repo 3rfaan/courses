@@ -5063,3 +5063,163 @@ void main() {
 We have a global variable `a` with a value of 3. We pass the address of `a` (`&a`) to function `m()`. In `m()` we have a local variable `a` with a value of 1. The local variable `a` will contain 2 after the expression `y - a` (3 - 1).
 
 We pass the local variable `a` with a value of 2 by reference (`&a`) to `n()`. Because we assume dynamic scoping, `a` in function `n()` will take the value of 2 also because `m()` is the caller. As we passed the value of local variable `a` by reference, `a` in `print` of function `m()` will also be 4. So the output will be `4 4`.
+
+# Recursion
+
+## Outline
+
+- Definition of recursion
+- Program to demonstrate recursion
+- Homework problem
+
+## Definition
+
+**Recursion** is a process in which a function calls itself directly or indirectly.
+
+**Example:**
+
+```
+int fun() {
+  ...
+  fun();
+}
+```
+
+## Program to Demonstrate Recursion
+
+```c
+int fun(int n) {
+  if (n == 1)
+    return 1;
+  else
+    return 1 + fun(n - 1);
+}
+
+int main(void) {
+  int n = 3;
+  printf("%d", fun(n));
+  return 0;
+}
+```
+
+Output: `3`
+
+| Stack           |
+| --------------- |
+| fun(1): `n = 1` |
+| fun(2): `n = 2` |
+| fun(3): `n = 3` |
+| main(): `n = 3` |
+
+## Homework Problem
+
+What is the output of the following C program:
+
+```c
+#include <stdio.h>
+
+int fun(int n) {
+  if (n == 0)
+    return 1;
+  else
+    return 7 + fun(n - 2);
+}
+
+int main(void) {
+  printf("%d", fun(4));
+  return 0;
+}
+```
+
+- a) `4`
+- b) `7`
+- **c) `15`** ✅
+- d) `12`
+
+`fun(4)` -> `return 7 + fun(2)` -> `return 7 + fun(0)` -> `return 1`
+
+Output: `15`
+
+## How to Write Recursive Functions
+
+### Idea
+
+1. Divide the problem into smaller sub-problems.
+2. Specify the base condition to stop the recursion.
+
+**Problem:** Calculate the factorial of a number.
+
+**Factorial of 5:**
+
+$$5\times4\times3\times2\times1=120$$
+
+### Basic Structure
+
+```
+Fact() {
+  if () { }     <---- Base case
+
+  else { }      <---- Recursive procedure
+}
+```
+
+1. Divide the problem into smaller sub-problems
+
+Calculate `Fact(4)`
+
+- `Fact(1)` = $1$
+- `Fact(2)` = $2\times1=2\times{Fact(1)}$
+- `Fact(3)` = $3\times2\times1=3\times{Fact(2)}$
+- `Fact(4)` = $4\times3\times2\times1=4\times{Fact(3)}$
+
+`Fact(n)` = $n\times{Fact(n-1)}$
+
+or in code:
+
+```
+Fact(int n) {
+  if () {
+
+  } else {
+    return n * Fact(n - 1);
+  }
+}
+```
+
+2. Specify the base condition to stop the recursion.
+
+Base condition is the one which doesn't require to call the same function again and it helps in stopping the recursion.
+
+We take `Fact(1) = 1` as our base case:
+
+```Fact(int n) {
+  if (n == 1) {
+    return 1;
+  } else {
+    return n * Fact(n - 1);
+  }
+}
+```
+
+And this would be a real C program, rather than pseudocode:
+
+```c
+#include <stdio.h>
+
+typedef unsigned long long UINT64;
+
+UINT64 fact(int n) {
+    if (n == 1)
+        return 1;
+    else
+        return n * fact(n - 1);
+}
+
+int main(void) {
+    int n;
+
+    printf("Enter the number: ");
+    scanf("%d", &n);
+    printf("Factorial of a number %d is: %lld\n", n, fact(n));
+}
+```
