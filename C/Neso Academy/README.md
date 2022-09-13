@@ -4659,9 +4659,9 @@ The stack looks like this:
 
 So `fun3()` will return and removed from the stack. Then `fun2()`, then `fun1()` until control goes back to the `main()` function. When `main()` finishes executing, the stack is empty and this indicates that all functions of the program finished their executions.
 
-But not the real functions are stored in the stack, but the **Activition Record**.
+But not the real functions are stored in the stack, but the **Activation Record**.
 
-**Activision Record** - is a portion of a stack which generally is composed of:
+**Activation Record** - is a portion of a stack which generally is composed of:
 
 1. Locals of the callee
 2. Return address to the caller
@@ -5206,9 +5206,7 @@ And this would be a real C program, rather than pseudocode:
 ```c
 #include <stdio.h>
 
-typedef unsigned long long UINT64;
-
-UINT64 fact(int n) {
+int fact(int n) {
     if (n == 1)
         return 1;
     else
@@ -5220,6 +5218,303 @@ int main(void) {
 
     printf("Enter the number: ");
     scanf("%d", &n);
-    printf("Factorial of a number %d is: %lld\n", n, fact(n));
+    printf("Factorial of a number %d is: %d\n", n, fact(n));
 }
 ```
+
+## Types of Recursion
+
+1. Direct recursion
+2. Indirect recursion
+3. Tail recursion
+4. Non-tail recursion
+
+### Direct Recursion
+
+A function is called direct recursive if it calls the same function again.
+
+**Structure of direct recursion:**
+
+```
+fun() {
+  // some code
+
+  fun();
+
+  // some code
+}
+```
+
+### Indirect Recursion
+
+A function (say `fun`) is called indirect recursive if it calls another function (say `fun2`) and then `fun2` calls `fun` directly or indirectly.
+
+```
+fun() {
+  // some code
+  fun2();
+  // some code
+}
+
+fun2() {
+  // some code
+  fun();
+  // some code
+}
+```
+
+#### Program to Understand Indirect Recursion
+
+WAP to print numbers from 1 to 10 in such a way that when number is _odd_, add 1 and when number is _even_, subtract 1.
+
+Output: `2 1 4 3 6 5 8 7 10 9`
+
+This is the C program:
+
+```c
+#include <stdio.h>
+
+void odd(void);
+void even(void);
+
+int n = 1;
+
+void odd(void) {
+  if (n <= 10) {
+    printf("%d ", n + 1);
+    n++;
+    even();
+  }
+  return;
+}
+
+void even(void) {
+  if (n <= 10) {
+    printf("%d ", n - 1);
+    n++;
+    odd();
+  }
+  return;
+}
+
+int main(void) {
+  odd();
+  return 0;
+}
+```
+
+The call stack would look like this:
+
+- `Act` - Activation record
+- `o` - odd()
+- `e` - even()
+
+| Stack (Call Stack) |
+| ------------------ |
+| odd(): `Act o`     |
+| even(): `Act e`    |
+| odd(): `Act o`     |
+| even(): `Act e`    |
+| odd(): `Act o`     |
+| main(): `Act m`    |
+
+When reaching 11, the condition fails and the stack gets popped until the stack is empty.
+
+### Tail Recursion
+
+A recursive function is said to be _tail recursive_ if the recursive call is the last thing done by the function. There is no need to keep record of the previous state.
+
+```c
+void fun(int n) {
+  if (n == 0)
+    return;
+  else
+    printf("%d ", n);
+  return fun(n - 1);
+}
+
+int main(void) {
+  fun(3);
+  return 0;
+}
+```
+
+Output: `3 2 1`
+
+| Stack (Call Stack) |
+| ------------------ |
+| fun(0): `return;`  |
+| fun(1): `Act f1`   |
+| fun(2): `Act f2`   |
+| fun(3): `Act f3`   |
+| main(): `Act m`    |
+
+### Non-Tail Recursion
+
+A recursive function is said to be _non-tail recursive_ if the recursive call is not the last thing done by the function. After returning back, there is something left to evaluate.
+
+```c
+void fun(int n) {
+  if (n == 0)
+    return;
+  fun(n - 1);
+  printf("%d ", n);
+}
+
+int main(void) {
+  fun(3);
+  return 0;
+}
+```
+
+Output: `1 2 3`
+
+| Stack (Call Stack) |
+| ------------------ |
+| fun(0): `return;`  |
+| fun(1): `Act f1`   |
+| fun(2): `Act f2`   |
+| fun(3): `Act f3`   |
+| main(): `Act m`    |
+
+Another example for a non-tail recursion:
+
+```c
+int fun(int n) {
+  if (n == 1)
+    return 0;
+  else
+    return 1 + fun(n / 2);
+}
+
+int main(void) {
+  printf("%d", fun(8));
+  return 0;
+}
+```
+
+Output: `3`
+
+| Stack (Call Stack) |
+| ------------------ |
+| fun(1): `return;`  |
+| fun(2): `Act f2`   |
+| fun(4): `Act f4`   |
+| fun(8): `Act f8`   |
+| main(): `Act m`    |
+
+`fun(8)` => `return 1 + fun(8)` => `return 1 + fun(4)` => `return 1 + fun(2)` => `return 0`
+
+#### Homework Problem
+
+Identify whether the following programs are tail recursive or non-tail recursive.
+
+**Program 1:**
+
+```c
+void fun2(int n) {
+  if (n == 0) return;
+
+  fun2(n / 2);
+  printf("%d", n % 2);
+}
+```
+
+**Program 2:**
+
+```c
+void fun2(int n) {
+  if (n <= 0) return;
+
+  printf("%d ", n);
+  fun2(2 * n);
+  printf("%d ", n);
+}
+```
+
+**Answer:** Both programs are non-tail recursions.
+
+## Advantage and Disadvantage of Recursion
+
+### Advantage
+
+- Every recursive program can be modeled into an iterative program but recursive programs are more elegant and requires relatively less lines of code.
+
+**Example:** Program to calculate factorial of a number can be written in both iterative as well as recursive way as follows:
+
+**Iterative:**
+
+```c
+int fact(int n) {
+  int res = 1;
+
+  while (n != 0) {
+    res *= n;
+    n--;
+  }
+  return res;
+}
+
+int main(void) {
+  printf("%d", fact(5));
+  return 0;
+}
+```
+
+**Recursive:**
+
+```c
+int fact(int n) {
+  if (n == 1)
+    return 1;
+  else
+    return n * fact(n - 1);
+}
+
+int main(void) {
+  printf("%d", fact(5));
+  return 0;
+}
+```
+
+### Disadvantage
+
+- Recursive programs require more space than iterative programs.
+
+Stack of iterative program of `fact()` above:
+
+| Stack             |
+| ----------------- |
+| fact(5): `Act f5` |
+| main(): `Act m`   |
+
+Stack of recursive program of `fact()` above:
+
+| Stack              |
+| ------------------ |
+| fact(1): `return;` |
+| fact(2): `Act 2`   |
+| fact(3): `Act 3`   |
+| fact(4): `Act 4`   |
+| fact(5): `Act 5`   |
+| main(): `Act m`    |
+
+## Question 1
+
+Consider the follwing recursive C function:
+
+```c
+void get(int n) {
+  if (n < 1) return;
+  get(n - 1);
+  get(n - 3);
+  printf("%d", n);
+}
+```
+
+If `get(6)` function is being called in `main()` then how many times will the `get()` function be invoked before returning to the `main()`?
+
+- a) 15
+- **b) 25** ✅
+- c) 35
+- d) 45
