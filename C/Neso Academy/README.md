@@ -5518,3 +5518,261 @@ If `get(6)` function is being called in `main()` then how many times will the `g
 - **b) 25** ✅
 - c) 35
 - d) 45
+
+## Question 2
+
+Determine how many number of times the star will be printed on the screen:
+
+```c
+void fun1(int n) {
+  int i = 0;
+
+  if (n > 1)
+    fun1(n - 1);
+  for (i = 0; i < n; i++)
+    printf(" * ");
+}
+```
+
+- a) n
+- **b) n \* (n + 1) / 2** ✅
+- c) n \* n
+- d) None of the above
+
+**Answer:**
+
+If `n = 3` then we have the following function calls:
+
+| Stack     |
+| --------- |
+| `fun1(3)` |
+| `fun1(2)` |
+| `fun1(1)` |
+
+| Call      | Loop                      | Output                       |
+| --------- | ------------------------- | ---------------------------- |
+| `fun1(1)` | `for (i = 0; i < 1; i++)` | Star will be printed 1 time  |
+| `fun1(2)` | `for (i = 0; i < 2; i++)` | Star will be printed 2 times |
+| `fun1(3)` | `for (i = 0; i < 2; i++)` | Star will be printed 3 times |
+
+So for `n = 2` star will be printed $1+2=3$ times and for `n = 3` star will be printed $1+2+3=6$ times.
+
+So we could say for `n = 4` star will be printed $1+2+3+4=10$ times.
+
+So for `n = k` star will be printed:
+
+$$1+2+3+4+...+k=k\times(k+1)\div2$$
+
+## Question 3
+
+Consider the C function given below:
+
+```c
+int f(int j) {
+  static int i = 50;
+  int k;
+
+  if (i == j) {
+    printf("something");
+    k = f(i);
+    return 0;
+  } else {
+    return 0;
+  }
+}
+```
+
+Which one of the following is true?
+
+- a) The function returns 0 for all values of j.
+- b) The function prints the string "something" for all values of j.
+- c) The function returns 0 when j = 50.
+- **d) The function will exhaust the runtime stack or run into an infinite loop when j = 50.** ✅
+
+**Answer:** If `j = 50` then the function go into an infinite loop as `i` retains the value 50 and `f()` calls itself with the function call `f(50)`.
+
+## Question 4
+
+Consider the following C function:
+
+```c
+int fun(int n) {
+  int x = 1, k;
+
+  if (n == 1) return x;
+  for (k = 1; k < n; ++k)
+    x = x + fun(k) * fun(n - k);
+  return x;
+}
+```
+
+The return value of `fun(5)` is:
+
+- a) 0
+- b) 26
+- **c) 51** ✅
+- d) 71
+
+**Answer:**
+
+`fun(5)`
+
+= `1 + fun(1) * fun(4) + fun(2) * fun(3) + fun(3) * fun(2) + fun(4) * fun(1)`
+
+= `1 + 2(fun(1) * fun(4) + fun(2) * fun(3))`
+
+**= `1 + 2(fun(4) + fun(2) * fun(3))`**
+
+`fun(2)` = `1 + fun(1) * fun(1)` = $1+1=2$
+
+`fun(3)` = `1 + fun(1) * fun(2) + fun(2) * fun(1)`= $1+2+2=5$
+
+`fun(4)` = `1 + fun(1) * fun(3) + fun(2) * fun(2) + fun(3) * fun(1)` = $1+5+4+5=15$
+
+`fun(5)` = $1+2\times(15+2\times5)=51$
+
+## Question 5
+
+What will be the output of the following C program?
+
+```c
+void count(int n) {
+  static int d = 1;
+
+  printf("%d ", n);
+  printf("%d ", d);
+  d++;
+
+  if (n > 1)
+    count(n - 1);
+  printf("%d ", d);
+}
+
+int main(void) {
+  count(3);
+  return 0;
+}
+```
+
+- **a) `3 1 2 2 1 3 4 4 4`** ✅
+- b) `3 1 2 1 1 1 2 2 2`
+- c) `3 1 2 2 1 3 4`
+- d) `3 1 2 1 1 1 2`
+
+**Answer:**
+
+| Stack              |
+| ------------------ |
+| count(1): `Act c1` |
+| count(2): `Act c2` |
+| count(3): `Act c3` |
+| main(): `Act m`    |
+
+# Rapid Fire Quiz 2
+
+## Instructions
+
+1. All questions are multiple choice questions.
+2. There are 10 questions in this rapid fire quiz.
+3. You have been provided 10 seconds to answer each question except the last question. You have been provided 15 seconds to answer the last question.
+4. All questions carry one mark for correct answer and zero marks for incorrect answer. There is no negative marking.
+5. Whatever we learned so far is now being tested in this quiz.
+6. Please not down the scores you gain this quiz for self evaluation.
+7. All questions are compulsory to attempt.
+
+## Q1: Which of the following statements is true about static functions in C?
+
+- a) Static functions are global functions
+- **b) Static functions are restricted to the files where they are declared** ✅
+- c) There is no concept like static functions in C
+- d) None of the above
+
+## Q2: State true or false. In C, is it mandatory to declare a function before use?
+
+- a) True
+- **b) False** ✅
+
+## Q3: Which keyword is used to come out of a loop only for that iteration?
+
+- a) `break`
+- **b) `continue`** ✅
+- c) `return`
+- d) None of the above
+
+## Q4: Which of the following ways to write a function prototype is correct?
+
+1. `int fun(int var1, int var2)`
+2. `int fun(int, int)`
+3. `fun(int, int)`
+
+- a) Only 1
+- b) Only 2 and 3
+- **c) Only 1 and 2** ✅
+- d) All 1, 2 and 3
+
+## Q5: Is this statement correct?
+
+> C supports dynamic scoping
+
+- a) Yes
+- **b) No** ✅
+
+## Q6: In C, parameters are always
+
+- **a) Passed by value** ✅
+- b) Passed by reference
+- c) Both
+- d) None of the above
+
+## Q7: In C, what is the meaning of the following function prototype with empty parameter list?
+
+```c
+void fun();
+```
+
+- a) Function can only be called without any parameter.
+- **b) Function can be called with any number of parameters of any type.** ✅
+- c) Function can be called with any number of integer parameters.
+- d) Function can be called with one integer parameter.
+
+## Q8: Assuming int size is 4 bytes. What is going to happen when the following program runs?
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  printf("Hi!\n");
+  main();
+  return 0;
+}
+```
+
+- a) We can't use `main()` inside `main()`
+- b) `Hi!` will be printed 2147483647 times i.e. $2^{31}-1$
+- **c) `Hi!` would be printed until stack overflow happens for this program** ✅
+- d) `Hi!` would be printed only once because when `main()` is used inside `main()`, it's ignored by compiler at run time.
+
+## Q9: In the context of `break` and `continue` statements in C, pick the best statement.
+
+- a) `break` and `continue` can be used in `for`, `while`, do-while loop body and `switch` body.
+- **b) `break` and `continue` can be used in `for`, `while`, do-while loop body. But only `break` can be used in `switch` body.** ✅
+- c) `break` and `continue` can be used in `for`, `while` and do-while loop body. Besides, `continue` and `break` can be used in `switch` and if-else body.
+- d) None of the above
+
+## Q10: Determine the output of the following C program?
+
+```c
+int main(void) {
+  int i = 9;
+
+  for (; i;) {
+    printf("Hmmm...");
+    i--;
+  }
+}
+```
+
+- a) `Hmmm...` will be printed 10 times
+- **b) `Hmmm...` will be printed 9 times** ✅
+- c) Compiler error
+- d) None of the above
