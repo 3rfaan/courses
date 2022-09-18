@@ -6600,3 +6600,327 @@ int main(void) {
 
 1. Variable length arrays _cannot have static storage duration_.
 2. Variable length arrays do not have an initializer.
+
+# Pointers
+
+- Pointer is a special variable that is capable of storing some address.
+- It points to a memory location where the first byte is stored.
+
+## Declaring & Initializing Pointers
+
+General syntax for declaring pointer variables:
+
+```
+type *pointer_name
+```
+
+Here the data type refers to the type of the value that the pointer will point to.
+
+**Example:**
+
+```c
+int *ptr;   // Points to integer value
+char *ptr;  // Point to character value
+float *ptr; // Points to float value
+```
+
+### Need Of Address Of Operator
+
+- Simlpy declaring a pointer is not enough.
+- It is important to _initialize pointer_ before use.
+- One way to initialize a pointer is to _assign address of some variable_.
+
+```c
+int x = 5;    // Address 1000
+int *ptr;     // Address 2000
+
+ptr = &x;     // ptr points to address of x (1000)
+```
+
+We can also write all these lines on a single line:
+
+```c
+int x = 5, *ptr = &x;
+```
+
+## Value Of Operator In Pointers
+
+_Value of_ operator/indirection operator/dereference operator is an operator that is used to access the value stored at the location pointed to by the pointer.
+
+When we have this line:
+
+```c
+int x = 5, *ptr = &x;
+```
+
+We can access the value to which the pointer points to by adding a star (`*`) in front of the pointer name.
+
+```c
+printf("%d", *ptr);
+```
+
+Output: `5`
+
+We can also change the value of the object pointed by the pointer.
+
+**Example:**
+
+```c
+int x = 10;
+int *ptr = &x;
+
+*ptr = 4;
+printf("%d", *ptr);
+```
+
+Output: `4`
+
+Now the variable `x` stores the value 4.
+
+### A Word Of Caution
+
+⛔️ Never apply the indirection operator to the uninitialized pointer.
+
+**Example:**
+
+```c
+int *ptr;
+printf("%d", *ptr);
+```
+
+Output: _Error_
+
+⛔️ Assigning value to an uninitialized pointer is dangerous.
+
+```c
+int *ptr;
+*ptr = 1;
+```
+
+Output: _Segmentation Fault (SIGSEGV)_
+
+Segmentation fault is caused by a program trying to _read_ or _write_ an illegal memory location.
+
+## Pointer Assignment
+
+```c
+int i = 10; // Memory address: 1000
+int *p, *q;
+
+p = &i;     // p stores memory address of i: 1000
+q = p;      // q stores memory address of i: 1000
+printf("%d %d", *p, *q);
+```
+
+Output: `10 10`
+
+```c
+int i = 10, j = 20;
+int *p, *q;
+
+p = &i;
+q = &j;
+*q = *p;
+```
+
+Output: `10 10`
+
+### Homework Problem
+
+Predict the output of the following C program:
+
+```c
+int i = 1;
+int *p = &i, *q;
+
+q = p;
+*q = 5;
+printf("%d", *p);
+```
+
+Output: `5`
+
+**Answer:**
+
+`i` is initialized to a value of 1. Then we store the address of `i` into the pointer `*p`. Then we store this address in the pointer `*q`. So all of these variables have the same memory address. Next we assign `*q` a value of 5 through dereferencing. So the value 5 is stored in this memory location making all other variables store the same value which is 5.
+
+## Application Of Pointers
+
+### Idea
+
+Pseudocode:
+
+```
+int a[] = {23, 45, 6, 98};
+
+int min, max;
+min = max = a[0];
+
+for i = 1 to 3:
+  1. if a[i] < min then
+      min = a[i]
+  2. if a[i] > max then
+      max = a[i]
+```
+
+In a C program the code would look like this:
+
+```c
+#include <stdio.h>
+
+void min_max(int arr[], int len, int *min, int *max) {
+    *min = *max = arr[0];
+    int i;
+
+    for (i = 1; i < len; i++) {
+        if (arr[i] > *max) *max = arr[i];
+        if (arr[i] < *min) *min = arr[i];
+    }
+}
+
+int main(void) {
+    int a[] = {23, 4, 21, 98, 987, 45, 32, 10, 123, 986, 50, 3, 4, 5};
+    int min, max;
+    int len = sizeof(a) / sizeof(a[0]);
+
+    min_max(a, len, &min, &max);
+    printf("Minimum value in the array is: %d\n", min);
+    printf("Maximum value in the array is: %d\n", max);
+    return 0;
+}
+```
+
+Output:
+
+```
+Minimum value in the array is: 3
+Maximum value in the array is: 987
+```
+
+## Returning Pointers
+
+This is a program to find the middle of an array:
+
+```c
+int main(void) {
+  int a[] = {1, 2, 3, 4, 5};
+  int n = sizeof(a)/sizeof(a[0]);
+  int *mid = find_mid(a, n);
+
+  printf("%d", *mid);
+  return 0;
+}
+```
+
+This is the function `find_mid()`:
+
+```c
+int *find_mid(int a[], int n) {
+  return &a[n / 2];
+}
+```
+
+Output: `3`
+
+### Word Of Caution
+
+Never every try to return the address of an _automatic (local) variable_.
+
+**Example:**
+
+```c
+int *fun(void) {
+  int i = 10;
+  return &i;
+}
+
+int main(void) {
+  int *p = fun();
+
+  printf("%d", *p);
+  return 0;
+}
+```
+
+⛔️ Warning: Functino returns address of local variable.
+
+This code **won't compile!**
+
+## Important Questions
+
+### Question 1: Consider the following two statements
+
+```c
+int *p = &i;
+p = &i;
+```
+
+First statement is the declaration and second is simple assignment statement. Why isn't in second statement, `p` preceded by `*` symbol?
+
+**Solution:** In C, `*` symbol has different meanings depending on the context in which it's used.
+
+At the time of declaration, `*` symbol is not acting as an indirection operator. `*` symbol in the first statement tells the compiler that `p` is a pointer to an integer.
+
+But if we write `*p = &i` then it is wrong, because here `*` symbol indicates the indirection operator and we cannot assign the address to some integer value.
+
+Therefore, in the second statement, there is no need of `*` symbol in front of `p`. It simply means we are assigning the address to a pointer.
+
+### Question 2: What is the output of the following program?
+
+```c
+void fun(const int *p) {
+  *p = 0;
+}
+
+int main(void) {
+  const int i = 10;
+
+  fun(&i);
+  return 0;
+}
+```
+
+Output: _Error: Assignment of read-only location \*p_
+
+### Question 3: How to print the address of a variable?
+
+**Solution:** Use `%p` as a format specifier in `printf()` function.
+
+```c
+int main(void) {
+  int i = 10;
+  int *p = &i;
+
+  printf("The address of variable i is %p", p);
+  return 0;
+}
+```
+
+Output:
+
+```
+The address of variable i is 0x16d76f3f8
+```
+
+### Question 4: If `i` is a variable and `p` points to `i`, which of the following expressions are aliases of `i`?
+
+- **a) `*p`** ✅
+- b) `*&p`
+- c) `&p`
+- d) `*i`
+- **e) `*&i`** ✅
+
+**Example:**
+
+```c
+int i = 10;
+int *p = &i;
+```
+
+Suppose we have for `i` a value of 10 in memory address _1000_ and for `p` a value of _1000_ in memory address _2000_.
+
+- a) `*p` = `*(1000)` = 10
+- b) `*&p` = `*(&p)` = `*(2000)`
+- c) `&p` = 2000
+- d) `*i` = `*(10)` doesn't make sense
+- e) `*&i` = `*(&i)` = `*(1000)` = 10
