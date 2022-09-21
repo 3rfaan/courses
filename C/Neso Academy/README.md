@@ -6924,3 +6924,495 @@ Suppose we have for `i` a value of 10 in memory address _1000_ and for `p` a val
 - c) `&p` = 2000
 - d) `*i` = `*(10)` doesn't make sense
 - e) `*&i` = `*(&i)` = `*(1000)` = 10
+
+## Pointer Arithmetic - Addition
+
+We want the pointer `*p` to point to the first element of the array `a`. What would be the code?
+
+```c
+p = &a[0];
+```
+
+What happens if we add some integer to the pointer?
+
+```c
+p = p + 1;
+```
+
+means moving the pointer 3 positions in forward direction. So `p` will store the address of the 4th element (index 3) in the array.
+
+So in general, if `p` point to `a[i]`, then
+
+`p = p + j` = `&a[i + j]`
+
+or in our example:
+
+`p = p + 3` = `&a[0 + 3]`
+
+So, **what happened?**
+
+When we add to a pointer, we move the pointer to the next memory location.
+For an array of integers, an integer will take 4 bytes of memory (depends on system). So if we add 3 to pointer `p`, we move forward 12 bytes to the next memory location.
+
+### Homework Problem
+
+Let's say we have a pointer `p` and an array `a`. Initially, `p` contains the address of 3rd element of array i.e. `p = &a[2];`.
+
+What will be the index of the array after this operation: `p = p + 2`?
+
+**Answer:** Initially, `p` has the address of `a[2]`, so when we add 2 to `p` we shift 2 positions towards right from the inital address, so `p = &a[4]`.
+
+## Pointer Arithmetic - Subtraction
+
+If we had `p = &a[3]` and we apply the operation `p = p - 3` then we will have `p` will have the address of `a[0]`.
+
+Initially, if `p` point to `a[i]`, then
+
+`p = p - j` = `&a[i - j]`
+
+or, if `p` points to `a[3]`, then
+
+`p = p - 3` = `&a[3 - 3]` = `&a[0]`
+
+### Subtracting One Pointer From Another Pointer
+
+Result is distance between the two pointers.
+
+If `p` points to the second element of the array (`a[2]`) and `q` points to the sixth element (`a[6]`), then we have to subtract the two pointers:
+
+`q - p = 4`
+
+### Undefined Behaviours
+
+Performing arithmetic on pointers which are not pointing to array element leads to undefined behaviour.
+
+```c
+int main(void) {
+  int i = 10;
+  int *p = &i;
+
+  printf("%d", *(p + 3));
+  return 0;
+}
+```
+
+Output: _Different outputs everytime_
+
+If two pointers are pointing to different array then performing subtraction between them leads to undefined behaviour.
+
+```c
+int main(void) {
+  int a[] = {1, 2, 3, 4};
+  int b[] = {10, 20, 30, 40};
+  int *p = &a[0];
+  int *q = &b[3];
+
+  printf("%d", q - p);
+  return 0;
+}
+```
+
+Output: _Different outputs everytime_
+
+## Pointer Arithmetic - Increment & Decrement
+
+### Post Increment
+
+```c
+int main(void) {
+  int a[] = {5, 16, 7, 89, 45, 32, 23, 10};
+  int *p = &a[0];
+
+  printf("%d ", *(p++));
+  printf("%d", *p);
+  return 0;
+}
+```
+
+Output: `5 16`
+
+### Pre Increment
+
+```c
+int main(void) {
+  int a[] = {5, 16, 7, 89, 45, 32, 23, 10};
+  int *p = &a[0];
+
+  printf("%d", *(++p));
+  return 0;
+}
+```
+
+Output: `16`
+
+### Pre & Post Decrement
+
+```c
+int main(void) {
+  int a[] = {5, 16, 7, 89, 45, 32, 23, 10};
+  int *p = &a[2];
+
+  printf("%d ", *(--p));
+  printf("%d", *(p--));
+  return 0;
+}
+```
+
+Output: `16 16`
+
+## Pointer Arithmetic - Comparing Pointers
+
+- Use relational operators (`<`, `>`, `<=`, `>=`) and equality operators (`==`, `!=`) to compare pointers.
+- Only possible when both pointers point to same array.
+- Output depends upon the relative positions of both pointers.
+
+**Example:**
+
+```c
+int main(void) {
+  int a[] = {1, 2, 3, 4, 5, 6};
+  int *p = &a[3];
+  int *q = &a[5];
+
+  printf("%d\n", p <= q);   // Output: 1
+  printf("%d\n", p >= q);   // Output: 0
+
+  q = &a[3];
+  printf("%d", p == q);     // Output: 1
+  return 0;
+}
+```
+
+### Homework Problem
+
+What is the output of the following C program?
+
+```c
+int main(void) {
+  int a[] = {5, 16, 7, 89, 45, 32, 23, 10};
+  int *p = &a[1], *q = &a[5];
+
+  printf("%d ", *(p + 3));
+  printf("%d ", *(q - 3));
+  printf("%d ", q - p);
+  printf("%d ", q < p);
+  printf("%d ", *p < *q);
+  return 0;
+}
+```
+
+- a) `45 7 4 1 1`
+- b) `45 4 7 1 1`
+- c) `44 7 4 1 0`
+- **d) `45 7 4 0 1`** ✅
+
+**Answer:**
+
+Initially, `*p` points to 16 and `*q` points to 32.
+
+The following are the various `printf()` statements:
+
+1. `*(p + 3)` = `*(&a[1 + 3])` = `*(&a[4])` = 45
+2. `*(q - 3)` = `*(&a[5 - 3])` = `*(&a[2])` = 7
+3. `q - p` = $1020-1004\div4=4$
+4. `q < p` = 1020 < 1004 = 0 (`false`)
+5. `*p < *q` = 16 < 32 = 1 (`true`)
+
+## Program - Calculate Sum Of Elements Of Array Using Pointers
+
+```c
+int main(void) {
+  int a[] = {11, 22, 36, 5, 2};
+  int sum = 0, *p;
+
+  for (p = &a[0]; p <= &a[4]; p++)
+    sum += *p;
+
+  printf("Sum is %d\n", sum);
+  return 0;
+}
+```
+
+Output: `Sum is 76`
+
+## Using Array Name As Pointer
+
+💡 **Fact:** Name of an array can be used as a pointer to the _first element_ of an array.
+
+**Example:**
+
+```c
+int main(void) {
+  int a[5];
+
+  *a = 10;
+  printf("%d", a[0]);
+  return 0;
+}
+```
+
+Output: `10`
+
+Supposing the first element of array `a` has a memory address of 1000:
+
+`*a = 10` = `*(1000) = 10`
+
+Let's do some pointer arithmetic:
+
+```c
+int main(void) {
+  int a[5];
+
+  *(a + 1) = 20;
+  printf("%d", a[1]);
+  return 0;
+}
+```
+
+Output: `20`
+
+`*(a + 1) = 20` = `*(1000 + 1 * 4) = 20` = `*(1004) = 20`
+
+So it is clear that
+
+`*(a + i) = a[i]`
+
+Now we can rewrite the program where we calculated the sum of an array:
+
+```c
+int main(void) {
+  int a[] = {11, 22, 36, 5, 2};
+  int sum = 0, *p;
+
+  for (p = a; p <= a + 4; p++)
+    sum += *p;
+
+  printf("Sum is %d", sum);
+  return 0;
+}
+```
+
+Output: `Sum is 76`
+
+⛔️ **Be careful:** It is true that we can use array names as pointers, but assigning a new address to them is not possible!
+
+```c
+int main(void) {
+  int a[] = {11, 22, 36, 5, 2};
+
+  printf("%p", a++);
+  return 0;
+}
+```
+
+This will output an error because `a++` means `a = a + 1` so we are trying to assign address 1004 to array `a` which is not possible!
+
+Recall that name of the array indicates the base address of the array i.e. 1000. We cannot change this.
+
+Obviously, we can write something like this:
+
+```c
+int main(void) {
+  int a[] = {11, 22, 36, 5, 2};
+
+  printf("%p", a + 1);
+  return 0;
+}
+```
+
+Here we are not trying to assign some new address to `a`. We are simply accessing the address of the second element of the array.
+
+**Alternative:**
+
+```c
+int main(void) {
+  int a[] = {11, 22, 36, 5, 2};
+  int *p = a;
+
+  printf("%d", *(++p));
+  return 0;
+}
+```
+
+Output: `22`
+
+We can assign the first element of the array to the pointer `*p` and then increment the pointer and dereference it to print the value. This is allowed.
+
+## Program - Reverse A Series Of Numbers Using Pointers
+
+```c
+#include <stdio.h>
+#define N 5
+
+int main(void) {
+    int a[N], *p;
+
+    printf("Enter %d elements in the array: ", N);
+    for (p = a; p <= a + N - 1; p++)
+        scanf("%d", p);
+
+    printf("Elements in reverse order:\n");
+    for (p = a + N - 1; p >= a; p--)
+        printf("%d ", *p);
+    putchar('\n');
+
+    return 0;
+}
+```
+
+Output:
+
+```
+$ Enter 5 elements in the array: 10 20 30 40 50
+Elements in reverse order:
+50 40 30 20 10
+```
+
+## Passing Array Name As An Argument To A Function
+
+```c
+int add(int b[], int len) {
+  int sum = 0, i;
+
+  for (i = 0; i < len; i++)
+    sum += b[i];
+  return sum;
+}
+
+int main(void) {
+  int a[] = {1, 2, 3, 4};
+  int len = sizeof(a)/sizeof(a[0]);
+
+  printf("%d", add(a, len));
+  return 0;
+}
+```
+
+Output: `10`
+
+Note that we are _not_ passing the whole array in `add(a, len)`. We are just passing the base address of the array.
+
+An array name is always treated as a pointer. You can also write `*b` instead of `b[]`.
+
+## Using Pointers With 2D Arrays
+
+### Difference Betweent Row Major And Column Major Order
+
+**Row major order:** Elements are stored row by row.
+
+**Column major order:** Elements are stored column by column.
+
+👉🏼 C stores multidimensional arrays in row major order.
+
+```c
+for (i = 0; i < row; i++)
+  for (j = 0; j < col; j++)
+    printf("%d ", a[i][j]);
+```
+
+| 1     | 2     | 3    | 4    |
+| ----- | ----- | ---- | ---- |
+| Row 0 | Row 0 | Row1 | Row1 |
+
+| a      | c0  | c1  |
+| ------ | --- | --- |
+| **r0** | 1   | 2   |
+| **r1** | 3   | 4   |
+
+- row = 2
+- col = 2
+
+Using pointers:
+
+```c
+for (p = &a[0][0]; p <= &a[row - 1][col - 1]; p++)
+  printf("%d ", *p);
+```
+
+Output: `1 2 3 4`
+
+| 1         | 2         | 3         | 4         |
+| --------- | --------- | --------- | --------- |
+| `a[0][0]` | `a[0][1]` | `a[1][0]` | `a[1][1]` |
+| Row 0     | Row 0     | Row 1     | Row 1     |
+
+- row = 2
+- col = 2
+
+## Address Arithmetic in Mutlidimensional Arrays
+
+### 1D Array
+
+| a              | 1    | 2    | 3    | 4    |
+| -------------- | ---- | ---- | ---- | ---- |
+| Memory address | 1000 | 1004 | 1008 | 1012 |
+
+`int a[4];` means array of 4 integers. So `a` is a pointer to the first element of the array.
+
+- `a` => 1000
+- `*a` => 1
+
+### 2D Array
+
+| a              | 1    | 2    | 3    | 4    |
+| -------------- | ---- | ---- | ---- | ---- |
+| Memory address | 1000 | 1004 | 1008 | 1012 |
+| Row            | 1    | 1    | 2    | 2    |
+
+`int a[2][2];`
+
+Here `a` is a pointer to the first 1D array.
+
+- `a` => 1000 (pointer to 1st 1D array)
+- `a + 1` => 1008 (pointer to 2nd 1D array)
+- `*a` => \*(pointer to 1st 1D array) => address to first element of first 1D array
+  - `*a` = `*(a + 0)` = `a[0]` = `&a[0][0]`
+- `**a` => `*(*a)` => `*(*(a + 0))` => `*(&a[0][0])` => `a[0][0]` => 1
+- `*(a + 1)` => \*(pointer to 2nd 1D array) => pointer to 1st element of 2nd 1D array
+- `**(a + 1)` => \*\*(pointer to 2nd 1D array) => \*(pointer to 1st element of 2nd 1D array) => 3
+- `*(a + 1) + 1` => pointer to 1st element of 2nd 1D array + 1 => pointer to the 2nd element of 2nd 1D array
+- `*(*(a + 1) + 1)` => \*pointer to 2nd element of 2nd 1D array => 4 => `a[1][1]`
+
+### 3D Array
+
+| a              | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    |
+| -------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Memory address | 1000 | 1004 | 1008 | 1012 | 1016 | 1020 | 1024 | 1028 |
+| 2D array       | 1st  | 1st  | 1st  | 1st  | 2nd  | 2nd  | 2nd  | 2nd  |
+
+`int a[2][2][2];`
+
+- `a`: Pointer to the first 2D array
+- `[2]`: Two 2D arrays
+- `[2]`: Each of which contains two 1D arrays
+- `[2]`: Each of which contains two elements
+
+---
+
+- `a` => pointer to 1st 2D array = 1000
+- `a + 1` => pointer to 2nd 2D array = 1016
+- `*(a + 1)` => pointer to 1st 1D array of 2nd 2D array => 1016
+- `*(*(a + 1))` => pointer to 1st element of 1st 1D array of 2nd 2D array
+- `**(*(a + 1))` => 5 => `a[1][0][0]`
+
+We want to access 2nd element of the above array.
+
+1. `a`: Pointer to 1st 2D array
+2. `*a`: Pointer to 1st 1D array of 1st 2D array
+3. `**a`: Pointer to 1st element of 1st 1D array of 1st 2D array
+4. `**a + 1`: Pointer to 2nd element of 1st 1D array of 1st 2D array
+5. `*(**a + 1)`: 2nd element of 1st 1D array of 1st 2D array
+
+### Homework Problem
+
+| a              | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    |
+| -------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Memory address | 1000 | 1004 | 1008 | 1012 | 1016 | 1020 | 1024 | 1028 |
+| 2D array       | 1st  | 1st  | 1st  | 1st  | 2nd  | 2nd  | 2nd  | 2nd  |
+
+How to access the second last element of the above array using pointer arithmetic?
+
+1. `a + 1`: Pointer to 2nd 2D array
+2. `*(a + 1) + 1`: Pointer to 2nd 1D array of 2nd 2D array
+3. `*(*(a + 1) + 1)`: Pointer to 1st element of 2nd 1D array of 2nd 2D array
+4. `**(*(a + 1) + 1))`: 1st element of 2nd 1D array of 2nd 2D array => 7
