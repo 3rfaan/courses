@@ -7416,3 +7416,416 @@ How to access the second last element of the above array using pointer arithmeti
 2. `*(a + 1) + 1`: Pointer to 2nd 1D array of 2nd 2D array
 3. `*(*(a + 1) + 1)`: Pointer to 1st element of 2nd 1D array of 2nd 2D array
 4. `**(*(a + 1) + 1))`: 1st element of 2nd 1D array of 2nd 2D array => 7
+
+## Pointers GATE Question 1
+
+Consider the following declaration of two dimensional array in C:
+
+```c
+char a[100][100];
+```
+
+Assuming that the main memory is byte addressable and that the array is stored starting from the memory address 0, the address of `a[40][50]` is:
+
+- a) 4040
+- **b) 4050** ✅
+- c) 5040
+- d) 5050
+
+**Answer:**
+
+`a[100][100]` means we have 100 1D arrays, each containing 100 elements (100 rows & 100 columns). We want the address `&a[40][50]`. We can find this by this formula:
+
+Formula: `&a[i][j]` = $BA+[(i-lb_1)\times NC+(j-lb_2)]\times c$
+
+- $BA$ = Base address of whole 2D array
+- $NC$ = Number of columns
+- $c$ = Size of data type of elements stored in array (in bytes)
+- $lb_1$ = Lower bound of rows
+- $ub_1$ = Upper bound of rows
+- $lb_2$ = Lower bound of columns
+- $ub_2$ = Upper bound of columns
+
+In our example, we have the following data:
+
+- $BA=0$
+- $NC=100$
+- $c=$ 1 bytes
+- `a[0...99][0...99]`
+
+So if we fill the formula with the above data we get:
+
+`&a[40][50]` = $0+[(40-0)\times100+(50-0)]\times1=4000+50=4050$
+
+So the address is **4050**.
+
+To understand the formula, we can look at this example:
+
+We have an array `int a[5][5];`. We have to find `&a[2][2]`.
+
+Let's assume that `a[2] = b`. So we can write `&b[2]`. Then we can transform it to `&*(b + 2)`, which is `&*(*(a + 2) + 2)`.
+
+`a` is a pointer to the first 1D array. We add 2 to it `*(a + 2)`. We assume integer size is 4 bytes and memory address of first element is 1000. We move 2 rows down the 2D array which consists of 5 elements per row and each element is 4 bytes. So we have `*(1000 + 2 * 5 * 4)` = `*(1000 + 40)` = `*(1040)` = `1040`. We are now in the first element of the second row in the 2D array. Now we add 2 to move forward 2 elements in the 1D array: `*(1040 + 2)` = `*(1040 + 2 * 4)` = `*(1048)`.
+
+So now we have `&*(1048)` and the `&` and `*` cancel each other. So we have **1048** which is the address of `&a[2][2]`.
+
+## Pointers GATE Question 2
+
+What is the output of the following C code? Assume that address of `x` is 2000 (in decimal) and an integer requires 4 bytes of memory.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    unsigned int x[4][3] = {{1, 2, 3}, {4, 5, 6},
+                            {7, 8, 9}, {10, 11, 12}};
+    printf("%u, %u, %u", x + 3, *(x + 3), *(x + 2) + 3);
+}
+```
+
+- **a) 2036, 2036, 2036** ✅
+- b) 2012, 4, 2204
+- c) 2036, 10, 10
+- d) 2012, 4, 6
+
+**Answer:**
+
+This is how the array would look like in memory:
+
+| x   | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   |
+| --- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| MA  | 2000 | 2004 | 2008 | 2012 | 2016 | 2020 | 2024 | 2028 | 2032 | 2036 | 2040 | 2044 |
+| AN  | 1    | 1    | 1    | 2    | 2    | 2    | 3    | 3    | 3    | 4    | 4    | 4    |
+
+`x` = Pointer to the first 1D array
+
+- `x + 3` = $2000+3\times12=2036$ = Pointer to 4th 1D array
+- `*(x + 3)` = Pointer to first element of 4th 1D array: **2036**
+- `*(x + 2) + 3`
+  - `x` = Pointer to first 1D array
+  - `x + 2` = Pointer to the 3rd 1D array
+  - `*(x + 2)` = 2024 = Pointer to first element of 3rd 1D array
+  - `\*(x + 2) + 3 = $2024+3\times4=2036$
+
+## Pointer Pointing To An Entire Array
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int a[5] = {1, 2, 3, 4, 5};
+    int *p = a;
+
+    printf("%d", *p);
+    return 0;
+}
+```
+
+Output: `1`
+
+Let's suppose we make a little change in the code:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int a[5] = {1, 2, 3, 4, 5};
+    int (*p)[5] = &a;
+
+    printf("%p", p);
+    return 0;
+}
+```
+
+`(*p)`: A pointer to five integer elements.
+
+### Why Passing `&a`?
+
+**Example:** 2D array `b`:
+
+| 1    | 2    | 3    | 4    |
+| ---- | ---- | ---- | ---- |
+| 1000 | 1004 | 1008 | 1012 |
+| 1000 | 1000 | 1008 | 1008 |
+
+- `*b` = Pointer to 1st element of 1st 1D array
+- `&*b` = b = Pointer to 1st 1D array
+
+Because `a` points to the first element of the array we need to go outside to point to the _whole_ 1D array, not just the first element of it.
+
+Let's now try to print the first element of array `a`:
+
+```c
+int (*p)[5] = &a;
+printf("%d", **p);
+```
+
+Output: `1`
+
+### Question Pointer Pointing To Entire Array
+
+What is the output of the following program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int a[][3] = {1, 2, 3, 4, 5, 6};
+    int (*ptr)[3] = a;
+
+    printf("%d %d ", (*ptr)[1], (*ptr)[2]);
+    ++ptr;
+    printf("%d %d ", (*ptr)[1], (*ptr)[2]);
+
+    return 0;
+}
+```
+
+- **a) `2 3 5 6`** ✅
+- b) `2 3 4 5`
+- c) `4 5 0 0`
+- d) None of the above
+
+**Answer:**
+
+We have an array `a` with 3 columns. So the number of rows must be 2. `a` gets assigned to pointer `*ptr` pointing to an 1D array with 3 integer elements. We pass to `*ptr` the address of the first 1D array. Then we print `(*ptr)[1]` and `(*ptr)[2]`.
+
+`ptr` is a pointer to the first 1D array while `*ptr` is a pointer to the first element of the first 1D array. And `(*ptr)[1]` is equal to `*((*ptr) + 1)`. `(*ptr) + 1` gives pointer to second element of first 1D array. `*((*ptr) + 1)` gives the second element. So `*((*ptr) + 2)` gives the third element. So far, the output will be `2 3`.
+
+Then `ptr` is incremented (`++ptr`). So `ptr` now points to the second 1D array. Then we repeat the above process and we will have `5 6` as an ouput. Putting everything together we will have an ouput of `2 3 5 6`.
+
+## Pointers GATE Question 3
+
+What is the output of the following C program:
+
+```c
+void f(int *p, int *q) {
+    p = q;
+    *p = 2;
+}
+
+int i = 0, j = 1;
+
+int main(void) {
+    f(&i, &j);
+    printf("%d %d\n", i, j);
+    return 0;
+}
+```
+
+- a) `2 2`
+- b) `2 1`
+- c) `0 1`
+- **d) `0 2`** ✅
+
+**Answer:**
+
+We have two variables `i` (address 1000) with a value of 0 and `j` (address 2000) with a value of 1. Then we assign the address of `q` (`j`: 2000) to `p` (`i`: 2000). Now `p` and `q` point to the same memory location (2000). When we now change the value of `*p` to 2, we change it for both the pointers `*p` and `*q` as they are pointing to the exact same location. Then we print the values of `i` and `j`. `i` has the address 1000, on which we didn't modify the value, so it is still 0. And `j` has the address 2000, which now holds a value of 2. So the output is `0 2`.
+
+## Pointers GATE Question 4
+
+What is the value printed by the following C program:
+
+```c
+#include <stdio.h>
+
+int f(int *a, int n) {
+    if (n <= 0)
+      return 0;
+    else if (*a % 2 == 0)
+      return *a + f(a + 1, n - 1);
+    else
+      return *a - f(a + 1, n - 1);
+}
+
+int main(void) {
+    int a[] = {12, 7, 13, 4, 11, 6};
+
+    printf("%d", f(a, 6));
+    getchar();
+    return 0;
+}
+```
+
+- a) `-9`
+- b) `5`
+- **c) `15`** ✅
+- d) `19`
+
+**Answer:**
+
+Every C program starts executing from `main()`. We have an array `a` with 6 integer elements and we call the function `f()` with the arguments `a` and 6. `a` is passing a pointer to the first element of the array `a`. It is equal to passing `&a[0]`.
+
+We then have a recursion inside `f()`:
+
+`f(&a[0], 6)` -> `12 + f(&a[1], 5)` -> `7 - f(&a[2], 4)` -> `13 - f(&a[3], 3)` -> `4 + f(&a[4], 2)` -> `11 - f(&a[5], 1)` -> `6 + f(&a[6], 0)` -> `return 0`
+
+## Pointers GATE Question 5
+
+What is printed by the following C program:
+
+```c
+int f(int x, int *py, int **ppz) {
+    int y, z;
+
+    **ppz += 1;
+    z = **ppz;
+
+    *py += 2;
+    y = *py;
+    x += 3;
+
+    return x + y + z;
+}
+
+void main(void) {
+    int c, *b, **a;
+
+    c = 4, b = &c, a = &b;
+    printf("%d", f(c, b, a));
+}
+```
+
+- a) `18`
+- **b) `19`** ✅
+- c) `21`
+- d) `22`
+
+**Answer:**
+
+|         | c    | b    | a    |
+| ------- | ---- | ---- | ---- |
+| Value   | 7    | 1000 | 2000 |
+| Address | 1000 | 2000 | 3000 |
+
+|         | x    | py   | ppz  |
+| ------- | ---- | ---- | ---- |
+| Value   | 7    | 1000 | 2000 |
+| Address | 4000 | 5000 | 6000 |
+
+| y    | z    |
+| ---- | ---- |
+| 7    | 5    |
+| 7000 | 8000 |
+
+$$x+y+z=7+7+5=19$$
+
+## Pointers GATE Question 6
+
+Which one of the choices given below would be printed when the following program is executed?
+
+```c
+void swap(int *x, int *y) {
+    static int *temp;
+
+    temp = x;
+    x = y;
+    y = temp;
+}
+
+void printab(void) {
+    static int i, a = -3, b = -6;
+
+    i = 0;
+    while (i <= 4) {
+      if ((i++) % 2 == 1) continue;
+      a = a + i;
+      b = b + i;
+    }
+    swap(&a, &b);
+    printf("a = %d, b = %d\n", a, b);
+}
+
+int main(void) {
+    printab();
+    printab();
+    return 0;
+}
+```
+
+- a) `a = 0, b = 3` `a = 0, b = 3`
+- b) `a = 3, b = 0` `a = 12, b = 9`
+- c) `a = 3, b = 6` `a = 3, b = 6`
+- **d) `a = 6, b = 3` `a = 15, b = 12`** ✅
+
+**Answer:**
+
+Static:
+
+| `i`  | `a`  | `b`  |
+| ---- | ---- | ---- |
+| 0    | -3   | -6   |
+| 1000 | 2000 | 3000 |
+
+Iterations
+
+| `i` | `a` | `b` |
+| --- | --- | --- |
+| 1   | -2  | -5  |
+| 2   | -2  | -5  |
+| 3   | 1   | -2  |
+| 4   | 1   | -2  |
+| 5   | 6   | 3   |
+
+The `swap()` function doesn't really do anything except swapping addresses of `x` and `y` which has no effect on the values `a` and `b`.
+
+So the output after the first `printab()` call will be `a = 6, b = 3`.
+
+As `a` and `b` are _static_ variables, they retain their values. So we start this time with these values:
+
+| `i`  | `a`  | `b`  |
+| ---- | ---- | ---- |
+| 0    | 6    | 3    |
+| 1000 | 2000 | 3000 |
+
+| `i` | `a` | `b` |
+| --- | --- | --- |
+| 1   | 7   | 4   |
+| 2   | 7   | 4   |
+| 3   | 10  | 7   |
+| 4   | 10  | 7   |
+| 5   | 15  | 12  |
+
+So the output after the second `printab()` call will be `a = 15, b = 12`.
+
+## Pointers GATE Question 7
+
+A C program is given below:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int i, j;
+    char a[2][3] = {{'a', 'b', 'c'}, {'d', 'e', 'f'}};
+    char b[3][2];
+    char *p = *b;
+
+    for (i = 0; i < 2; i++) {
+      for (j = 0; j < 3; j++) {
+        *(p + 2 * j + i) = a[i][j];
+      }
+    }
+}
+```
+
+What should be the contents of the array `b` at the end of the program?
+
+- a) `a b` `c d` `e f`
+- **b) `a d` `b e` `c f`** ✅
+- c) `a c` `e b` `d f`
+- d) `a e` `d c` `b f`
+
+**Answer:**
+
+Array `a` would look something like this:
+
+| `'a'` | `'b'` | `'c'` | `'d'` | `'e'` | `'f'` |
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| 3000  | 3001  | 3002  | 3003  | 3004  | 3005  |
+
+Pointer `*p` points to the first element in the first 1D array of array `b`, that's what `*b` means. Now we just have to iterate through the loops and add the values of `i` and `j` to `p` which means we traverse through the array. For example `(p + 1)` is the second element of the first 1D array and so on. This is what the array looks in the end:
+
+| `'a'` | `'b'` | `'c'` | `'d'` | `'e'` | `'f'` |
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| 4000  | 4001  | 4002  | 4003  | 4004  | 4005  |
