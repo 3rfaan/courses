@@ -7824,8 +7824,149 @@ Array `a` would look something like this:
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | 3000  | 3001  | 3002  | 3003  | 3004  | 3005  |
 
-Pointer `*p` points to the first element in the first 1D array of array `b`, that's what `*b` means. Now we just have to iterate through the loops and add the values of `i` and `j` to `p` which means we traverse through the array. For example `(p + 1)` is the second element of the first 1D array and so on. This is what the array looks in the end:
+Pointer `*p` points to the first element in the first 1D array of array `b`,
+that's what `*b` means. Now we just have to iterate through the loops and add
+the values of `i` and `j` to `p` which means we traverse through the array. For
+example `(p + 1)` is the second element of the first 1D array and so on. This
+is what the array looks in the end:
 
 | `'a'` | `'b'` | `'c'` | `'d'` | `'e'` | `'f'` |
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | 4000  | 4001  | 4002  | 4003  | 4004  | 4005  |
+
+# String Literals
+
+## Definition
+
+**String literal (or string constant)** is a sequence of characters enclosed
+within double quotes.
+
+**Example:** `"Hello everyone"`, `"Hallo zusammen"`, `"Hola a todos"`
+
+**`%s` is a placeholder**
+
+```c
+int main(void) {
+    printf("%s", "Hello everyone");
+    return 0;
+}
+```
+
+Double quotes are important! We cannot use single quotes for string literals like in other languages.
+
+## Continuing String Literals
+
+### Splicing
+
+```c
+printf("%s", "You have to dream before your dreams can come true.\
+--A.P.J. Abdul Kalam");
+```
+
+This is called "splicing". We just added an `\` after the first secntence. The same can be achieved like this:
+
+```c
+printf("%s", "You have to dream before your dreams can come true. "
+"--A.P.J. Abdul Kalam")
+```
+
+The output of the above programs is:
+
+```
+You have to dream before your dreams can come true.      --A.P.J. Abdul Kalam
+You have to dream before your dreams can come true. --A.P.J. Abdul Kalam
+```
+
+As we can see in the first string literal where we used splicing there are additional spaces while in the second the text is formatted like we intended.
+
+## Storing String Literals
+
+```c
+printf("Earth");
+```
+
+`"Earth"` is a string literal.
+
+First argument to `printf()` and `scanf()` functions is always a string literal.
+
+**But what are we actually passing to `printf()`/`scanf()`?**
+
+String literals are stored as an array of characters in memory.
+
+| E   | a   | r   | t   | h   | \0  |
+| --- | --- | --- | --- | --- | --- |
+
+Total 6 bytes of read-only memory is allocated to the above string literal.
+
+⛔️ `'\0'` character must not be confused with the character `'0'`. Both have different ASCII codes. `'\0'` (null character) has the code 0 while `'0'` has the code 48.
+
+In C, compiler treats a string literal as a pointer to the first character.
+
+**So to the `printf()` or `scanf()` functions we are passing a pointer to the first character of a string literal.**
+
+Both `printf()` and `scanf()` functions expects a character pointer (`char *`) as an argument.
+
+```c
+printf("Earth");
+```
+
+Passing "Earth" here is equivalent to passing the pointer to character `'E'`.
+
+## Operations On String Literals
+
+### Assigning String Literal To A Pointer
+
+```c
+char *ptr = "Hello World";
+```
+
+**Recall:** Writing string literal is equivalent to writing the pointer to the first character of the string literal.
+
+`ptr` contains the address of the first character of the string literal.
+
+As writing "Hello" is equivalent to writing the pointer to the first character. Therefore, we can subscript it to get some character of the string literal.
+
+`"Hello"[1]` is equivalent to pointer to `'H'[1]`.
+
+| H    | e    | l    | l    | o    | \0   |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 1000 | 1001 | 1002 | 1003 | 1004 | 1005 |
+
+Pointer to `'H'[1]` = \*(pointer to `'H'` + 1)
+
+Pointer to `'H'[1]` = `*(1000 + 1)` = `*(1001)` = `'e'`
+
+Similarly,
+
+`"Hello"[0]` => `'H'`
+`"Hello"[1]` => `'e'`
+`"Hello"[2]` => `'l'`
+`"Hello"[3]` => `'l'`
+`"Hello"[4]` => `'o'`
+
+👉 String literals cannot be modified. It causes undefined behaviour.
+
+```c
+char *ptr = "Hello";
+
+*ptr = 'M'; // ⛔️ Not allowed!
+```
+
+String literals are also known as string constants. They have been allocated a read only memory. So we cannot alter them.
+
+But character pointer itself has been allocated read-write memory. So the same pointer can point to some other string literal.
+
+## String Literal Versus Character Constant
+
+String literal and character constant are not the same.
+
+`"H"` $\neq$ `'H'`
+
+- The string literal is represented by a pointer to a character `'H'`.
+- The character constant is represented by an integer (ASCII code: 72).
+
+So:
+
+`printf("\n")` $\neq$ `printf('\n')`
+
+`printf()` expects a pointer to a character, not an integer. So the second `printf()` will output an error!
