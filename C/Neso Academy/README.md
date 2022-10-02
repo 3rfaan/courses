@@ -7938,11 +7938,11 @@ Pointer to `'H'[1]` = `*(1000 + 1)` = `*(1001)` = `'e'`
 
 Similarly,
 
-`"Hello"[0]` => `'H'`
-`"Hello"[1]` => `'e'`
-`"Hello"[2]` => `'l'`
-`"Hello"[3]` => `'l'`
-`"Hello"[4]` => `'o'`
+- `"Hello"[0]` => `'H'`
+- `"Hello"[1]` => `'e'`
+- `"Hello"[2]` => `'l'`
+- `"Hello"[3]` => `'l'`
+- `"Hello"[4]` => `'o'`
 
 👉 String literals cannot be modified. It causes undefined behaviour.
 
@@ -7970,3 +7970,792 @@ So:
 `printf("\n")` $\neq$ `printf('\n')`
 
 `printf()` expects a pointer to a character, not an integer. So the second `printf()` will output an error!
+
+## Declaring & Initializing A String Variable
+
+A string variable is a one dimensional array of characters that is capable of holding a string at a time.
+
+**Example:** `char s[6];`
+
+**Note:** Always make the array one character longer than the string. If length of the string is 5 characters long then don't forget to make extra room for the _null_ character.
+
+Failing to do the same may cause unpredictable results when program is executed as some C libraries assume the strings are _null_ terminated.
+
+### Initializing A String Variable
+
+**Example:** `char s[6] = "Hello";`
+
+| H   | e   | l   | l   | o   | \0  |
+| --- | --- | --- | --- | --- | --- |
+
+Although it seems like `"Hello"` in the above example is a string literal but it is not.
+
+When a string is assigned to a character array, then this character array is treated like other types of arrays.
+
+```c
+char s[6] = "Hello";
+
+char s[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+```
+
+**Recall:** We cannot modify a string literal. The following code will produce an error message:
+
+```c
+char *ptr = "Hello";
+
+*ptr = 'M';
+```
+
+But we can modify a char array:
+
+```c
+char s[6] = "Hello";
+
+s[0] = 'M';
+```
+
+### Short Length Initializer
+
+```c
+char s[7] = "Hello";
+```
+
+If the char array holds less character than we initialized, then the rest of the empty places will get filled up by _null_ terminators:
+
+| H   | e   | l   | l   | o   | \0  | \0  |
+| --- | --- | --- | --- | --- | --- | --- |
+
+### Long Length Initializer
+
+```c
+char s[4] = "Hello";
+```
+
+| H   | e   | l   | l   |
+| --- | --- | --- | --- |
+
+The rest of the part is truncated. We will also get a warning and we should
+always prevent this case at any cost.
+
+### Equal Length Initializer
+
+```c
+char s[5] = "Hello";
+```
+
+| H   | e   | l   | l   | o   |
+| --- | --- | --- | --- | --- |
+
+There is no room for `\0` and we have an undefined behaviour.
+
+### Omitting The Length
+
+```c
+char s[] = "Hello";
+```
+
+Automatically, the compiler sets aside 6 characters for `s` which is enough to store the string `"Hello"` with the _null_ character.
+
+| H   | e   | l   | l   | o   | \0  |
+| --- | --- | --- | --- | --- | --- |
+
+## Writing Strings
+
+### Writing Strings Using `printf()`
+
+```c
+char *ptr = "Hello world";
+
+printf("%s", ptr);
+```
+
+Output: `Hello world`
+
+`"%.ns"` is used to print just a part of the string where `n` is the number of characters to be displayed on the screen.
+
+```c
+char *ptr = "Hello world";
+
+printf("%.5s", ptr);
+```
+
+Output: `Hello`
+
+`"%m.ns"` is used to print just a part of the string where `n` is the number of characters to be displayed and `m` denotes the size of the field within which the string will be displayed.
+
+```c
+char *ptr = "Hello world";
+
+printf("%.5s", ptr);
+printf("%6.5s", ptr);
+```
+
+Output:
+
+```
+Hello
+ Hello
+```
+
+|     | H   | e   | l   | l   | o   |
+| --- | --- | --- | --- | --- | --- |
+
+Field of length `m` = 60
+
+### Writing Strings Using `puts()`
+
+`puts()` is a function declared in `<stdio.h>` library and is used to write strings to the output screen.
+
+Also, `puts()` function automatically writes a _newline character_ after writing the string to the output screen.
+
+```c
+char *s = "Hello";
+
+puts(s);
+puts(s);
+```
+
+Output:
+
+```
+Hello
+Hello
+```
+
+## Reading Strings
+
+### Reading Strings Using `scanf()`
+
+Using `scanf()` we can read a string into a string variable (character array).
+
+```c
+char a[10];
+
+printf("Enter the string:\n");
+scanf("%s", a);
+printf("%s", a);
+```
+
+Like any array name, `a` is treated as a pointer to the first element of the array. Therefore, there is no need to put `&`.
+
+Output:
+
+```
+$ Enter the string:
+$ You are most welcome
+You
+```
+
+Why does it output only `You`? `scanf()` doesn't store the white space characters in the string variable.
+
+It only reads characters other than white spaces and store them in the specified character array until it encounters a white space character.
+
+When white space is seen by `scanf()`, it stops and hence, only `You` is stored in the specified character array.
+
+### Reading Strings Using `gets()`
+
+In order to read an entire line of input, `gets()` function can be used.
+
+```c
+char a[10];
+
+printf("Enter the string:\n");
+gets(a);
+printf("%s", a);
+```
+
+Input: `You are most welcome`
+
+⛔️ The program may crash after the input!
+
+This is because the inputted string is longer than the specified length of character array `a`.
+
+Both, `gets()` and `scanf()` functions have no way to detect when the character array is full.
+
+Both of them never check the maximum limit of input characters. Hence, they may cause undefined behaviour and probably lead to buffer overflow error which eventually causes the program to crash.
+
+Although `scanf()` has a way to set the limit for the number of characters to be stored in the character array.
+
+By using `%ns`, where `n` indicates the number of characters allowed to store in the character array.
+
+```c
+char a[10];
+
+printf("Enter the string:\n");
+scanf("9s", a);
+printf("%s", a);
+```
+
+Output:
+
+```
+$ Enter the string:
+$ Youaremostwelcome
+Youaremos
+```
+
+But unfortunately, `gets()` is still _unsafe_.
+
+It will try to write the characters beyond the memory allocated to the character array which is _unsafe_ because it will simply overwrite the memory beyond the memory allocated to the character array.
+
+Hence, it is advisable to _not_ use the `gets()` function.
+
+## Designing Input Function Using `getchar()`
+
+As `scanf()` and `gets()` functions are risky to use. Hence, _it is advisable to design our own input function._
+
+We want our input function to have the following functionalities:
+
+1. It must continue to read the string even after seeing white space characters.
+2. It must stop reading the string after seeing the newline character.
+3. It must discard extra characters.
+4. It must return the number of characters it stores in the character array.
+
+```c
+#include <stdio.h>
+
+int input(char str[], int n) {
+  int ch, i = 0;
+
+  while ((ch = getchar()) != '\n') {
+    if (i < n)
+      str[i++] = ch;
+  }
+  str[i] = '\0';
+  return i;
+}
+
+int main(void) {
+  char str[100];
+  int n = input(str, 5);
+
+  printf("%d %s", n, str);
+  return 0;
+}
+```
+
+Output:
+
+```
+$ Hello, How are you?
+5 Hello
+```
+
+`getchar()` is used to read one character at a time from the user input. It returns an integer equivalent to the ASCII code of the character. This is the reason why we have `int ch` in place of `char ch`.
+
+## `putchar()` In C99
+
+**Prototype:** `int putchar(int ch)`
+
+`putchar()` accepts an integer argument (which represents a character it wants to display) and returns an integer representing the character written on the screen.
+
+💡 Always remember that character is internally represented in binary form only. It doesn't make any difference if you write `int ch` instead of `char ch`.
+
+**Example:**
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  int ch;
+
+  for (ch = 'A'; ch <= 'Z'; ch++)
+    putchar(ch);
+  return 0;
+}
+```
+
+Output: `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+
+## Problem 1
+
+Identify which of the following calls work properly and give the reason for the same.
+
+- a) `printf("%c", '\n');` ✅
+- b) `printf("%c", "\n");`
+- c) `putchar('\n');` ✅
+- d) `putchar("\n");`
+- e) `puts('\n');`
+- f) `puts("\n");` ✅
+- g) `printf("%s", '\n');`
+- h) `printf("%s", "\n");` ✅
+
+## C String Library
+
+### Introcution To C String Library
+
+There are some operations which we can perform on strings.
+
+**Example:** Copy strings, concatenate strings, select substrings and so on.
+
+`<string.h>` library contains all the required functions for performing string operations.
+
+So we just have to include this header file:
+
+```c
+#include <string.h>
+```
+
+and we are good to go!
+
+### `strcpy()` - String Copy
+
+**Prototype:** `char* strcpy(char* destination, const char* source)`
+
+`strcpy()` is used to copy a string pointed by source (including _NULL_ character) to the destination (character array).
+
+**Example:**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char str1[10] = "Hello";
+  char str2[10];
+
+  printf("%s\n", strcpy(str2, str1));
+  printf("%s", str2);
+  return 0;
+}
+```
+
+Output:
+
+```
+Hello
+Hello
+```
+
+`strcpy()` returns the pointer to the first character of the string which is copied in the destination. Hence if we use `%s`, then whole string will be printed on the screen.
+
+We can also chain together a series of `strcpy()` calls:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char str1[10] = "Hello";
+  char str2[10];
+  char str3[10];
+
+  strcpy(str3, strcpy(str2, str1));
+  printf("%s %s", str2, str3);
+  return 0;
+}
+```
+
+Output:
+
+```
+Hello
+Hello
+```
+
+In the call to `strcp(str1, str2)` there is no way the `strcpy()` will check whether the string pointed by `str2` will fit in `str1`.
+
+If the length of the string pointed by `str2` is greater than the length of the character array `str1` then it will be an undefined behaviour.
+
+To avoid this we can call the `strncpy()` function.
+
+`strncpy(destination, source, sizeof(destination));`
+
+**Example:**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char str1[6] = "Hello";
+  char str2[4];
+
+  strncpy(str2, str1, sizeof(str2));
+  printf("%s", str2);
+  return 0;
+}
+```
+
+Output: `Hell`
+
+`strncpy()` will leave the string in `str2` (destination) without a terminating _NULL_ character, if the size of `str1` (source) is equal to or greater than the size of `str2` (destination).
+
+**Example:**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char str1[6] = "Hello";
+  char str2[6];
+
+  strncpy(str2, str1, sizeof(str2));
+  str2[sizeof(str2) - 1] = '\0';
+  printf("%s", str2);
+  return 0;
+}
+```
+
+Output: `Hello`
+
+### `strlen()` - String Length
+
+**Prototype:** `size_t strlen(const char* str);`
+
+`size_t` is an unsigned integer type of at least 16 bits.
+
+`strlen()` function is used to determine the length of the given string.
+
+To the `strlen()` function, we should pass the pointer to the first character of the string whose length we want to determine.
+
+**Note:** It doesn't count the _NULL_ character.
+
+**Example:**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char *str = "Hello world";
+  printf("%d", strlen(str));
+  return 0;
+}
+```
+
+Output: `11`
+
+It calculates the length of the string and not the length of the array.
+
+### `strcat()` & `strncat()` - String Concatenation
+
+**Prototype:** `char* strcat(char* str1, const char* str2);`
+
+`strcat()` function _appends_ the content of string `str2` at the end of string `str1`. It _returns_ the pointer to the resulting string `str1`.
+
+**Example:**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char str1[100], str2[100];
+
+  strcpy(str1, "Welcome to ");
+  strcpy(str2, "our Academy");
+  strcat(str1, str2);
+
+  printf("%s", str1);
+  return 0;
+}
+```
+
+Output: `Welcome to our Academy`
+
+⛔️ **Caution:** An undefined behaviour can be observed if size of `str1` isn't long enough to accomodate the additional characters of `str2`.
+
+`strncat()` is the _safer version_ of `strcat()`.
+
+It appends the limited number of characters specified by the third argument passed to it.
+
+📝 **Note:** `strncat()` automatically adds the _NULL_ character at the end of the resultant string.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char str1[5], str2[100];
+
+  strcpy(str1, "He");
+  strcpy(str2, "llo!");
+  strncat(str1, str2, sizeof(str1) - strlen(str1) - 1);
+  printf("%s", str1);
+  return 0;
+}
+```
+
+Output: `Hell`
+
+### `strcmp()` - String Comparison
+
+**Prototype:** `int strcmp(const char* s1, const char* s2);`
+
+- Compares two strings `s1` and `s2`
+- Returns value
+  - Less than 0 if `s1 < s2`
+  - Greater than 0 if `s1 > s2`
+  - Equal to 0 if `s1 == s2`
+
+👉🏼**Attention!**
+
+In ASCII character set:
+
+- All uppercase letters are less than all the lowercase letters (Uppercase letters have ASCII codes between 65 and 90 and lowercase letters have ASCII codes between 97 and 122).
+- Digits are less than letters (0-9 digits have ASCII codes between 48 and 57).
+- Spaces are less than all printing characters (Space character has the value of 32 in ASCII set).
+
+`strcmp()` considers `s1 < s2` if either one of the following conditions is satisfied:
+
+- When the first i characters in `s1` and `2` are same and (i+1)st character of `s1` is less than that of `s2`.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char *s1 = "abcd";
+  char *s2 = "abce";
+
+  if (strcmp(s1, s2) < 0)
+    printf("s1 is less than s2");
+  else
+    printf("s1 is greater than or equal to s2");
+  return 0;
+}
+```
+
+Output: `s1 is less than s2`
+
+- All characters of `s1` match `s2` but `s1` is shorter than `s2`.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char *s1 = "abc";
+  char *s2 = "abcd";
+
+  if (strcmp(s1, s2) < 0)
+    printf("s1 is less than s2");
+  else
+    printf("s1 is greater than or equal to s2");
+  return 0;
+}
+```
+
+Output: `s1 is less than s2`
+
+## Array Of Strings
+
+### 2D Array
+
+```c
+char fruits[][12] = {"2 Oranges", "2 Apples", "3 Bananas", "1 Pineapple"};
+```
+
+This array could be represented like this:
+
+| 2   |     | O   | r   | a   | n   | g   | e   | s   | \0  | \0  | \0  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2   |     | A   | p   | p   | l   | e   | s   | \0  | \0  | \0  | \0  |
+| 3   |     | B   | a   | n   | a   | n   | a   | s   | \0  | \0  | \0  |
+| 1   |     | P   | i   | n   | e   | a   | p   | p   | l   | e   | \0  |
+
+Here a lot of memory is wasted because of the _NULL_ characters. But we have an alternative.
+
+### Array Of Pointers
+
+```c
+char *fruits[] = {"2 Oranges", "2 Apples", "3 Bananas", "1 Pineapple"};
+```
+
+### Homework Problem
+
+What is the output of the following C program:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char *fruits[] = {"2 Oranges", "2 Apples", "3 Bananas", "1 Pineapple"};
+
+  if (strcmp(fruits[1], fruits[2]) < 0)
+    printf("%s are lesser than %s", fruits[1], fruits[2]);
+  else if (strcmp(fruits[1], fruits[2]) > 0)
+    printf("%s are greater than %s", fruits[1], fruits[2]);
+  return 0;
+}
+```
+
+Output: `2 Apples are lesser than 3 Bananas`
+
+## Problem 2
+
+Consider the following C program segment:
+
+```c
+char p[20];
+char *s = "string";
+int length = strlen(s);   // 6
+int i;
+
+for (i = 0; i <length; i++)
+  p[i] = s[length - i];
+printf("%s", p);
+```
+
+The output of the program is:
+
+- a) `gnirts`
+- b) `string`
+- c) `gnirt`
+- **d) No output is printed** ✅
+
+**Answer:**
+
+`printf()` function will print everything before the *null* character and will not see anything after the *null* character. Therefore, **nothing will be printed on the screen.**
+
+## Problem 3
+
+What does the following fragment of C program print?
+
+```c
+char c[] = "GATE2011";
+char *p = c;
+
+printf("%s", p + p[3] - p[1]);
+```
+
+- a) `GATE2011`
+- b) `E2011`
+- **c) `2011`** ✅
+- d) `011`
+
+**Answer:**
+
+We have a character array `c` containing `GATE2011` and a pointer `*p` that stores the address of the first element in the character array. Then in the `printf()` statement we have the first address, which we suppose is 1000, then `p[3]` which can be written as `*(1000 + 3)` containing the letter `E` and then `p[1]` (`*(1000 + 1)`) which contains the letter `A`.
+
+Always remember that character is internally represented as integer only. So `E` is represented as 69 and `A` as 65. So we have `printf("%s", 1000 + 69 - 65)`. So we print the address of 1004. Address 1004 contains the value `2`. So the `printf()` functions prints the string starting from 2 and continues until the *null* character. So 2011 will be printed on the screen.
+
+## Problem 4
+
+Consider the following function written in the C programming language. The output of the below function on input `ABCD EFGH` is
+
+```c
+void foo(char *a) {
+  if (*a && *a != ' ') {
+    foo(a + 1);
+    putchar(*a);
+  }
+}
+```
+
+- a) `ABCD EFGH`
+- b) `ABCD`
+- c) `HGFE DCBA`
+- **d) `DCBA`** ✅
+
+**Answer:**
+
+We pass the input `ABCD EFGH` to character pointer `*a`. So `a` holds the address of the first element in the passed character array. The `if` condition means if a character pointed by pointer `a` is neither a *NULL* character nor a blank character then continue, else stop. `*a` is dereferencing the value of the address stored in `a`, so `A`. Then recursion is happening and calling `foo()` incrementing `a` to address 1001.
+
+`foo(1000)` -> `foo(1001)` -> `foo(1002)` -> `foo(1003)` -> `foo(1004)`
+
+We don't have any `return` statement. So we just go back until we reach `foo(1000)` in the stack. On each step, `printf()` will print the current element value in the character array. 
+
+## Problem 5
+
+Consider the following C program:
+
+```c
+void fun1(char *s1, char *s2) {
+  char *tmp;
+
+  tmp = s1;
+  s1 = s2;
+  s2 = tmp;
+}
+
+void fun2(char **s1, char **s2) {
+  char *tmp;
+
+  tmp = *s1;
+  *s1 = *s2;
+  *s2 = tmp;
+}
+
+int main(void) {
+  char *str1 = "Hi", *str2 = "Bye";
+
+  fun1(str1, str2);
+  printf("%s %s", str1, str2);
+
+  fun2(&str1, &str2);
+  printf("%s %s", str1, str2);
+
+  return 0;
+}
+```
+
+- **a) `Hi Bye Bye Hi`** ✅
+- b) `Hi Bye Hi Bye`
+- c) `Bye Hi Hi Bye`
+- d) `Bye Hi Bye Hi`
+
+**Answer:**
+
+We start in the `main()` function. We pass the addresses of first element in `str1` and `str2` to the `fun1()` function. The `fun1()` function switches the addresses of `s1` and `s2` which are *local* to it. So there is no change of `str1` and `str2` in the `main()` function. So the first `printf()` statement prints `Hi Bye`.
+
+In the second case we pass the addresses of character pointers `str1` and `str2`. In `fun2()` we have double pointers. So `**s1` holds the address of the pointer `str1` which points to a character and `**s2` of `str2`. We are dereferencing `s1` and put the value of it, which is the address to the first character in the `str1` array, into `temp`. Then we assign the value of `s2`, which is the address that points to the first character in `str2` to `s1` which then holds the address of the first character of `str2`. Then we assign `s2` to the pointer `tmp` which holds the address of the first character in string `str1`. So the addresses get switched. In the end `str1` points to the first character of `str2` and `s2` points to the first character of `str1`.
+
+## Problem 6
+
+Determine the output of the following program:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+  char *c = "GATECSIT2017";
+  char *p = c;
+
+  printf("%d", (int)strlen(c + 2[p] - 6[p] - 1));
+  return 0;
+}
+```
+
+- a) `1`
+- **b) `2`** ✅
+- c) `4`
+- d) `6`
+
+**Answer:**
+
+We have two pointers, `*c` and `*p` pointing to the first character in the characters array (G). Then we have the `strlen()` statement, which can also be written as:
+
+```c
+(int)strlen(1000 + *(2 + 1000) - *(6 + 1000) - 1)
+```
+
+If we do the maths we have:
+
+```c
+(int)strlen(1000 + *(1002) - *(1006) - 1)
+```
+
+In the character array we can look up the different addresses and the value they hold as it is dereferenced.
+
+```c
+(int)strlen(1000 + T - I - 1)
+```
+
+We can now do a simple trick. As we know `I` is before `T` so we can think of `I` as being 1 and then count the letters until `T`, so `T` will be 12:
+
+```c
+(int)strlen(1000 + 12 - 1 - 1)
+
+(int)strlen(1010)
+```
+
+So `strlen()` will count the characters starting at address 1010 until the *null* character but not including *null* character.
+
+`strlen()` returns a `size_t` type data. Therefore, `(int)` will convert the `size_t` type to `int` type. This is called type casting.
+
+So we will have 2 as the output.
