@@ -8759,3 +8759,131 @@ So `strlen()` will count the characters starting at address 1010 until the *null
 `strlen()` returns a `size_t` type data. Therefore, `(int)` will convert the `size_t` type to `int` type. This is called type casting.
 
 So we will have 2 as the output.
+
+# Function Pointers
+
+Function pointers are like normal pointers but they have the capability to point to a function.
+
+```c
+int fun(int a, int b) {
+  return a + b;
+}
+```
+**Example:**
+
+How to declare a pointer to an array?
+
+```c
+int main(void) {
+  int *ptr[10];   // ⛔ WRONG
+
+  return 0;
+}
+```
+
+Always remember the *precedence of operators.* Precedence of `[]` is higher than `*`.
+
+So `ptr` is an array of 10 pointers pointing to integers. 
+
+The right method to declare a pointer to an array is as follows:
+
+```c
+int main(void) {
+  int (*ptr)[10];
+
+  return 0;
+}
+```
+
+Now, `ptr` is a pointer which is pointing to an array of 10 integers.
+
+**Example:**
+
+Now the question arises: *How to delcare a pointer to a function?*
+
+We want a pointer to the following function:
+
+```c
+int add(int a, int b) {
+  return a + b;
+}
+```
+We can declare a pointer like this. Here `ptr` is a pointer pointing to a function that contains 2 integers arguments and returns an integer.
+
+```c
+int main(void) {
+  int (*ptr)(int, int);
+}
+```
+
+**Example:** Assigning the address of a function to a function pointer.
+
+```c
+int main(void) {
+  int (*ptr)(int, int) = &add;
+}
+```
+
+OR
+
+```c
+int main(void) {
+  int (*ptr)(int, int);
+
+  ptr = &add;
+}
+```
+
+**Example:** Using the function pointer.
+
+```c
+int main(void) {
+  int result;
+  int (*ptr)(int, int) = &add;
+
+  result = *ptr(10, 20);
+  printf("%d", result);
+}
+```
+
+Because a function name represents also the initial address of that function. So we can instead of writing `&add` just assing `add` to the function pointer. If we do it this way, there is no need to dereference `ptr`:
+
+```c
+int add(int a, int b) {
+  return a + b;
+}
+
+int main(void) {
+  int result;
+  int (*ptr)(int, int) = add;
+
+  result = ptr(10, 20);
+  printf("%d", result);
+}
+```
+
+## Application Of Function Pointers
+
+Suppose we want to call a function named `func()` at a certain point in time in our code:
+
+```c
+int func(int a, int b) {
+  return a + b;
+}
+
+int main(void) {
+  printf("%d", func(2, 5));
+  
+  return 0;
+}
+```
+
+There is nothing that has to be decided at runtime.
+
+Let's say we want to design a *calculator* which has the capability to perform addition, subtraction, multiplication and division.
+
+Here, the user will decide which operation he wants to perform.
+
+Suppose we have decided to create separate functions for these operations.
+
+Now we want the user to decide which function has to be called at runtime. *One way is to use if/switch case expressions.* 
