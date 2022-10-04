@@ -8609,7 +8609,7 @@ The output of the program is:
 
 **Answer:**
 
-`printf()` function will print everything before the *null* character and will not see anything after the *null* character. Therefore, **nothing will be printed on the screen.**
+`printf()` function will print everything before the _null_ character and will not see anything after the _null_ character. Therefore, **nothing will be printed on the screen.**
 
 ## Problem 3
 
@@ -8631,7 +8631,7 @@ printf("%s", p + p[3] - p[1]);
 
 We have a character array `c` containing `GATE2011` and a pointer `*p` that stores the address of the first element in the character array. Then in the `printf()` statement we have the first address, which we suppose is 1000, then `p[3]` which can be written as `*(1000 + 3)` containing the letter `E` and then `p[1]` (`*(1000 + 1)`) which contains the letter `A`.
 
-Always remember that character is internally represented as integer only. So `E` is represented as 69 and `A` as 65. So we have `printf("%s", 1000 + 69 - 65)`. So we print the address of 1004. Address 1004 contains the value `2`. So the `printf()` functions prints the string starting from 2 and continues until the *null* character. So 2011 will be printed on the screen.
+Always remember that character is internally represented as integer only. So `E` is represented as 69 and `A` as 65. So we have `printf("%s", 1000 + 69 - 65)`. So we print the address of 1004. Address 1004 contains the value `2`. So the `printf()` functions prints the string starting from 2 and continues until the _null_ character. So 2011 will be printed on the screen.
 
 ## Problem 4
 
@@ -8653,11 +8653,11 @@ void foo(char *a) {
 
 **Answer:**
 
-We pass the input `ABCD EFGH` to character pointer `*a`. So `a` holds the address of the first element in the passed character array. The `if` condition means if a character pointed by pointer `a` is neither a *NULL* character nor a blank character then continue, else stop. `*a` is dereferencing the value of the address stored in `a`, so `A`. Then recursion is happening and calling `foo()` incrementing `a` to address 1001.
+We pass the input `ABCD EFGH` to character pointer `*a`. So `a` holds the address of the first element in the passed character array. The `if` condition means if a character pointed by pointer `a` is neither a _NULL_ character nor a blank character then continue, else stop. `*a` is dereferencing the value of the address stored in `a`, so `A`. Then recursion is happening and calling `foo()` incrementing `a` to address 1001.
 
 `foo(1000)` -> `foo(1001)` -> `foo(1002)` -> `foo(1003)` -> `foo(1004)`
 
-We don't have any `return` statement. So we just go back until we reach `foo(1000)` in the stack. On each step, `printf()` will print the current element value in the character array. 
+We don't have any `return` statement. So we just go back until we reach `foo(1000)` in the stack. On each step, `printf()` will print the current element value in the character array.
 
 ## Problem 5
 
@@ -8700,7 +8700,7 @@ int main(void) {
 
 **Answer:**
 
-We start in the `main()` function. We pass the addresses of first element in `str1` and `str2` to the `fun1()` function. The `fun1()` function switches the addresses of `s1` and `s2` which are *local* to it. So there is no change of `str1` and `str2` in the `main()` function. So the first `printf()` statement prints `Hi Bye`.
+We start in the `main()` function. We pass the addresses of first element in `str1` and `str2` to the `fun1()` function. The `fun1()` function switches the addresses of `s1` and `s2` which are _local_ to it. So there is no change of `str1` and `str2` in the `main()` function. So the first `printf()` statement prints `Hi Bye`.
 
 In the second case we pass the addresses of character pointers `str1` and `str2`. In `fun2()` we have double pointers. So `**s1` holds the address of the pointer `str1` which points to a character and `**s2` of `str2`. We are dereferencing `s1` and put the value of it, which is the address to the first character in the `str1` array, into `temp`. Then we assign the value of `s2`, which is the address that points to the first character in `str2` to `s1` which then holds the address of the first character of `str2`. Then we assign `s2` to the pointer `tmp` which holds the address of the first character in string `str1`. So the addresses get switched. In the end `str1` points to the first character of `str2` and `s2` points to the first character of `str1`.
 
@@ -8754,7 +8754,7 @@ We can now do a simple trick. As we know `I` is before `T` so we can think of `I
 (int)strlen(1010)
 ```
 
-So `strlen()` will count the characters starting at address 1010 until the *null* character but not including *null* character.
+So `strlen()` will count the characters starting at address 1010 until the _null_ character but not including _null_ character.
 
 `strlen()` returns a `size_t` type data. Therefore, `(int)` will convert the `size_t` type to `int` type. This is called type casting.
 
@@ -8764,11 +8764,6 @@ So we will have 2 as the output.
 
 Function pointers are like normal pointers but they have the capability to point to a function.
 
-```c
-int fun(int a, int b) {
-  return a + b;
-}
-```
 **Example:**
 
 How to declare a pointer to an array?
@@ -8781,9 +8776,9 @@ int main(void) {
 }
 ```
 
-Always remember the *precedence of operators.* Precedence of `[]` is higher than `*`.
+Always remember the _precedence of operators._ Precedence of `[]` is higher than `*`.
 
-So `ptr` is an array of 10 pointers pointing to integers. 
+So `ptr` is an array of 10 pointers pointing to integers.
 
 The right method to declare a pointer to an array is as follows:
 
@@ -8799,7 +8794,7 @@ Now, `ptr` is a pointer which is pointing to an array of 10 integers.
 
 **Example:**
 
-Now the question arises: *How to delcare a pointer to a function?*
+Now the question arises: _How to delcare a pointer to a function?_
 
 We want a pointer to the following function:
 
@@ -8808,6 +8803,7 @@ int add(int a, int b) {
   return a + b;
 }
 ```
+
 We can declare a pointer like this. Here `ptr` is a pointer pointing to a function that contains 2 integers arguments and returns an integer.
 
 ```c
@@ -8846,7 +8842,7 @@ int main(void) {
 }
 ```
 
-Because a function name represents also the initial address of that function. So we can instead of writing `&add` just assing `add` to the function pointer. If we do it this way, there is no need to dereference `ptr`:
+Because a function name represents also the initial address of that function. So we can instead of writing `&add` just passing `add` to the function pointer. If we do it this way, there is no need to dereference `ptr`:
 
 ```c
 int add(int a, int b) {
@@ -8873,17 +8869,82 @@ int func(int a, int b) {
 
 int main(void) {
   printf("%d", func(2, 5));
-  
+
   return 0;
 }
 ```
 
 There is nothing that has to be decided at runtime.
 
-Let's say we want to design a *calculator* which has the capability to perform addition, subtraction, multiplication and division.
+Let's say we want to design a _calculator_ which has the capability to perform addition, subtraction, multiplication and division.
 
 Here, the user will decide which operation he wants to perform.
 
 Suppose we have decided to create separate functions for these operations.
 
-Now we want the user to decide which function has to be called at runtime. *One way is to use if/switch case expressions.* 
+Now we want the user to decide which function has to be called at runtime. _One way is to use if/switch case expressions._
+
+```c
+#include <stdio.h>
+
+float sum(float a, float b) { return (a + b); }
+float sub(float a, float b) { return (a - b); }
+float mult(float a, float b) { return (a * b); }
+float divi(float a, float b) { return (a / b); }
+
+int main(void) {
+  int choice;
+  float a, b, result;
+
+  printf("Enter your choice: 0 for sum, 1 for sub, 2 for mult, 3 for div:\n");
+  scanf("%d", &choice);
+
+  printf("Enter the two numbers:\n");
+  scanf("%f %f", &a, &b);
+
+  switch (choice) {
+  case 0:
+    result = sum(a, b);
+    break;
+  case 1:
+    result = sub(a, b);
+    break;
+  case 2:
+    result = mult(a, b);
+    break;
+  case 3:
+    result = divi(a, b);
+    break;
+  }
+  printf("%f", result);
+  return 0;
+}
+```
+
+A better way in this case would be to declare a function pointer and let it decide at runtime which function will get executed:
+
+```c
+#include <stdio.h>
+
+#define OPS 4
+
+float sum(float a, float b) { return (a + b); }
+float sub(float a, float b) { return (a - b); }
+float mult(float a, float b) { return (a * b); }
+float divi(float a, float b) { return (a / b); }
+
+int main(void) {
+  float (*funptr[OPS])(float, float) = {sum, sub, mult, divi};
+  int choice;
+  float a, b;
+
+  printf("Enter your choice: 0 for sum, 1 for sub, 2 for mult, 3 for div:\n");
+  scanf("%d", &choice);
+
+  printf("Enter the two numbers:\n");
+  scanf("%f %f", &a, &b);
+
+  printf("%f", funptr[choice](a, b));
+  return 0;
+}
+```
