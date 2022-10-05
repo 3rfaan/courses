@@ -8948,3 +8948,576 @@ int main(void) {
   return 0;
 }
 ```
+
+# Structures
+
+**Problem:** I have a garage. I want to store all the information about the cars which are available in my garage.
+
+🚗 **Car 1 specifications**
+
+| Title              | Description     |
+| ------------------ | --------------- |
+| Engine             | DDis 190 Engine |
+| Fuel type          | Petrol          |
+| Fuel tank capacity | 37              |
+| Seating capacity   | 5               |
+| City mileage       | 19.74 kmpl      |
+
+We could declare variables for each specification of `car1`:
+
+```c
+char *car1Engine = "DDis 190 Engine";
+char *car1fuelType = "Petrol";
+int car1fuelCap = 37;
+int car1seatingCap = 5;
+float car1CityMileage = 19.74;
+```
+
+🚕 **Car 2 specifications**
+
+| Title              | Description           |
+| ------------------ | --------------------- |
+| Engine             | 1.2 L Kappa Dual VTVT |
+| Fuel type          | Diesel                |
+| Fuel tank capacity | 35                    |
+| Seating capacity   | 5                     |
+| City mileage       | 22.54 kmpl            |
+
+```c
+char *car2Engine = "1.2 L Kappa Dual VTVT";
+char *car2fuelType = "Diesel";
+int car2fuelCap = 35;
+int car2seatingCap = 5;
+float car2CityMileage = 22.54;
+```
+
+This is a very bad approach if we had more cars. It's time and memory intensive.
+
+_Array is also not a good option_ - Array has the capability to store more than one element but they all must be of the _same type_. Our requirement is to store data of different types.
+
+## Definition
+
+A _structure_ is a user defined data type that can be used to group elements of different types into a single type.
+
+For the above car (`car1` & `car2`) we can define a structure like this:
+
+```c
+struct {
+  char *engine;
+  char *fuel_type;
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+} car1, car2;
+```
+
+**Example:**
+
+```c
+struct {
+  char *engine;
+} car1, car2;
+
+int main(void) {
+  car1.engine = "DDis 190 Engine";
+  car2.engine = "1.2 L Kappa Dual VTVT";
+
+  printf("%s\n", car1.engine);
+  printf("%s", car2.engine);
+  return 0;
+}
+```
+
+Output:
+
+```
+DDis 190 Engine
+1.2 L Kappa Dual VTVT
+```
+
+## Structure Tags
+
+Structure tag is used to identify a particular kind of structure.
+
+```c
+struct employee {   // Structure tag
+  char *name;
+  int age;
+  int salary;
+};
+
+int manager(void) {
+  struct employee manager;
+}
+
+int main(void) {
+  struct employee emp1;
+  struct employee emp2;
+}
+```
+
+Another example:
+
+```c
+struct car {        // Structure tag
+  char engine[50];
+  char fuel_type[10];
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+};
+
+int main(void) {
+  struct car c1;
+}
+```
+
+We can also create a struct variable with the structure tag:
+
+```c
+struct car {        // Structure tag
+  char engine[50];
+  char fuel_type[10];
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+}, c1;              // Declared variable c1 here
+```
+
+## Structure Types
+
+**Syntax:** `typedef existing_data_type new_data_type`
+
+`typedef` gives freedom to the user by allowing them to create their own types.
+
+**Example:**
+
+```c
+#include <stdio.h>
+
+typedef int INTEGER;
+
+int main(void) {
+  INTEGER var = 100;
+
+  printf("%d", var);
+  return 0;
+}
+```
+
+### Using `typedef` In Structures
+
+#### Structure Declaration
+
+```c
+struct car {
+  char engine[50];
+  char fuel_type[10];
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+}, c1;
+```
+
+#### Separate Declaration
+
+```c
+struct car {
+  char engine[50];
+  char fuel_type[10];
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+};
+
+int main(void) {
+  struct car c1;
+}
+```
+
+Instead of writing `struct car` everytime when initiating an instance of `car`, we can use a `typedef` for the type `car`.
+
+```c
+typedef struct car {
+  char engine[50];
+  char fuel_type[10];
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+} car;
+
+int main(void) {
+  car c1;
+}
+```
+
+## Initializing & Accessing Structure Members
+
+⛔️ The following is **NOT** allowed:
+
+```c
+struct abc {
+  int p = 23;
+  int q = 34;
+};
+```
+
+We have to do the following:
+
+```c
+struct abc {
+  int p;
+  int q;
+};
+
+int main(void) {
+  struct abc x = {23, 34};
+}
+```
+
+**Example:**
+
+```c
+struct car {
+  char engine[50];
+  char fuel_type[10];
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+};
+
+int main(void) {
+  struct car c1 = {"DDis 190 Enginge", "Diesel", 37, 5, 19.74};
+  struct car c2 = {"Kappa", "Petrol", 22, 8, 14.5};
+}
+```
+
+### Accessing Members Of Structures
+
+We can access members of the structure using dot (`.`) operator.
+
+```c
+struct car {
+  int fuel_tank_cap;
+} c1, c2;
+
+int main(void) {
+  c1.fuel_tank_cap = 45;
+  c2.fuel_tank_cap = 30;
+
+  printf("%d %d", c1.fuel_tank_cap, c2.fuel_tank_cap);
+  return 0;
+}
+```
+
+Output: `45, 30`
+
+## Designated Initialization
+
+Designated initialization allows structure members to be initialized in any order.
+
+```c
+struct abc {
+  int x;
+  int y;
+  int z;
+};
+
+int main(void) {
+  struct abc a = {.y = 20, .x = 10, .z = 30};
+
+  printf("%d %d %d", a.x, a.y, a.z);
+  return 0;
+}
+```
+
+Output: `10 20 30`
+
+## Declaring An Array Of Structure
+
+Instead of delcaring multiple variables, we can also declare an array of structure in which each element of the array will represent a structure variable.
+
+```c
+#include <stdio.h>
+
+struct car {
+  int fuel_tank_cap;
+  int seating_cap;
+  float city_mileage;
+};
+
+int main(void) {
+  struct car c[2];
+  int i;
+
+  for (i = 0; i < 2; i++) {
+    printf("Enter the car %d fuel tank capacity: ", i + 1);
+    scanf("%d", &c[i].fuel_tank_cap);
+
+    printf("Enter the car %d seating capacity ", i + 1);
+    scanf("%d", &c[i].seating_cap);
+
+    printf("Enter the car %d city mileage ", i + 1);
+    scanf("%f", &c[i].city_mileage);
+  }
+  putchar('\n');
+
+  for (i = 0; i < 2; i++) {
+    printf("\nCar %d details: \n", i + 1);
+    printf("Fuel tank capacity: %d\n", c[i].fuel_tank_cap);
+    printf("Seating capacity: %d\n", c[i].seating_cap);
+    printf("City mileage: %f\n", c[i].city_mileage);
+  }
+  return 0;
+}
+```
+
+## Pointer To Structure Variable
+
+**Program:**
+
+```c
+struct abc {
+  int x;
+  int y;
+};
+
+int main(void) {
+  struct abc a = {0, 1};
+  struct abc *ptr = &a;
+
+  printf("%d %d", ptr->x, ptr->y);
+  return 0;
+}
+```
+
+Output: `0 1`
+
+`ptr` is a pointer to some variable of type `struct abc`.
+
+`ptr->x` is equivalent to `(*ptr).x`.
+
+## Structure Padding
+
+When an object of some structure type is declared then some contiguous block of memory will be allocated to structure members.
+
+**Example:**
+
+```c
+struct abc {
+  char a;
+  char b;
+  int c;
+} var;
+```
+
+What is the size of `struct abc`?
+
+### Calculating The Size Of The Structure
+
+Let the size of `int` is 4 bytes and size of `char` is 1 byte.
+
+Naturally, we'd assume the following:
+
+```c
+struct abc {
+  char a;   // 1 byte
+  char b;   // 1 byte
+  int c;    // 4 bytes
+} var;      // = 6 bytes
+```
+
+But this assumption is **WRONG**!
+
+There is a concept called _structure padding_.
+
+The processor doesn't read 1 byte at a time from memory. It reads 1 word at a time.
+
+If we have a 32 bit processor then it means it can access 4 bytes at a time which means word size is 4 bytes.
+
+If we have a 64 bit processor then it means it can access 8 bytes at a time which means word size is 8 bytes.
+
+In a 32 bit architecture system the structure `abc` will be allocated as follows:
+
+|     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| a   | b   | c   | c   | c   | c   |     |     |
+| 1   | 1   | 1   | 1   | 2   | 2   | 2   | 2   |
+
+In one CPU cycle (1), `char a`, `char b` and 2 bytes of `int c` can be accessed. There is no problem with `char a` and `char b` but...
+
+...whenever we want the value stored in variable `c`, 2 cycles are required to access the contents of variable `c`. In the first cycle, 1st 2 bytes can be accessed and in the 2nd cycle the last 2 bytes. It's an unncecessary wastage of CPU cycles.
+
+We can save the number of cycles by using the concept called _padding_.
+
+|     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| a   | b   |     |     | c   | c   | c   | c   |
+| 1   | 1   | 1   | 1   | 2   | 2   | 2   | 2   |
+
+So the total size of the struct `abc` in this case is:
+
+| Struct member | Size        |
+| ------------- | ----------- |
+| `char a`      | 1 byte      |
+| `char b`      | 1 byte      |
+| Empty spaces  | 2 bytes     |
+| `int c`       | 4 bytes     |
+| **Total**     | **8 bytes** |
+
+So:
+
+```c
+struct abc {
+  char a;
+  char b;
+  int c;
+};
+
+int main(void) {
+  struct abc var;
+
+  printf("%d", sizeof(var));
+}
+```
+
+Output: `8`
+
+What happens if we changed the order of members?
+
+```c
+struct abc {
+  char a;
+  int b;
+  char c;
+};
+
+int main(void) {
+  struct abc var;
+
+  printf("%d", sizeof(var));
+}
+```
+
+Output: `12`
+
+In a 32 bit architecture:
+
+|     |     |     |     |     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| a   |     |     |     | b   | b   | b   | b   | c   |     |     |     |
+| 1   | 1   | 1   | 1   | 2   | 2   | 2   | 2   | 3   | 3   | 3   | 3   |
+
+Total size: 4 bytes + 4 bytes + 4 bytes = 12 bytes (3 words accessed)
+
+## Structure Packing
+
+Because of structure padding, size of the structure becomes more than the size of the actual structure. Due to this some memory will get wasted.
+
+We can avoid the wastage of memory by simply writing `#pragma pack(1)`.
+
+`#pragma` is a special purpose directive used to turn on or off certain features.
+
+```c
+#pragma pack(1)
+
+struct abc {
+  char a;
+  int b;
+  char c;
+} var;
+
+int main(void) {
+  printf("%d", sizeof(var));
+  return 0;
+}
+```
+
+Output: `6`
+
+## Problem 1
+
+Predict the output of the following C program:
+
+```c
+#include <stdio.h>
+
+struct Point {
+  int x, y, z;
+};
+
+int main(void) {
+  struct Point p1 = {.y = 0, .z = 1, .x = 2};
+
+  printf("%d %d %d", p1.x, p1.y, p1.z);
+  return 0;
+}
+```
+
+- **a) `2 0 1`** ✅
+- b) Compiler Error
+- c) `0 1 2`
+- d) `2 1 0`
+
+## Problem 2
+
+Consider the following C program:
+
+```c
+#include <stdio.h>
+
+struct Ournode {
+  char x, y, z;
+};
+
+int main(void) {
+  struct Ournode p = {'1', '0', 'a' + 2};
+  struct Ournode *q = &p;
+
+  printf("%c %c", *((char*)q + 1), *((char*)q + 2));
+  return 0;
+}
+```
+
+- **a) `0, c`** ✅
+- b) `0, a + 2`
+- c) `'0', 'a + 2'`
+- d) `'0', 'c'`
+
+**Answer:**
+
+We have a struct `Ournode` that has three variables of type `char`. Then we initialize the struct variable `p` with the values of type `char` `'1'`, `'0'`, `'c'`. `'c'` because adding 2 to `'a'` (ASCII: 97) will be 99 which is the ASCII code of the character `'c'`.
+
+Members are stored in a contiguous block of memory. So we can assume:
+
+| `'1'` | `'0'` | `'c'` |
+| ----- | ----- | ----- |
+| 1000  | 1001  | 1002  |
+
+We then have a pointer `q` which points to the struct variable `p` of type `Ournode`. So `q` contains the address 1000. Here, `p` contains the address of the whole structure, not the address of the first element of the structure, even though they are the same (1000).
+
+Then through `printf()` we print two characters. `q` was the pointer to the whole structure. Now, after type casting, it is a pointer to a character. `q` in fact is now pointing to the first element. As we add 1 to the address, `q` points to the second element, which is address 1001 (`'0'`). The second argument to `printf()` works the same, except we are adding 2, pointing now to 1002 (`'c'`). Both are dereferenced so `printf()` prints the characters `0, c`.
+
+## Problem 3
+
+The following C declarations
+
+```c
+struct node {
+  int i;
+  float j;
+};
+
+struct node *s[10];
+```
+
+define `s` to be:
+
+- **a) An array, each element of which is a pointer to a structure of type `node`.** ✅
+- b) A structure of 2 fields, each field being a pointer to an array of 10 elements.
+- c) A structure of 3 fields: An integer, a float and an array of 10 elements.
+- d) An array, each element of which is a structure of type node.
+
+**Answer:**
+
+As square brackets have precedence over the star operator `*`, we know that `s` is an array. As there is an `*`, we know that it is a pointer to type `struct node`. So `s` is an array which holds pointers to `struct node` type in each of its elements.
