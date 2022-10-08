@@ -9521,3 +9521,305 @@ define `s` to be:
 **Answer:**
 
 As square brackets have precedence over the star operator `*`, we know that `s` is an array. As there is an `*`, we know that it is a pointer to type `struct node`. So `s` is an array which holds pointers to `struct node` type in each of its elements.
+
+# Unions
+
+Union is a user defined data type but unlike structures, union members share the same memory location.
+
+**Example:**
+
+```c
+struct abc {
+  int a;
+  char b;
+};
+```
+
+- Address of `a` = 6295624
+- Address of `b` = 6295628
+
+```c
+union abc {
+  int a;
+  char b;
+};
+```
+
+- Address of `a` = 6295616
+- Address of `b` = 6295616
+
+## Fact
+
+In union, members will share the same memory location. If we make changes in one member then it will be reflected to other members as well.
+
+**Example:**
+
+```c
+union abc {
+  int a;
+  char b;
+} var;
+
+int main(void) {
+  var.a = 65;
+
+  printf("a = %d\n", var.a);
+  printf("b = %c\n", var.b);
+  return 0;
+}
+```
+
+Output:
+
+```
+a = 65
+b = A
+```
+
+### Deciding The Size Of Union
+
+Size of the union is taken according to the size of the largest member of the union.
+
+**Example:**
+
+```c
+union abc {
+  int a;
+  char b;
+  double c;
+  float d;
+};
+
+int main(void) {
+  printf("%ld", sizeof(union abc));
+  return 0;
+}
+```
+
+Output: `8`
+
+Sizes depend on the machine. Let's assume the following sizes:
+
+| Type     | Size    |
+| -------- | ------- |
+| `int`    | 4 bytes |
+| `char`   | 1 byte  |
+| `double` | 8 bytes |
+| `float`  | 4 bytes |
+
+### Accessing Members Using Pointers
+
+We can access members of union through pointers using the arrow syntax (`->`) operator.
+
+```c
+union abc {
+  int a;
+  char b;
+};
+
+int main(void) {
+  union abc var;
+  var.a = 90;
+
+  union abc *p = &var;
+  printf("%d %c", p->a, p->b);
+  return 0;
+}
+```
+
+Output: `90 Z`
+
+ASCII code of `'Z'` is 90 so when we print `p->b` we print `Z`.
+
+## Problem 1
+
+Consider the following C declaration:
+
+```c
+struct {
+  short s[5];
+  union {
+    float y;
+    long z;
+  } u;
+} t;
+```
+
+Assume that objects of type `short`, `float` and `long` occupy 2 bytes, 4 bytes and 8 bytes respectively. The memory requirement for variable `t`, ignoring alignment considerations, is
+
+- a) 22 bytes
+- b) 14 bytes
+- **c) 18 bytes** ✅
+- d) 10 bytes
+
+**Answer:**
+
+In the structure we have an array of 5 elements of type `short`. Each element occupies 2 bytes so we have 10 bytes in total.
+
+As for the `union`, we know that memory allocated to the union is equal to the memory needed for the largest member of it. As the `z` member of type `long` is the largest member in the union (8 bytes), we have 18 bytes in total. So size of variable `t` will be 18 bytes.
+
+## Application Of Unions
+
+A store sells two kinds of items:
+
+- 📙 Books
+- 👕 Shirts
+
+Store owners want to keep records of the above mentioned items along with the relevant information.
+
+- **Books:** Title, author, number of pages, price
+- **Shirts:** Color, size, design, price
+
+Initially, they decided to create a structure like below:
+
+```c
+struct store {
+  double price;
+  char *title;
+  char *author;
+  int num_pages;
+  int color;
+  int size;
+  char *design;
+};
+```
+
+This structure is perfectly usable but only price is a common property in both the items and the rest are individual.
+
+We access the members of `struct store`:
+
+```c
+int main(void) {
+  struct store book;
+
+  book.title = "The Alchemist";
+  book.author = "Paulo Coelho";
+  book.num_pages = 197;
+  book.price = 23; // in dollars
+  return 0;
+}
+```
+
+The `book` variable doesn't possesses `int color`, `int size` and `char *design`. Therefore it's a wastage of memory.
+
+### Printing Size Of Structure
+
+Note that structure padding is not considered.
+
+```c
+int main(void) {
+  struct store book;
+
+  printf("%ld bytes", sizeof(book));
+  return 0;
+}
+```
+
+Output: `44 bytes`
+
+Why is size 44 bytes?
+
+```c
+struct store {
+  double price;   // 8 bytes
+  char *title;    // 8 bytes
+  char *author;   // 8 bytes
+  int num_pages;  // 4 bytes
+  int color;      // 4 bytes
+  int size;       // 4 bytes
+  char *design;   // 8 bytes
+};                // Total: 44 bytes
+```
+
+We can save lot of space if we start using unsions.
+
+```c
+#include <stdio.h>
+
+#pragma pack(1)
+struct store {
+  double price;       // 8 bytes
+  union {
+    struct {
+      char *title;    // 8 bytes
+      char *author;   // 8 bytes
+      int num_pages;  // 4 bytes
+    } book;           // Total: 20 bytes
+
+    struct {
+      int color;      // 4 bytes
+      int size;       // 4 bytes
+      char *design;   // 8 bytes
+    } shirt;          // Total: 16 bytes
+  } item;             // Total: max(20, 16) = 20 bytes
+};                    // Total: price + item = 8 + 20 = 28 bytes
+
+int main(void) {
+  struct store s;
+
+  s.item.book.title = "The Alchemist";
+  s.item.book.author = "Paulo Coelho";
+  s.item.book.num_pages = 197;
+
+  printf("%s\n", s.item.book.title);
+  printf("%ld", sizeof(s));
+  return 0;
+}
+```
+
+Output:
+
+```
+The Alchemist
+28
+```
+
+## Application of Unions - Part 2
+
+How good is that if we have an array containing mixed type data?
+
+```c
+typedef union {
+  int a;
+  char b;
+  double c;
+} data;
+
+int main(void) {
+  data arr[10];
+
+  arr[0].a = 10;
+  arr[1].b = 'a';
+  arr[2].c = 10.178;
+  // and so on
+  return 0;
+}
+```
+
+Here we are successfully creating an array containing mixed type data.
+
+Why not structures?
+
+Assuming,
+
+- `sizeof(int)` = 4 bytes
+- `sizeof(char)` = 1 bytes
+- `sizeof(double)` = 8 bytes
+
+```c
+typedef union {
+  int a;
+  char b;
+  double c;
+} data;       // size = 8 bytes
+```
+
+```c
+typedef struct {
+  int a;
+  char b;
+  double c;
+} data;       // size = 13 bytes
+```
+
+So for `data arr[10]` using unions the size will be 80 bytes while `data arr[10]` using structures will be 130 bytes.
