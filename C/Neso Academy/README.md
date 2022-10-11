@@ -9823,3 +9823,261 @@ typedef struct {
 ```
 
 So for `data arr[10]` using unions the size will be 80 bytes while `data arr[10]` using structures will be 130 bytes.
+
+# Enumerations
+
+An enumerated type is a user defined type which is used to assign names to _integral constants_ because names are easier to handle in program.
+
+```c
+enum Bool {False, True};
+
+int main(void) {
+  enum Bool var;
+
+  var = True;
+  printf("%d", var);
+  return 0;
+}
+```
+
+Output: `1`
+
+`False` and `True` are the names to _integral constants_.
+
+If we do not assign values to enum names then automatically compiler will assign values to them starting from 0.
+
+**But** we can also use `#define` to assign names to integral constants. Then why do we even need enumerations?
+
+## Need Of Enumerations
+
+Two important reasons:
+
+1. Enums can be declared in the local scope.
+2. Enum names are automatically initialized by the compiler.
+
+**Reason #1:** Enums can be declared in the local scope.
+
+```c
+int main(void) {
+  enum Bool {False, True} var;
+
+  var = True;
+  printf("%d", var);
+  return 0;
+}
+```
+
+This enum is not visible outside the `main()` function.
+
+**Reason #2:** Enum names are automatically initialized by the compiler.
+
+```c
+int main(void) {
+  enum Bool {False, True} var;
+
+  var = True;
+  printf("%d", var);
+  return 0;
+}
+```
+
+`False` is initialized to 0 and `True` to 1.
+
+## Some Important Facts
+
+**Fact #1:** Two or more names can have the same value.
+
+```c
+int main(void) {
+  enum point {x = 0, y = 0, z = 0};
+
+  printf("%d %d %d", x, y, z);
+  return 0;
+}
+```
+
+Output: `0 0 0`
+
+**Fact #2:** We can assign values in any order. All unassigned names will get value as value of previous name +1.
+
+```c
+int main(void) {
+  enum point {y = 2, x = 34, t, z = 0};
+
+  printf("%d %d %d", x, y, z, t);
+  return 0;
+}
+```
+
+Output: `34 2 0 35`
+
+**Fact #3:** Only integral values are allowed.
+
+```c
+int main(void) {
+  enum point {x = 34, y = 2.5, z = 0};
+
+  printf("%d %d %d", x, y, z);
+  return 0;
+}
+```
+
+This would output an error, as we assigned `y` to a float value.
+
+**Fact #4:** All enum constant must be unique in their scope.
+
+```c
+int main(void) {
+  enum point1 {x = 34, y = 2, z = 0};
+  enum point2 {x = 4, p = 25, q = 1};
+
+  printf("%d %d %d %d %d", x, y, z, p, q);
+  return 0;
+}
+```
+
+This would also ouput an error, as we are redeclaring enumerator `x`.
+
+# Calculating Area Of Rectangle
+
+**Question:** The following structures are designed to store information about objects on a graphics screen:
+
+```c
+struct point { int x, y; };
+struct rectangle { struct point upper_left, lower_right; };
+```
+
+A point structure stores the `x` and `y` coordinates of a point on the screen. A rectangle structure stores the coordinates of the upper left and lower right corners of the rectangle.
+
+Write a function that accepts rectangle structure `r` as an argument and computes the area of `r`.
+
+**Formula for calculating an area:**
+$$A=l\times b$$
+
+- Length = `lower_right_x` - `upper_left_x`
+- Breadth = `upper_left_y` - `lower_right_y`
+
+```c
+#include <stdio.h>
+
+struct point {
+  int x;
+  int y;
+};
+
+struct rectangle {
+  struct point upper_left;
+  struct point lower_right;
+};
+
+int area(struct rectangle r) {
+  int length, breadth;
+
+  length = r.lower_right.x - r.upper_left.x;
+  breadth = r.upper_left.y - r.lower_right.y;
+
+  return length * breadth;
+}
+
+int main(void) {
+  struct rectangle r;
+
+  printf("Enter the upper left coordinates of the rectangle: \n");
+  scanf("%d %d", &r.upper_left.x, &r.upper_left.y);
+
+  printf("Enter the lower right coordinates of the rectangle: \n");
+  scanf("%d %d", &r.lower_right.x, &r.lower_right.y);
+
+  printf("Area of the rectangle: %d", area(r));
+  return 0;
+}
+```
+
+# Problems On Structures & Unions
+
+**Question 1:** Suppose that `s` is the following structure:
+
+```c
+struct {
+  double a;
+  union {
+    char b[4];
+    double c;
+    int d;
+  } e;
+  char f[4];
+} s;
+```
+
+If `char` values occupy 1 byte, `int` values occupy 4 bytes and `double` values occupy 8 bytes, how much space will a C compiler allocate for `s`? _(Assume that the compiler leaves no "holes" between members - no padding.)_
+
+| Member      | Size    |
+| ----------- | ------- |
+| `double a`  | 8 bytes |
+| `char b[4]` | 4 bytes |
+| `double c`  | 8 bytes |
+| `int d`     | 4 bytes |
+| `char f[4]` | 4 bytes |
+
+The size of a union is equal to the size of the member which possesses the maximum size. As `double c` is the biggest member, so size of the unin is 8 bytes. So we have:
+
+$$8+8+4=20$$
+
+The size of struct `s` is **20 bytes** in total, padding not considered.
+
+**Question 2:** Suppose that `u` is the following union:
+
+```c
+union {
+  double a;
+  struct {
+    char b[4];
+    double c;
+    int d;
+  } e;
+  char f[4];
+} u;
+```
+
+If `char` values occupy 1 byte, `int` values occupy 4 bytes and `double` values occupy 8 bytes, how much space will a C compiler allocate for `u`? _(Assume that the compiler leaves no "holes" between members - no padding.)_
+
+| Member      | Size     |
+| ----------- | -------- |
+| `double a`  | 8 bytes  |
+| `struct e`  | 16 bytes |
+| `char f[4]` | 4 bytes  |
+
+In this case, we have a union and we know that size of a union is equal to the size of its biggest member. The biggest member in this union is the `struct e`, which has a size of 16 bytes. So the total size of this union is **16 bytes**.
+
+```c
+#include <stdio.h>
+
+#pragma pack(1)
+
+struct {
+  double a; // 8 bytes
+  union {
+    char b[4]; // 4 bytes
+    double c;  // 8 bytes
+    int d;     // 4 bytes
+  } e;         // 8 bytes
+  char f[4];   // 4 bytes
+} s;           // 20 bytes
+
+union {
+  double a; // 8 bytes
+  struct {
+    char b[4]; // 4 bytes
+    double c;  // 8 bytes
+    int d;     // 4 bytes
+  } e;         // 16 bytes
+  char f[4];   // 4 bytes
+} u;           // 16 bytes
+
+int main(void) {
+  printf("%ld %ld", sizeof(s), sizeof(u));
+  return 0;
+}
+```
+
+Output: `20 16`
