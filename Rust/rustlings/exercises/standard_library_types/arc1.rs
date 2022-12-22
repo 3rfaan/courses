@@ -33,7 +33,7 @@ fn main() {
             println!("Sum of offset {} is {}", offset, sum);
         }));
     }
-    for handle in joinhandles.into_iter() {
+    for handle in joinhandles {
         handle.join().unwrap();
     }
 }

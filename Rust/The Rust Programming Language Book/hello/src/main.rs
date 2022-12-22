@@ -16,6 +16,7 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
+<<<<<<< HEAD
     let request_line = buf_reader.lines().next().unwrap().unwrap();
 
     let (status_line, filename) = if request_line == "GET / HTTP/1.1" {

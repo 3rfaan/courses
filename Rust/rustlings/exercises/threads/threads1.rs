@@ -6,7 +6,8 @@ use std::thread;
 use std::time::Duration;
 
 fn main() {
-    let mut handles = vec![];
+    let mut handles = Vec::new();
+
     for i in 0..10 {
         handles.push(thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
