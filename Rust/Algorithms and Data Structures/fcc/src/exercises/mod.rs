@@ -1,5 +1,13 @@
+mod convert_html_entities;
 mod diff_two_arrays;
+mod dna_paring;
+mod missing_letters;
+mod pig_latin;
+mod search_and_replace;
 mod seek_and_destroy;
+mod sorted_union;
 mod spinal_tab_case;
 mod sum_all_numbers_in_range;
+mod sum_all_primes;
+mod sum_odd_fibonacci_numbers;
 mod wherefore_art_thou;

@@ -6,7 +6,7 @@ fn spinal_case(mut s: String) -> String {
     let re = Regex::new(r"(?P<lower>[a-z])(?P<upper>[A-Z])").unwrap();
 
     // Splitting up "camelCase" to "camel Case"
-    s = re.replace_all(&s, "$lower $upper").to_string();
+    s = re.replace_all(&s, "${lower} ${upper}").to_string();
 
     // Regex to define delimiter for split method
     let re = Regex::new(r"\s|_").unwrap();
