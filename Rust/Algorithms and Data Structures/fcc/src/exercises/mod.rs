@@ -5,6 +5,7 @@ mod missing_letters;
 mod pig_latin;
 mod search_and_replace;
 mod seek_and_destroy;
+mod smallest_common_multiple;
 mod sorted_union;
 mod spinal_tab_case;
 mod sum_all_numbers_in_range;
