@@ -1,6 +1,7 @@
 mod convert_html_entities;
 mod diff_two_arrays;
 mod dna_paring;
+mod drop_it;
 mod missing_letters;
 mod pig_latin;
 mod search_and_replace;

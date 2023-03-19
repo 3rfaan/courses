@@ -1,3 +1,9 @@
+// You will be provided with an initial array (the first argument in the destroyer function), 
+// followed by one or more arguments. Remove all elements from the initial array that are of 
+// the same value as these arguments.
+
+Note: You have to use the arguments object.
+
 #[allow(dead_code)]
 fn destroyer(arr: &mut Vec<i32>, args: &[i32]) -> Vec<i32> {
     // If the integer in the args array is not equal to an element in the arr array then retain

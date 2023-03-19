@@ -1,3 +1,7 @@
+// Find the missing letter in the passed letter range and return it.
+
+// If all letters are present in the range, return undefined.
+
 #[allow(dead_code)]
 fn fear_not_letter(s: &str) -> Option<char> {
     // Using the chars() method to iterate over the next char and typecasting then into u8, the

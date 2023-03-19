@@ -1,3 +1,6 @@
+// Convert the characters &, <, >, " (double quote), and ' (apostrophe),
+// in a string to their corresponding HTML entities.
+
 // Some characters and their corresponding HTML entities
 const ENTITIES: [(&str, &str); 5] = [
     ("&", "&amp;"),
