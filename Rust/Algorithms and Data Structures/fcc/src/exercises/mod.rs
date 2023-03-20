@@ -1,7 +1,9 @@
+mod binary_agents;
 mod convert_html_entities;
 mod diff_two_arrays;
 mod dna_paring;
 mod drop_it;
+mod everything_be_true;
 mod missing_letters;
 mod pig_latin;
 mod search_and_replace;
@@ -9,6 +11,7 @@ mod seek_and_destroy;
 mod smallest_common_multiple;
 mod sorted_union;
 mod spinal_tab_case;
+mod steamroller;
 mod sum_all_numbers_in_range;
 mod sum_all_primes;
 mod sum_odd_fibonacci_numbers;

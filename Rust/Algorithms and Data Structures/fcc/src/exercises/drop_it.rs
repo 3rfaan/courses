@@ -5,12 +5,12 @@
 // otherwise, arr should be returned as an empty array.
 
 #[allow(dead_code)]
-fn drop_elements<F>(arr: &mut Vec<i32>, f: F) -> Vec<i32>
+fn drop_elements<F>(arr: &mut Vec<i32>, filter: F) -> Vec<i32>
 where
     F: Fn(&i32) -> bool,
 {
-    for (i, e) in arr.iter().enumerate() {
-        if f(e) {
+    for (i, value) in arr.iter().enumerate() {
+        if filter(value) {
             return arr[i..].to_vec();
         }
     }
