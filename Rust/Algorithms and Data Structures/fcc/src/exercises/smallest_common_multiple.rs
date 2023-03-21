@@ -6,6 +6,7 @@
 // For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also
 // evenly divisible by all numbers between 1 and 3. The answer here would be 6.
 
+#[allow(dead_code)]
 fn smallest_commons(mut arr: [i32; 2]) -> i32 {
     // Sorting the two numbers so the smaller one is at index 0 and the bigger one at 1
     arr.sort();

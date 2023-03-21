@@ -1,9 +1,12 @@
+mod arguments_optional;
 mod binary_agents;
 mod convert_html_entities;
 mod diff_two_arrays;
 mod dna_paring;
 mod drop_it;
 mod everything_be_true;
+mod make_a_person;
+mod map_the_debris;
 mod missing_letters;
 mod pig_latin;
 mod search_and_replace;
