@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 regex = "1"
+ansi_term = "0.12.1"
