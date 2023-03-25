@@ -11,16 +11,20 @@ use regex::Regex;
 
 #[allow(dead_code)]
 fn translate_pig_latin(s: String) -> String {
+    // Regex to check if s starts with a vowel
     let re = Regex::new(r"^[aeiou]+").unwrap();
     let mut result = String::new();
 
+    // If s starts with vowel, push to result string and add "way" at the end
     if re.is_match(&s) {
         result.push_str(&s);
         result.push_str("way");
     } else {
-        let re = Regex::new(r"(?P<first>^[^aeiou]+)(?P<rest>\w*)").unwrap();
+        // If starting with consonant(s) then taking the consonant(s) and putting them at the end,
+        // then adding "ay"
+        let re = Regex::new(r"(?P<consonant>^[^aeiou]+)(?P<rest>\w*)").unwrap();
 
-        result = re.replace(&s, "${rest}${first}ay").to_string();
+        result = re.replace(&s, "${rest}${consonant}ay").to_string();
     }
     result
 }

@@ -1,3 +1,5 @@
+// Flatten a nested array. You must account for varying levels of nesting.
+
 #[allow(dead_code)]
 enum Value {
     Number(i32),
