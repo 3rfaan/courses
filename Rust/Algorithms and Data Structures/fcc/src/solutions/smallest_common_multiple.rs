@@ -7,9 +7,27 @@
 // evenly divisible by all numbers between 1 and 3. The answer here would be 6.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
-fn smallest_commons(arr: [i32; 2]) -> i32 {
-    unimplemented!()
+fn smallest_commons(mut arr: [i32; 2]) -> i32 {
+    // Sorting the two numbers so the smaller one is at index 0 and the bigger one at 1
+    arr.sort();
+
+    // Destructuring array so the meaning is more clear
+    let (start, end) = (arr[0], arr[1]);
+
+    // From the range of start to end (e.g. 1 to 5) multiplying each number in the range by the
+    // accumulator value and dividing the result by the greatest common divisor of the
+    // accumulator value
+    let lcm = (start..=end).fold(start, |acc, n| (acc * n) / gcd(acc, n));
+
+    lcm
+}
+
+// Function to find the greatest common divisor of two ints using recursion
+fn gcd(a: i32, b: i32) -> i32 {
+    match b {
+        0 => a,
+        _ => gcd(b, a % b),
+    }
 }
 
 #[cfg(test)]

@@ -11,12 +11,25 @@
 use std::collections::HashMap;
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn what_is_in_a_name(
     collection: Vec<HashMap<String, String>>,
     source: HashMap<String, String>,
 ) -> Vec<HashMap<String, String>> {
-    unimplemented!()
+    // Putting collection vector into consuming iterator
+    collection
+        .into_iter()
+        // Filter over every HashMap in collection (obj)
+        .filter(|obj| {
+            source
+                // Iterating over key, value pairs in source HashMap
+                .iter()
+                // Checking for all key, value pairs in source if the HashMap in the collection we
+                // filter over contains a key of source and the value of the obj is equal the value
+                // of the source HashMap
+                .all(|(key, value)| obj.contains_key(key) && obj.get(key) == Some(value))
+        })
+        // Recollecting into vector again
+        .collect()
 }
 
 #[cfg(test)]

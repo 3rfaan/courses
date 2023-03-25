@@ -12,38 +12,43 @@
 // These methods must be the only available means of interacting with the object.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
-struct Person {}
+struct Person {
+    first_name: String,
+    last_name: String,
+}
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 impl Person {
     fn create(first_name: &str, last_name: &str) -> Self {
-        unimplemented!()
+        Person {
+            first_name: first_name.to_string(),
+            last_name: last_name.to_string(),
+        }
     }
 
     fn get_first_name(&self) -> &str {
-        unimplemented!()
+        &self.first_name
     }
 
     fn get_last_name(&self) -> &str {
-        unimplemented!()
+        &self.last_name
     }
 
     fn get_full_name(&self) -> String {
-        unimplemented!()
+        format!("{} {}", &self.first_name, &self.last_name)
     }
 
     fn set_first_name(&mut self, first_name: &str) {
-        unimplemented!()
+        self.first_name = first_name.to_string();
     }
 
     fn set_last_name(&mut self, last_name: &str) {
-        unimplemented!()
+        self.last_name = last_name.to_string();
     }
 
     fn set_full_name(&mut self, first_name: &str, last_name: &str) {
-        unimplemented!()
+        self.first_name = first_name.to_string();
+        self.last_name = last_name.to_string();
     }
 }
 

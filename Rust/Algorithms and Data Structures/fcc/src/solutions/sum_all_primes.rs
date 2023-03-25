@@ -5,9 +5,17 @@
 // Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn sum_primes(num: i64) -> i64 {
-    unimplemented!()
+    // Iterating from 2 (because 1 is not a prime number because it is not dividable by 2 numbers),
+    // then filtering only the numbers which returned true when passed to the is_prime() function
+    // and eventually adding them together
+    (2..=num).filter(|&n| is_prime(n)).sum()
+}
+
+// Function to find out if a number is a prime by checking if the given number (n) is NOT evenly
+// dividable by all numbers from 2 to the square root of the given number (n)
+fn is_prime(n: i64) -> bool {
+    (2..=(n as f64).sqrt() as i64).all(|i| n % i != 0)
 }
 
 #[cfg(test)]

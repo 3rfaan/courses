@@ -9,14 +9,18 @@
 // The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn pair_element(s: &str) -> Vec<[char; 2]> {
-    unimplemented!()
+    // Vector for pairs which will be returned
+    let mut pairs = Vec::new();
+
+    // Iterating over characters in string "s"
+    for c in s.chars() {
+        pairs.push(match_base_pair(c));
+    }
+    pairs
 }
 
 // Function to return an array of 2 chars with the matching base DNA pair
-#[allow(dead_code)]
-#[allow(unused_variables)]
 fn match_base_pair(c: char) -> [char; 2] {
     match c {
         'A' => ['A', 'T'],

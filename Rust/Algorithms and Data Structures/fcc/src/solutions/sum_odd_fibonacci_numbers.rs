@@ -6,9 +6,30 @@
 // For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn sum_fibs(num: i64) -> i64 {
-    unimplemented!()
+    // Starting with 0 and 1 where 1 is the current number
+    let mut prev = 0;
+    let mut curr = 1;
+
+    // Variable for storing the sum
+    let mut sum = 0;
+
+    // Loop until current number is equal to "num" argument
+    while curr <= num {
+        // If the current number is odd then add it to the "sum" variable
+        if curr % 2 == 1 {
+            sum += curr;
+        }
+
+        // The next number is the previous number added to the current number
+        let next = prev + curr;
+
+        // Rotating the number where current becomes previous and next becomes current, then
+        // looping again
+        prev = curr;
+        curr = next;
+    }
+    sum
 }
 
 #[cfg(test)]

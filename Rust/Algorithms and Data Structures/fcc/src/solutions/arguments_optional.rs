@@ -12,15 +12,13 @@
 // If either argument isn't a valid number, return undefined.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn curry(a: i32) -> impl Fn(i32) -> i32 {
-    move |x| unimplemented!()
+    move |x| a + x
 }
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn add_two(a: i32, b: i32) -> i32 {
-    unimplemented!()
+    a + b
 }
 
 #[cfg(test)]

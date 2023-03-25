@@ -5,9 +5,13 @@
 // For example, sumAll([4,1]) should return 10 because sum of all the numbers between 1 and 4 (both inclusive) is 10.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 pub fn sum_all(arr: &mut [i32; 2]) -> i32 {
-    unimplemented!()
+    // Sort array (that's why arr is mutable!)
+    arr.sort();
+
+    // Take range from first index of slice to last index and sum all the integers in the sum
+    // together
+    (arr[0]..=arr[1]).sum()
 }
 
 #[cfg(test)]

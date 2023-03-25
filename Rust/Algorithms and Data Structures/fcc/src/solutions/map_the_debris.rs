@@ -16,8 +16,9 @@
 //
 // The radius of the earth is 6367.4447 kilometers, and the GM value of earth is 398600.4418 km^3s^-2.
 
+use std::f64::consts::PI;
+
 #[allow(dead_code)]
-#[allow(unused_variables)]
 #[derive(Debug, PartialEq)]
 struct Satellite {
     name: String,
@@ -25,9 +26,22 @@ struct Satellite {
 }
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn orbital_period(arr: Vec<Satellite>) -> Vec<(String, i32)> {
-    unimplemented!()
+    // Setting given constonants in the exercise
+    const GM: f64 = 398600.4418;
+    const EARTH_RADIUS: f64 = 6367.4447;
+
+    // Iter over the vector of struct Satellite
+    arr.iter()
+        .map(|sat| {
+            let earth = EARTH_RADIUS + sat.avg_alt;
+            // Applying mathematical formula from above
+            let orbital_period = (2.0 * PI * (earth.powi(3) / GM).sqrt()).round() as i32;
+
+            // Returning a tuple of the name and orbital period of the given satellite
+            (sat.name.clone(), orbital_period)
+        })
+        .collect()
 }
 
 #[cfg(test)]

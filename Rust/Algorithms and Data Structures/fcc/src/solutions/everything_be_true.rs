@@ -10,17 +10,50 @@
 // Enum to hold Person or Pokemon type so both types can be passed as argument for truth_check()
 #[derive(PartialEq)]
 #[allow(dead_code)]
-#[allow(unused_variables)]
 enum Type {
     Person(Person),
     Pokemon(Pokemon),
 }
 
 // Methods returning value of certain field
-impl Type {}
+impl Type {
+    fn name(&self) -> &str {
+        match self {
+            Type::Person(pers) => &pers.name,
+            _ => panic!("Not valid type"),
+        }
+    }
+
+    fn role(&self) -> &str {
+        match self {
+            Type::Person(pers) => &pers.role,
+            _ => panic!("Not a valid type"),
+        }
+    }
+
+    fn is_bot(&self) -> bool {
+        match self {
+            Type::Person(pers) => pers.is_bot,
+            _ => panic!("Not a valid type"),
+        }
+    }
+
+    fn number(&self) -> i32 {
+        match self {
+            Type::Pokemon(pkmn) => pkmn.number,
+            _ => panic!("Not a valid type"),
+        }
+    }
+
+    fn caught(&self) -> i32 {
+        match self {
+            Type::Pokemon(pkmn) => pkmn.caught,
+            _ => panic!("Not a valid type"),
+        }
+    }
+}
 
 #[derive(PartialEq)]
-#[allow(unused_variables)]
 struct Person {
     name: String,
     role: String,
@@ -28,7 +61,6 @@ struct Person {
 }
 
 #[derive(PartialEq)]
-#[allow(unused_variables)]
 struct Pokemon {
     name: String,
     number: i32,
@@ -36,9 +68,17 @@ struct Pokemon {
 }
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn truth_check(collection: Vec<Type>, pre: &str) -> bool {
-    unimplemented!()
+    // Itering over vector of elements either of Person or Pokemon type and emulating JavaScript
+    // falsy values to check if everything is truthy (values that are true in a Boolean context)
+    collection.iter().all(|p| match pre {
+        "name" => p.name() != "",
+        "role" => p.role() != "",
+        "is_bot" => p.is_bot() != false,
+        "number" => p.number() != 0,
+        "caught" => p.caught() != 0,
+        _ => panic!("No field name found for {pre}"),
+    })
 }
 
 #[cfg(test)]

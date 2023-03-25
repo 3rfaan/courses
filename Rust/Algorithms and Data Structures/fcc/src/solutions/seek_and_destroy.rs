@@ -5,9 +5,13 @@
 // Note: You have to use the arguments object.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn destroyer(arr: &mut Vec<i32>, args: &[i32]) -> Vec<i32> {
-    unimplemented!()
+    // If the integer in the args array is not equal to an element in the arr array then retain
+    // (keep) it, else it will get removed
+    for arg in args {
+        arr.retain(|&x| x != *arg);
+    }
+    arr.to_vec()
 }
 
 #[cfg(test)]

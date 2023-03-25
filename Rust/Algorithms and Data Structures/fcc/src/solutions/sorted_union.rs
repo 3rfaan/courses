@@ -7,9 +7,19 @@
 // Check the assertion tests for examples.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn unite_unique(arr: Vec<Vec<i32>>) -> Vec<i32> {
-    unimplemented!()
+    // Flattening all vectors into a single one
+    let arr: Vec<i32> = arr.into_iter().flatten().collect();
+    let mut result = Vec::new();
+
+    // Iterating over the integers in the flattened vector and checking if the integer already
+    // exists in the vector we will return, if it does, we won't push the integer into it
+    for num in arr {
+        if !result.contains(&num) {
+            result.push(num);
+        }
+    }
+    result
 }
 
 #[cfg(test)]

@@ -62,9 +62,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut exc = String::new();
 
         print!(
-            "{} ({}): ",
+            "===> {} ({}): ",
             "Enter number of exercise".bold(),
-            "To quit just type 0".yellow()
+            "To quit type 0".yellow()
         );
         io::stdout().flush()?;
         io::stdin().read_line(&mut exc)?;

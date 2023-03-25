@@ -3,9 +3,17 @@
 // The binary string will be space separated.
 
 #[allow(dead_code)]
-#[allow(unused_variables)]
 fn binary_agent(s: &str) -> String {
-    unimplemented!()
+    let mut result = String::new();
+
+    // Splitting string of binary digits into a vector where each element holds one byte, then
+    // mapping over each byte and converting from base 2 to u8
+    for byte in s.split(' ').map(|x| u8::from_str_radix(x, 2).unwrap()) {
+        // Typecasting the u8 value in byte to char (ASCII) and pushing it to the result string
+        // which will hold the sentence in readable ASCII format
+        result.push(byte as char);
+    }
+    result
 }
 
 #[cfg(test)]
