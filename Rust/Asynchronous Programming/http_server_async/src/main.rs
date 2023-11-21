@@ -4,53 +4,8 @@ use async_std::{
     net::TcpListener,
     task::{self, spawn},
 };
-use futures::{
-    io::Error,
-    stream::StreamExt,
-    task::{Context, Poll},
-};
-use std::{cmp::min, pin::Pin, time::Duration};
-
-struct MockTcpStream {
-    read_data: Vec<u8>,
-    write_data: Vec<u8>,
-}
-
-impl Read for MockTcpStream {
-    fn poll_read(
-        self: Pin<&mut Self>,
-        _: &mut Context,
-        buf: &mut [u8],
-    ) -> Poll<Result<usize, Error>> {
-        let size: usize = min(self.read_data.len(), buf.len());
-
-        buf[..size].copy_from_slice(&self.read_data[..size]);
-
-        Poll::Ready(Ok(size))
-    }
-}
-
-impl Write for MockTcpStream {
-    fn poll_write(
-        mut self: Pin<&mut Self>,
-        _: &mut Context,
-        buf: &[u8],
-    ) -> Poll<Result<usize, Error>> {
-        self.write_data = Vec::from(buf);
-
-        Poll::Ready(Ok(buf.len()))
-    }
-
-    fn poll_flush(self: Pin<&mut Self>, _: &mut Context) -> Poll<Result<(), Error>> {
-        Poll::Ready(Ok(()))
-    }
-
-    fn poll_close(self: Pin<&mut Self>, _: &mut Context) -> Poll<Result<(), Error>> {
-        Poll::Ready(Ok(()))
-    }
-}
-
-impl Unpin for MockTcpStream {}
+use futures::stream::StreamExt;
+use std::time::Duration;
 
 #[async_std::main]
 async fn main() {
@@ -58,7 +13,7 @@ async fn main() {
 
     listener
         .incoming()
-        .for_each_concurrent(/* limit */ None, |stream| async move {
+        .for_each_concurrent(None, |stream| async move {
             let stream = stream.unwrap();
 
             spawn(handle_connection(stream));
@@ -93,6 +48,8 @@ async fn handle_connection(mut stream: impl Read + Write + Unpin) {
 
 #[async_std::test]
 async fn test_handle_connection() {
+    use http_server_async::MockTcpStream;
+
     let input_bytes = b"GET / HTTP/1.1\r\n";
     let mut contents = vec![0u8; 1024];
 
