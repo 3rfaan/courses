@@ -1,0 +1,25 @@
+[package]
+name = "wasm"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+chip8_core = { path = "../chip8_core" }
+js-sys = "^0.3.46"
+wasm-bindgen = "^0.2.69"
+getrandom = { version = "0.2", features = ["js"] }
+
+[dependencies.web-sys]
+version = "^0.3.46"
+features = [
+    "KeyboardEvent",
+    "CanvasRenderingContext2d",
+    "Document",
+    "Element",
+    "HtmlCanvasElement",
+    "ImageData",
+    "Window",
+]
