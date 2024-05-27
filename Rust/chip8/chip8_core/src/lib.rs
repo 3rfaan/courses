@@ -44,9 +44,9 @@ pub struct Emulator {
     st: u8, // sound timer
 }
 
-impl Emulator {
-    pub fn new() -> Self {
-        let mut new_emu = Self {
+impl Default for Emulator {
+    fn default() -> Self {
+        Self {
             pc: START_ADDR,
             ram: [0; RAM_SIZE],
             screen: [false; SCREEN_WIDTH * SCREEN_HEIGHT],
@@ -57,7 +57,13 @@ impl Emulator {
             keys: [false; NUM_KEYS],
             dt: 0,
             st: 0,
-        };
+        }
+    }
+}
+
+impl Emulator {
+    pub fn new() -> Self {
+        let mut new_emu = Self::default();
         new_emu.ram[..FONTSET_SIZE].copy_from_slice(&FONTSET);
         new_emu
     }
@@ -74,6 +80,20 @@ impl Emulator {
         self.dt = 0;
         self.st = 0;
         self.ram[..FONTSET_SIZE].copy_from_slice(&FONTSET);
+    }
+
+    pub fn get_display(&self) -> &[bool] {
+        &self.screen
+    }
+
+    pub fn keypress(&mut self, idx: usize, pressed: bool) {
+        self.keys[idx] = pressed;
+    }
+
+    pub fn load(&mut self, data: &[u8]) {
+        let start = START_ADDR as usize;
+        let end = (START_ADDR as usize) + data.len();
+        self.ram[start..end].copy_from_slice(data);
     }
 
     pub fn tick(&mut self) {
@@ -122,7 +142,7 @@ impl Emulator {
         );
 
         match nibbles {
-            /* NOP */ (0, 0, 0, 0) => return,
+            /* NOP */ (0, 0, 0, 0) => (),
             /* CLS */
             (0, 0, 0xE, 0) => self.screen = [false; SCREEN_WIDTH * SCREEN_HEIGHT],
             /* RET */
@@ -284,13 +304,13 @@ impl Emulator {
                 let x_coord = self.v_reg[x] as u16;
                 let y_coord = self.v_reg[y] as u16;
                 // Last nibble determines row high of sprite
-                let num_rows = nibbles.3;
+                let num_rows = nibbles.3 as u16;
                 // Keep track if any pixels were flipped
                 let mut flipped = false;
                 // Iterating over each row of sprite
                 for y_line in 0..num_rows {
                     // Determine memory address where row data is stored
-                    let addr = self.i_reg + y_line as u16;
+                    let addr = self.i_reg + y_line;
                     let pixels = self.ram[addr as usize];
                     // Iterate over each column in sprite's row
                     for x_line in 0..8 {
@@ -302,7 +322,7 @@ impl Emulator {
                             // Pixel's index for 1D screen array
                             let idx = x + SCREEN_WIDTH * y;
                             // Check if pixel is flipped and set it
-                            flipped != self.screen[idx];
+                            flipped |= self.screen[idx];
                             self.screen[idx] ^= true;
                         }
                     }
@@ -314,6 +334,100 @@ impl Emulator {
                     self.v_reg[0xF] = 0;
                 }
             }
+            /* SKIP key press */
+            (0xE, _, 9, 0xE) => {
+                let x = nibbles.1 as usize;
+                let vx = self.v_reg[x] as usize;
+                let key = self.keys[vx];
+                if key {
+                    self.pc += 2;
+                }
+            }
+            /* SKIP key not presses */
+            (0xE, _, 0xA, 1) => {
+                let x = nibbles.1 as usize;
+                let vx = self.v_reg[x] as usize;
+                let key = self.keys[vx];
+                if !key {
+                    self.pc += 2;
+                }
+            }
+            /* SET VX = DT */
+            (0xF, _, 0, 7) => {
+                let x = nibbles.1 as usize;
+                self.v_reg[x] = self.dt;
+            }
+            /* WAIT */
+            (0xF, _, 0, 0xA) => {
+                let x = nibbles.1 as usize;
+                let mut pressed = false;
+                for i in 0..self.keys.len() {
+                    if self.keys[i] {
+                        self.v_reg[x] = i as u8;
+                        pressed = true;
+                        break;
+                    }
+                }
+                if !pressed {
+                    self.pc -= 2; // Redo opcode
+                }
+            }
+            /* SET DT = VX */
+            (0xF, _, 1, 5) => {
+                let x = nibbles.1 as usize;
+                self.dt = self.v_reg[x];
+            }
+            /* SET ST = VX */
+            (0xF, _, 1, 8) => {
+                let x = nibbles.1 as usize;
+                self.st = self.v_reg[x];
+            }
+            /* ADD I += VX */
+            (0xF, _, 1, 0xE) => {
+                let x = nibbles.1 as usize;
+                let vx = self.v_reg[x] as u16;
+                self.i_reg = self.i_reg.wrapping_add(vx);
+            }
+            /* SET I = FONT */
+            (0xF, _, 2, 9) => {
+                let x = nibbles.1 as usize;
+                let c = self.v_reg[x] as u16;
+                self.i_reg = c * 5; // every font sprite takes up 5 bytes, e.g. for character 1 we
+                                    // have RAM address 5, for 2 RAM address 10 etc.
+            }
+            /* SET I = BCD of VX (binary-coded decimal) */
+            (0xF, _, 3, 3) => {
+                let x = nibbles.1 as usize;
+                let vx = self.v_reg[x] as f32;
+                // Fetch the hundreds digit by dividing by 100 and tossing the decimal
+                let hundreds = (vx / 100.0).floor() as u8;
+                // Fetch the tens digit by dividing by 10 and tossing the ones digit and the
+                // decimal
+                let tens = ((vx / 10.0) % 10.0).floor() as u8;
+                // Fetch the ones digit by tossing the hundreds and tens
+                let ones = (vx % 10.0) as u8;
+
+                self.ram[self.i_reg as usize] = hundreds;
+                self.ram[(self.i_reg + 1) as usize] = tens;
+                self.ram[(self.i_reg + 2) as usize] = ones;
+            }
+            /* STORE V0 - VX */
+            (0xF, _, 5, 5) => {
+                let x = nibbles.1 as usize;
+                let i = self.i_reg as usize;
+                for idx in 0..=x {
+                    self.ram[i + idx] = self.v_reg[idx];
+                }
+            }
+            /* LOAD V0 - VX */
+            (0xF, _, 6, 5) => {
+                let x = nibbles.1 as usize;
+                let i = self.i_reg as usize;
+                for idx in 0..=x {
+                    self.v_reg[idx] = self.ram[i + idx];
+                }
+            }
+
             _ => unimplemented!("Unimplemented opcode: {:04x}", op),
         }
     }
