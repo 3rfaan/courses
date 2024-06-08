@@ -1,6 +1,14 @@
 from manim import *
 
 
+class Title(Scene):
+    def construct(self):
+        Text.set_default(font="Open Sans")
+        title = Text("Computer Components")
+        self.play(Write(title))
+        self.wait()
+
+
 class NativeProgram(Scene):
     def construct(self):
         Text.set_default(font="Open Sans")
@@ -28,18 +36,25 @@ class NativeProgram(Scene):
 
 class Binary(Scene):
     def construct(self):
+
         zero = Text("0", font_size=150)
         one = Text("1", font_size=150)
 
         self.play(FadeIn(zero, shift=DOWN))
         self.wait()
         self.play(zero.animate.shift(2 * LEFT))
+        low = Text("LOW", font="Open Sans")
+        low.next_to(zero, DOWN * 1.25)
+        self.play(Write(low))
 
         one.shift(2 * RIGHT)
         self.play(FadeIn(one, shift=DOWN))
+        high = Text("HIGH", font="Open Sans")
+        high.next_to(one, DOWN * 1.25)
+        self.play(Write(high))
         self.wait()
 
-        group = VGroup(zero, one)
+        group = VGroup(zero, one, high, low)
         self.play(FadeOut(group))
         self.wait()
 
@@ -378,8 +393,6 @@ class ExecutionCycle(Scene):
 
         fetch = Text("Fetch", font="Open Sans", font_size=25)
         fetch.move_to(cpu.get_edge_center(UP) + UP * 0.5)
-        self.play(ReplacementTransform(execute, fetch))
-        self.wait()
         inst_two = MarkupText(
             f'<span fgcolor="{RED}">addi</span> a1, a1, -1',
             font="FiraCode Nerd Font",
@@ -387,6 +400,7 @@ class ExecutionCycle(Scene):
         )
         inst_two.move_to(cpu.get_center())
         self.play(
+            ReplacementTransform(execute, fetch),
             next_four.animate.move_to(cpu.get_center()),
         )
         self.wait()
