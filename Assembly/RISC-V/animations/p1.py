@@ -34,31 +34,6 @@ class NativeProgram(Scene):
         self.wait()
 
 
-class Binary(Scene):
-    def construct(self):
-
-        zero = Text("0", font_size=150)
-        one = Text("1", font_size=150)
-
-        self.play(FadeIn(zero, shift=DOWN))
-        self.wait()
-        self.play(zero.animate.shift(2 * LEFT))
-        low = Text("LOW", font="Open Sans")
-        low.next_to(zero, DOWN * 1.25)
-        self.play(Write(low))
-
-        one.shift(2 * RIGHT)
-        self.play(FadeIn(one, shift=DOWN))
-        high = Text("HIGH", font="Open Sans")
-        high.next_to(one, DOWN * 1.25)
-        self.play(Write(high))
-        self.wait()
-
-        group = VGroup(zero, one, high, low)
-        self.play(FadeOut(group))
-        self.wait()
-
-
 class Components(Scene):
     def construct(self):
         Text.set_default(font="FiraCode Nerd Font", font_size=120)
