@@ -68,7 +68,7 @@ class Components(Scene):
         kb.set_color(WHITE)
         kb.move_to([4, -2, 0])
         kb_top = kb.get_top()
-        kb_line = Line(kb_top, kb_top + UP * 1.25)
+        kb_line = Line(kb_top, kb_top + UP * 1.05)
 
         self.play(FadeIn(ram, shift=DOWN))
         self.play(FadeIn(cpu, shift=DOWN))
