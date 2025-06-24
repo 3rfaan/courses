@@ -1,0 +1,38 @@
+[package]
+name = "hot_dog"
+version = "0.1.0"
+authors = ["3rfaan <zubi.arfan@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dioxus = { version = "0.6.0", features = ["fullstack", "router"] }
+reqwest = { version = "0.12.20", features = ["json"] }
+rusqlite = { version = "0.36.0", optional = true }
+serde = { version = "1.0.219", features = ["derive"] }
+true = { version = "0.1.0", optional = true }
+
+[dev-dependencies]
+dioxus-autofmt = "0.6.2"
+
+[features]
+default = []
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+server = ["dioxus/server", "dep:rusqlite"]
+rusqlite = ["dep:rusqlite"]
+true = ["dep:true"]
+
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
