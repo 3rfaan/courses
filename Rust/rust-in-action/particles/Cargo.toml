@@ -1,0 +1,9 @@
+[package]
+name = "particles"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+piston_window = "0.117"
+piston2d-graphics = "0.39"
+rand = "0.8"
