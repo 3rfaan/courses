@@ -138,6 +138,9 @@ class Memory(Scene):
                 ["0xFF"],
                 ["0x0F"],
                 ["0xE1"],
+                ["0xE2"],
+                ["0xE4"],
+                ["0xE6"],
             ],
             include_outer_lines=True,
         )
