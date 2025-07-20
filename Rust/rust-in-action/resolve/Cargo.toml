@@ -1,0 +1,9 @@
+[package]
+name = "resolve"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = "4.5.41"
+hickory-proto = "0.25.2"
+rand = "0.9.1"
